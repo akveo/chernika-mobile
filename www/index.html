@@ -19,11 +19,20 @@
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
-    <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
+    <script src="modules/index.js"></script>
+
+    <script src="modules/main/main.module.js"></script>
+
+    <script src="modules/main/matches/matches.module.js"></script>
+    <script src="modules/main/matches/chat.js"></script>
+
+    <script src="modules/main/settings/settings.module.js"></script>
+    <script src="modules/main/settings/account.js"></script>
+
+    <script src="modules/main/swiper/swiper.module.js"></script>
+
   </head>
-  <body ng-app="starter">
+  <body ng-app="app">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
