@@ -49,6 +49,19 @@
         };
     }
 
+    var OFFSET_TO_SWIPE_ACCEPT = 100;
+
+    function calculateOpacity(deltaX, factor) {
+        var opacity = deltaX / (2 * OFFSET_TO_SWIPE_ACCEPT) * factor;
+        if (opacity < 0) {
+            return 0;
+        } else if (opacity > 1) {
+            return 1;
+        } else {
+            return opacity;
+        }
+    }
+
     swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout'];
     function swiperController($scope, peopleSuggestions, $timeout) {
         var vm = this;
@@ -61,24 +74,23 @@
         $scope.suggestionMoved = function(sugg, deltaX, deltaY) {
             sugg.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
             $scope.useTransition = false;
-            sugg.zIndex = 10;
+            sugg.yesOpacity = calculateOpacity(deltaX, 1);
+            sugg.noOpacity = calculateOpacity(deltaX, -1);
         };
 
 
         $scope.suggestionMoveEnd = function(sugg, deltaX, hDir) {
-            if (Math.abs(deltaX) > 100) {
-                $timeout(function() {
-                    $scope.suggestions = $scope.suggestions.slice(0, $scope.suggestions.length - 1);
-                }, 20);
-                sugg.zIndex = -1;
-                delete sugg.translateStyle;
-            } else {
-                $scope.useTransition = true;
-
-                $timeout(function() {
+            $scope.useTransition = true;
+            $timeout(function() {
+                if (Math.abs(deltaX) > OFFSET_TO_SWIPE_ACCEPT) {
+                    $scope.suggestions = $scope.suggestions.slice(1, $scope.suggestions.length);
+                } else {
                     delete sugg.translateStyle;
-                });
-            }
+                    delete sugg.yesOpacity;
+                    delete sugg.noOpacity;
+                }
+            }, 20);
+
         };
     }
 

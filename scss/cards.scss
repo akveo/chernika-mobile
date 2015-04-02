@@ -1,3 +1,8 @@
+@mixin translate3d($x: 0, $y: 0, $z: 0) {
+  -webkit-transform: translate3d($x,$y,$z);
+  transform: translate3d($x,$y,$z);
+}
+
 .swiper-view {
   width: 100%;
   height: 100%;
@@ -5,13 +10,69 @@
   .card {
     top: 0;
     left: 0;
+    width: 100%;
+    height: 80%;
     position: absolute;
-    -webkit-transform: translate3d(0,0,0);
-    transform: translate3d(0,0,0);
+    @for $i from 1 through 3 {
+      &:nth-child(#{$i}) {
+        @include translate3d(0, ($i - 1) * 5px);
+        z-index: 5 -$i;
+      }
+    }
+    &:nth-child(4) {
+      @include translate3d(0, 15px);
+      z-index: 1;
+    }
+    &:nth-child(n + 5) {
+      @include translate3d(0, 15px);
+      z-index: 0;
+    }
+
 
     &.useTransition {
       -webkit-transition: -webkit-transform 0.2s ease-out;
       transition: transform 0.2s ease-out;
+    }
+  }
+}
+
+
+$noRedColor: #cb0000;
+$yesGreenColor: #59FA49;
+.card {
+  .like-indicator {
+    position: absolute;
+    opacity: 0;
+    display: none;
+
+    z-index: 10;
+    top:25px;
+    border-radius: 10px;
+    font-weight: bold;
+    width: 100px;
+    height: 50px;
+    line-height: 42px;
+    font-size: 35px;
+    text-align: center;
+
+    &.yes {
+      left: 10px;
+      -webkit-transform: rotate(-30deg);
+      transform: rotate(-30deg);
+      color: $yesGreenColor;
+      border: 4px solid $yesGreenColor;
+    }
+    &.no {
+      right: 10px;
+      -webkit-transform: rotate(30deg);
+      transform: rotate(30deg);
+      color: $noRedColor;
+      border: 4px solid $noRedColor;
+    }
+  }
+  &:first-child {
+    .like-indicator {
+      display: inline-block;
     }
   }
 }
