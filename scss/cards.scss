@@ -6,6 +6,13 @@
     top: 0;
     left: 0;
     position: absolute;
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+
+    &.useTransition {
+      -webkit-transition: -webkit-transform 0.2s ease-out;
+      transition: transform 0.2s ease-out;
+    }
   }
 }
 

@@ -54,8 +54,13 @@
         var vm = this;
 
         $scope.hello = 'world';
+        $scope.useTransition = true;
 
         $scope.suggestions = peopleSuggestions;
+
+        $scope.suggestionSwipeStart = function() {
+            $scope.useTransition = false;
+        };
 
         $scope.suggestionMoved = function(sugg, deltaX, deltaY) {
             sugg.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
@@ -69,8 +74,14 @@
                     $scope.suggestions = $scope.suggestions.slice(0, $scope.suggestions.length - 1);
                 }, 20);
                 sugg.zIndex = -1;
+                delete sugg.translateStyle;
+            } else {
+                $scope.useTransition = true;
+
+                $timeout(function() {
+                    delete sugg.translateStyle;
+                });
             }
-            delete sugg.translateStyle;
         };
     }
 
