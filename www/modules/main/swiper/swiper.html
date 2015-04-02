@@ -3,7 +3,7 @@
     <div class="swiper-view">
       <div class="list card" ng-class="{ useTransition: useTransition }" ng-repeat="sugg in suggestions track by sugg.name"
            ng-style="{ transform: sugg.translateStyle, '-webkit-transform': sugg.translateStyle, 'z-index': sugg.zIndex }"
-           swipe-element="suggestionMoveEnd(sugg, deltaX, hDir)" swipe-element-move="suggestionMoved(sugg, deltaX, deltaY)" swipe-element-start="suggestionSwipeStart()">
+           swipe-element="suggestionMoveEnd(sugg, deltaX, hDir)" swipe-element-move="suggestionMoved(sugg, deltaX, deltaY)">
 
         <div class="item item-image">
           <img ng-src="{{sugg.photo}}">

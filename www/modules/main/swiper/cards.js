@@ -58,12 +58,9 @@
 
         $scope.suggestions = peopleSuggestions;
 
-        $scope.suggestionSwipeStart = function() {
-            $scope.useTransition = false;
-        };
-
         $scope.suggestionMoved = function(sugg, deltaX, deltaY) {
             sugg.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
+            $scope.useTransition = false;
             sugg.zIndex = 10;
         };
 
