@@ -1,15 +1,19 @@
 <ion-view view-title="Люди">
-  <ion-content class="padding">
-    <div class="list card" ng-repeat="sugg in suggestions">
+  <ion-content class="padding cards-container" scroll="false">
+    <div class="swiper-view">
+      <div class="list card" ng-repeat="sugg in suggestions track by sugg.name"
+           ng-style="{ transform: sugg.translateStyle, '-webkit-transform': sugg.translateStyle, 'z-index': sugg.zIndex }"
+           swipe-element="suggestionMoveEnd(sugg, deltaX, hDir)" swipe-element-move="suggestionMoved(sugg, deltaX, deltaY)">
 
-      <div class="item item-image">
-        <img ng-src="{{sugg.photo}}">
+        <div class="item item-image">
+          <img ng-src="{{sugg.photo}}">
+        </div>
+
+        <div class="item item-divider">
+          {{sugg.name}}, {{sugg.age}}
+        </div>
+
       </div>
-
-      <div class="item item-divider">
-        {{sugg.name}}, {{sugg.age}}
-      </div>
-
     </div>
   </ion-content>
 </ion-view>

@@ -49,35 +49,28 @@
         };
     }
 
-    swiperController.$inject = ['$scope', 'peopleSuggestions'];
-    function swiperController($scope, peopleSuggestions) {
+    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout'];
+    function swiperController($scope, peopleSuggestions, $timeout) {
         var vm = this;
 
         $scope.hello = 'world';
 
         $scope.suggestions = peopleSuggestions;
 
-        $scope.bitchMoving = function(bitch, deltaX, deltaY) {
-            console.log('moving');
-
-            bitch.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
+        $scope.suggestionMoved = function(sugg, deltaX, deltaY) {
+            sugg.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
+            sugg.zIndex = 10;
         };
 
 
-        $scope.bitchMoved = function(bitch, deltaX, hDir) {
-            if (Math.abs(deltaX) > 50) {
-                if (hDir == 'r') {
-                    approvedBitches.push(bitch);
-                }
+        $scope.suggestionMoveEnd = function(sugg, deltaX, hDir) {
+            if (Math.abs(deltaX) > 100) {
                 $timeout(function() {
-                    vm.bitchesData = vm.bitchesData.slice(0, vm.bitchesData.length - 1);
-                    if (vm.bitchesData.length === 0) {
-                        $state.go('likedBitches');
-                    }
+                    $scope.suggestions = $scope.suggestions.slice(0, $scope.suggestions.length - 1);
                 }, 20);
-                bitch.zIndex = -1;
+                sugg.zIndex = -1;
             }
-            delete bitch.translateStyle;
+            delete sugg.translateStyle;
         };
     }
 

@@ -3,7 +3,7 @@
  */
 (function(angular) {
 
-    angular.module('app.main.swiper', [])
+    angular.module('app.main.swiper', ['angular-swipe-element'])
         .config(swiperConfig);
 
     swiperConfig.$inject = ['$stateProvider'];
