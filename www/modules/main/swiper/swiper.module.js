@@ -13,9 +13,18 @@
             views: {
                 'tab-swiper': {
                     templateUrl: 'modules/main/swiper/swiper.html',
-                    controller: function() {}
+                    controller: 'swiperController',
+                    controllerAs: 'vm',
+                    resolve: {
+                        peopleSuggestions: peopleSuggestionsResolve
+                    }
                 }
             }
         });
+    }
+
+    peopleSuggestionsResolve.$inject = ['accountData'];
+    function peopleSuggestionsResolve(accountData) {
+        return accountData.getPeopleSuggestions();
     }
 })(angular);
