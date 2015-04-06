@@ -75,5 +75,13 @@ $yesGreenColor: #59FA49;
       display: inline-block;
     }
   }
+  &.with-footer {
+    padding-bottom: 35px;
+    .item-footer {
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  }
 }
 
