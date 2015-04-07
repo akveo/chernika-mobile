@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.0.0-rc.2"
   },
   "dependencies": {
-    "angular-swipe-element": "~0.0.2"
+    "angular-swipe-element": "~0.0.2",
+    "devices.css": "*"
   }
 }

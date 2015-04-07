@@ -1,0 +1,74 @@
+@mixin iphone6-mockup($scale: 1) {
+  box-sizing: content-box;
+  position: absolute;
+  bottom:0;
+  left: 50%;
+  $width: 375px * $scale;
+  $paddingLeft: $width/15.625;
+  margin-left: -$width / 2 - $paddingLeft;
+  width: $width;
+  height: $width * 16 / 9;
+  padding: $width/3.57 $paddingLeft;
+  border-radius: $width / 6.7;
+  border: 2px solid #999;
+  &:before {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border: 2px solid #999;
+    border-radius: 100%;
+    $speakerWidth: $width / 5.36;
+    width: $speakerWidth;
+    height: $width / 62.5;
+    left: 50%;
+    margin-left: -$speakerWidth / 2;
+    top: 20px;
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border: 1px solid #999;
+    border-radius: 100%;
+    $buttonWidth: $width / 5.514;
+    width: $buttonWidth;
+    height: $buttonWidth;
+    left: 50%;
+    margin-left: -$buttonWidth / 2;
+    bottom: $width / 17;
+  }
+}
+
+
+.device-mockup {
+  display: block;
+  .mockup-content {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #999;
+    background-position: center;
+    background-size: contain;
+    &.tutorial-1 {
+      background-image: url('../img/tutorial-1.png');
+    }
+    &.tutorial-2 {
+      background-image: url('../img/tutorial-2.png');
+    }
+    &.tutorial-3 {
+      background-image: url('../img/tutorial-3.jpg');
+    }
+    &.tutorial-4 {
+      background-image: url('../img/tutorial-4.jpg');
+    }
+  }
+}
+
+@for $i from 10 through 0 {
+  @media only screen and (min-height:709px - 42px * $i) {
+    .device-mockup {
+      &.iphone6 {
+        @include iphone6-mockup(0.6 - 0.05 * $i);
+      }
+    }
+  }
+}

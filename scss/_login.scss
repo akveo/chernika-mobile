@@ -1,0 +1,53 @@
+$loginPageFooterHeight: 66px;
+.login-page {
+  .has-footer {
+    bottom: $loginPageFooterHeight;
+  }
+  .bar-footer {
+    height: $loginPageFooterHeight;
+  }
+
+  .slider {
+    height: 100%;
+  }
+  .slider-slides {
+    padding-bottom: 25px;
+  }
+  .slider-slide {
+    text-align: center;
+    overflow: hidden;
+  }
+  .slider-pager {
+    bottom: 5px;
+  }
+
+  .device-mockup {
+    display: inline-block;
+  }
+
+}
+
+.login-page-footer {
+  padding: 10px 25px;
+}
+.login-button {
+  border: none;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+  font-size: 18px;
+  border-radius: 2px;
+  -webkit-box-shadow: 2px 2px 3px 0px rgba(50, 50, 50, 0.75);
+  -moz-box-shadow:    2px 2px 3px 0px rgba(50, 50, 50, 0.75);
+  box-shadow:         2px 2px 3px 0px rgba(50, 50, 50, 0.75);
+}
+.login-vk {
+  background-color: #6d8cb0;
+  color: white;
+  &:hover {
+    background-color: #6d8cb0;
+  }
+  &:active {
+    background: #5c7ca1;
+  }
+}

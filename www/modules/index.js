@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'app.main'])
+    angular.module('app', ['ionic', 'app.auth', 'app.main'])
         .config(appConfig)
         .run(appRun);
 
