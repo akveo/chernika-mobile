@@ -5,10 +5,11 @@
   left: 50%;
   $width: 375px * $scale;
   $paddingLeft: $width/15.625;
+  $paddingBottom: $width/3.57;
   margin-left: -$width / 2 - $paddingLeft;
   width: $width;
   height: $width * 16 / 9;
-  padding: $width/3.57 $paddingLeft;
+  padding: $paddingBottom $paddingLeft;
   border-radius: $width / 6.7;
   border: 2px solid #999;
   &:before {
@@ -29,13 +30,23 @@
     position: absolute;
     display: inline-block;
     border: 1px solid #999;
+    left: 50%;
     border-radius: 100%;
     $buttonWidth: $width / 5.514;
     width: $buttonWidth;
     height: $buttonWidth;
-    left: 50%;
     margin-left: -$buttonWidth / 2;
     bottom: $width / 17;
+  }
+
+  &.galaxy:after {
+    $buttonWidth: $width / 4.514;
+    $buttonHeight: $buttonWidth / 4;
+    width: $buttonWidth;
+    height: $buttonHeight;
+    border-radius: $buttonHeight;
+    margin-left: -$buttonWidth / 2;
+    bottom: $paddingBottom / 2 - $buttonHeight / 2;
   }
 }
 
@@ -66,9 +77,7 @@
 @for $i from 10 through 0 {
   @media only screen and (min-height:709px - 42px * $i) {
     .device-mockup {
-      &.iphone6 {
-        @include iphone6-mockup(0.6 - 0.05 * $i);
-      }
+      @include iphone6-mockup(0.6 - 0.05 * $i);
     }
   }
 }

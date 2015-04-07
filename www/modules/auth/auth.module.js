@@ -12,7 +12,8 @@
         $stateProvider
             .state('login', {
                 url: "/login",
-                templateUrl: "modules/auth/login.html"
+                templateUrl: "modules/auth/login.html",
+                controller: 'DeviceLoginController'
             })
     }
 
