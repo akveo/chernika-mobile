@@ -8,9 +8,10 @@
         .config(appConfig)
         .run(appRun);
 
-    appConfig.$inject = ['$urlRouterProvider'];
-    function appConfig($urlRouterProvider) {
-        $urlRouterProvider.otherwise('/main/swiper');
+    appConfig.$inject = ['$urlRouterProvider', '$ionicConfigProvider'];
+    function appConfig($urlRouterProvider, $ionicConfigProvider) {
+        $urlRouterProvider.otherwise('/login');
+        //$ionicConfigProvider.tabs.position('bottom');
     }
 
     appRun.$inject = ['$ionicPlatform'];

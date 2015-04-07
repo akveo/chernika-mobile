@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app.auth', [])
+    angular.module('app.auth', ['app.util'])
         .config(authConfig);
 
     authConfig.$inject = ['$stateProvider'];
