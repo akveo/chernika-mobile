@@ -8,14 +8,25 @@
 
     swiperConfig.$inject = ['$stateProvider'];
     function swiperConfig($stateProvider) {
-        $stateProvider.state('main.matches', {
-            url: '/matches',
-            views: {
-                'tab-matches': {
-                    templateUrl: 'modules/main/matches/matches.html',
-                    controller: 'ChatsController'
+        $stateProvider
+            .state('main.matches', {
+                url: '/matches',
+                views: {
+                    'tab-matches': {
+                        templateUrl: 'modules/main/matches/matches.html',
+                        controller: 'ChatsController'
+                    }
                 }
-            }
-        });
+            })
+            .state('main.match-detail', {
+                url: '/matches/:matchId',
+                views: {
+                    'tab-matches': {
+                        templateUrl: 'modules/main/matches/chat.html',
+                        controller: 'ChatDetailCtrl'
+                    }
+                }
+            })
+        ;
     }
 })(angular);

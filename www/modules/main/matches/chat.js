@@ -5,7 +5,8 @@
 
     angular.module('app.main.matches')
         .factory('Chats', Chats)
-        .controller('ChatsController', ChatsController);
+        .controller('ChatsController', ChatsController)
+        .controller('ChatDetailCtrl', ChatDetailCtrl);
 
     function Chats() {
         var chats = [{
@@ -59,5 +60,10 @@
         $scope.remove = function(chat) {
             Chats.remove(chat);
         }
+    }
+
+    ChatDetailCtrl.$inject = ['$scope', 'Chats', '$stateParams'];
+    function ChatDetailCtrl($scope, Chats, $stateParams) {
+        $scope.chat = Chats.get($stateParams.matchId);
     }
 })(angular);
