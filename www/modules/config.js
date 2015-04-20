@@ -7,7 +7,11 @@
     window.isTesting = true;
 
     angular.module('app')
-        .constant('appConfig', {});
+        .constant('appConfig', {
+            api: {
+                endpoint: 'http://akveo.com/pinder/'
+            }
+        });
 
 
 })(angular);

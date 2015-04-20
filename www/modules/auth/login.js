@@ -6,15 +6,20 @@
         .controller('DeviceLoginController', DeviceLoginController)
         .factory('vkAuthenticator', vkAuthenticator);
 
-    DeviceLoginController.$inject = ['$scope', '$state', 'vkAuthenticator'];
-    function DeviceLoginController($scope, $state, vkAuthenticator) {
+    DeviceLoginController.$inject = ['$scope', '$state', 'vkAuthenticator', 'userApi'];
+    function DeviceLoginController($scope, $state, vkAuthenticator, userApi) {
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.doAuthenticate = function() {
             vkAuthenticator()
                 .then(function(authParams) {
-                    //alert(JSON.stringify(authParams));
+                    return userApi.login(authParams);
+                })
+                .then(function() {
                     $state.go('main.swiper');
+                }, function error(e) {
+                    // TODO: User friendly error
+                    alert('Service temporary unavailable. Please try again later');
                 });
         };
     }
