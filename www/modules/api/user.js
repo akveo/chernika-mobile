@@ -13,7 +13,7 @@
 
         var userEndpoint = appConfig.api.endpoint + 'user';
         this.login = function(params) {
-            return $http.post(userEndpoint)
+            return $http.post(userEndpoint, params);
         };
 
         this.checkLoggedIn = function() {

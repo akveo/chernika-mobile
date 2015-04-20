@@ -4,13 +4,21 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'app.auth', 'app.main'])
+    angular.module('app', ['ionic', 'app.auth', 'app.main', 'app.api'])
         .config(appConfig)
-        .run(appRun);
+        .run(appRun)
+        .controller('SplashController', SplashController);
 
-    appConfig.$inject = ['$urlRouterProvider', '$ionicConfigProvider'];
-    function appConfig($urlRouterProvider, $ionicConfigProvider) {
-        $urlRouterProvider.otherwise('/login');
+    appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicConfigProvider'];
+    function appConfig($urlRouterProvider, $stateProvider, $ionicConfigProvider) {
+        $urlRouterProvider.otherwise('/splash');
+
+        $stateProvider
+            .state('splash', {
+                url: '/splash',
+                template: '<ion-view hide-nav-bar="true"></ion-view>',
+                controller: 'SplashController'
+            });
         //$ionicConfigProvider.tabs.position('bottom');
     }
 
@@ -27,5 +35,15 @@
                 StatusBar.styleDefault();
             }
         });
+    }
+
+    SplashController.$inject = ['userApi', '$state'];
+    function SplashController(userApi, $state) {
+        userApi.checkLoggedIn()
+            .then(function() {
+                $state.go('main.swiper');
+            }, function() {
+                $state.go('login');
+            });
     }
 })(angular);
