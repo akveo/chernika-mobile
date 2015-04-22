@@ -9,7 +9,8 @@
     angular.module('app')
         .constant('appConfig', {
             api: {
-                endpoint: 'http://akveo.com/pinder/'
+                //endpoint: 'http://akveo.com/pinder/'
+                endpoint: '/pinder/'
             }
         });
 

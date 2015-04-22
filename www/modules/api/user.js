@@ -17,7 +17,7 @@
         };
 
         this.checkLoggedIn = function() {
-            return $http.get(userEndpoint);
+            return $http.get(userEndpoint + '/profile');
         };
     }
 
