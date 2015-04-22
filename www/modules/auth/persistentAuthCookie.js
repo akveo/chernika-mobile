@@ -13,9 +13,9 @@
             // optional method
             'request': function(config) {
                 if (config.url.indexOf(appConfig.api.endpoint) === 0) {
-                    var persistentSession = localStorage.getItem('pinderSession');
+                    var persistentSession = localStorage.getItem(appConfig.api.tokenLocalStorageKey);
                     if (persistentSession) {
-                        config.headers['Pinder-Session'] = persistentSession;
+                        config.headers[appConfig.api.accessHeader] = persistentSession;
                     }
                 }
 
@@ -27,15 +27,11 @@
             'response': function(response) {
                 // do something on success
                 if (response.config.url.indexOf(appConfig.api.endpoint) === 0) {
-                    var newSessionValue = response.headers('Pinder-Session');
+                    var newSessionValue = response.headers(appConfig.api.accessHeader);
                     if (newSessionValue) {
-                        localStorage.setItem('pinderSession', newSessionValue);
-                    } else {
-                        localStorage.removeItem('pinderSession');
+                        localStorage.setItem(appConfig.api.tokenLocalStorageKey, newSessionValue);
                     }
-
                 }
-
                 return response;
             }
 
