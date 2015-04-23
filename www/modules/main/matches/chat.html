@@ -25,6 +25,6 @@
         <label class="item-input-wrapper">
             <input type="text" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage" on-focus="inputUp()" on-blur="inputDown()" />
         </label>
-        <button class="button button-clear ion-play" ng-click="sendMessage()"></button>
+        <button class="button button-clear ion-play" ng-click="sendMessage()" ng-disabled="!activeMessage"></button>
     </ion-footer-bar>
 </ion-view>
