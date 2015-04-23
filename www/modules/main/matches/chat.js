@@ -121,16 +121,21 @@
         });
 
         $scope.sendMessage = function() {
-            $scope.messages.push({
+            var newMessage = {
                 messageId: new Date().getTime(),
                 isYour: true,
                 content: $scope.activeMessage,
-                date: new Date().getTime()
-            });
+                date: new Date().getTime(),
+                isSending: true
+            };
+            $scope.messages.push(newMessage);
             delete $scope.activeMessage;
             $timeout(function() {
                 $ionicScrollDelegate.scrollBottom(true);
             });
+            $timeout(function() {
+                delete newMessage.isSending;
+            }, 1000);
         };
     }
 })(angular);

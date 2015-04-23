@@ -3,6 +3,9 @@ $inMessageBgColor: tint($balanced, 80%);
 $outMessageBgColor: tint($positive, 80%);
 $anchorWidth: 7px;
 .card {
+  &.sending {
+    opacity: 0.5;
+  }
   &.out-message {
     position: relative;
     overflow: visible;
