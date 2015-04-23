@@ -1,0 +1,71 @@
+$messageMargin: 15%;
+$inMessageBgColor: tint($balanced, 80%);
+$outMessageBgColor: tint($positive, 80%);
+$anchorWidth: 7px;
+.card {
+  &.out-message {
+    position: relative;
+    overflow: visible;
+    margin-left: $messageMargin;
+    background-color: $inMessageBgColor;
+    .item {
+      background-color: $inMessageBgColor;
+    }
+
+    &:after {
+      display: inline-block;
+      position: absolute;
+      right: -$anchorWidth;
+      top: 50%;
+      margin-top: -$anchorWidth;
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: $anchorWidth 0 $anchorWidth $anchorWidth;
+      border-color: transparent transparent transparent $inMessageBgColor;
+    }
+  }
+  &.in-message {
+    position: relative;
+    overflow: visible;
+    margin-right: $messageMargin;
+    background-color: $outMessageBgColor;
+    .item {
+      background-color: $outMessageBgColor;
+    }
+
+    &:before {
+      display: inline-block;
+      position: absolute;
+      left: -$anchorWidth;
+      top: 50%;
+      margin-top: -$anchorWidth;
+      content: '';
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: $anchorWidth $anchorWidth $anchorWidth 0;
+      border-color: transparent $outMessageBgColor transparent transparent;
+    }
+  }
+}
+
+.msg-header {
+  font-size: 14px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  min-height: 22px;
+  .name {
+    font-weight: 700;
+  }
+  .time {
+    float: right;
+  }
+}
+
+.msg-content {
+  padding-top: 0;
+  padding-bottom: 6px;
+  border-top: none;
+}

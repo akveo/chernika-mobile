@@ -62,8 +62,75 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', 'Chats', '$stateParams'];
-    function ChatDetailCtrl($scope, Chats, $stateParams) {
+    ChatDetailCtrl.$inject = ['$scope', 'Chats', '$stateParams', '$ionicScrollDelegate', '$timeout'];
+    function ChatDetailCtrl($scope, Chats, $stateParams, $ionicScrollDelegate, $timeout) {
         $scope.chat = Chats.get($stateParams.matchId);
+        $scope.messages = [
+            {
+                messageId: '1',
+                isYour: true,
+                content: 'Привет',
+                date: 1429808558000
+            },
+            {
+                messageId: '2',
+                isYour: false,
+                content: 'привет',
+                date: 1429808603000
+            },
+            {
+                messageId: '3',
+                isYour: true,
+                content: 'Хочешь я тебя пикапну?',
+                date: 1429808611000
+            },
+            {
+                messageId: '4',
+                isYour: false,
+                content: 'Давай',
+                date: 1429808621000
+            },
+            {
+                messageId: '5',
+                isYour: false,
+                content: 'пикапай',
+                date: 1429808650000
+            },
+            {
+                messageId: '6',
+                isYour: true,
+                content: 'Где встречаемся?',
+                date: 1429808691000
+            },
+            {
+                messageId: '7',
+                isYour: false,
+                content: 'На улке',
+                date: 1429808811000
+            },
+            {
+                messageId: '8',
+                isYour: false,
+                content: 'Захвати пивас',
+                date: 1429811009000
+            }
+        ];
+
+        $scope.$on('$ionicView.beforeEnter', function(){
+            $ionicScrollDelegate.scrollBottom();
+        });
+
+        $scope.sendMessage = function() {
+            $scope.messages.push({
+                messageId: new Date().getTime(),
+                isYour: true,
+                content: $scope.activeMessage,
+                date: new Date().getTime()
+            });
+            delete $scope.activeMessage;
+            $timeout(function() {
+                $ionicScrollDelegate.scrollBottom(true);
+            });
+        };
     }
 })(angular);
