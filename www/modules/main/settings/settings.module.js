@@ -13,9 +13,17 @@
             views: {
                 'tab-settings': {
                     templateUrl: 'modules/main/settings/settings.html',
-                    controller: 'AccountCtrl'
+                    controller: 'AccountCtrl',
+                    resolve: {
+                        currentSettings: currentSettingsResolve
+                    }
                 }
             }
         });
+    }
+
+    currentSettingsResolve.$inject = ['userApi'];
+    function currentSettingsResolve(userApi) {
+        return userApi.getSettings();
     }
 })(angular);

@@ -4,12 +4,57 @@
 (function(angular) {
 
     angular.module('app.main.settings')
-        .controller('AccountCtrl', AccountCtrl);
+        .controller('AccountCtrl', AccountCtrl)
+        .service('settingsTimeoutSaver', settingsTimeoutSaver)
+        .filter('agePlus', agePlus);
 
-    AccountCtrl.$inject = ['$scope'];
-    function AccountCtrl($scope) {
-        $scope.settings = {
-            enableFriends: true
+    AccountCtrl.$inject = ['$scope', 'appConfig', 'settingsTimeoutSaver', 'currentSettings'];
+    function AccountCtrl($scope, appConfig, settingsTimeoutSaver, currentSettings) {
+        console.log(currentSettings);
+        $scope.settings = angular.extend({
+            enableDiscovery: true,
+            distance: 100,
+            minAge: 18,
+            maxAge: 34,
+            show: 2 //Female
+        }, currentSettings);
+
+        $scope.$watch('settings', function(newValue, oldValue) {
+            if (!angular.equals(newValue, oldValue)) {
+                settingsTimeoutSaver.saveSettings(newValue);
+            }
+        }, true);
+
+        $scope.$watch('settings.minAge', function(newValue, oldValue) {
+            if ($scope.settings.maxAge - newValue < appConfig.settings.agesMinDistance) {
+                $scope.settings.minAge = $scope.settings.maxAge - appConfig.settings.agesMinDistance;
+            }
+        });
+
+        $scope.$watch('settings.maxAge', function(newValue, oldValue) {
+            if (newValue - $scope.settings.minAge < appConfig.settings.agesMinDistance) {
+                $scope.settings.maxAge = $scope.settings.minAge + appConfig.settings.agesMinDistance;
+            }
+        });
+    }
+
+    settingsTimeoutSaver.$inject = ['$timeout', 'userApi'];
+    function settingsTimeoutSaver($timeout, userApi) {
+        var lastChangeTooRecent = 0;
+        this.saveSettings = function(settingsObject) {
+            var settingsCopy = angular.copy(settingsObject);
+            lastChangeTooRecent++;
+            $timeout(function() {
+                if (!--lastChangeTooRecent) {
+                    userApi.saveSettings(settingsCopy);
+                }
+            }, 500);
+        };
+    }
+
+    function agePlus() {
+        return function(input) {
+            return input == 55 ? '55+' : input;
         };
     }
 

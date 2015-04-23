@@ -13,6 +13,9 @@
                 endpoint: '/pinder/',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
+            },
+            settings: {
+                agesMinDistance: 4
             }
         });
 

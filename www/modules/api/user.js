@@ -15,9 +15,17 @@
         this.login = function(params) {
             return $http.post(userEndpoint, params);
         };
-
         this.checkLoggedIn = function() {
             return $http.get(userEndpoint);
+        };
+
+        var settingsEndpoint = userEndpoint + '/profile';
+        this.getSettings = function() {
+            return $http.get(settingsEndpoint).then(function(res) { return res.data; });
+        };
+
+        this.saveSettings = function(settings) {
+            return $http.put(settingsEndpoint, settings);
         };
     }
 

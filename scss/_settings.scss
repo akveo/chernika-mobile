@@ -1,0 +1,23 @@
+.item.description {
+  overflow: auto;
+  white-space: normal;
+  text-align: justify;
+  &:after {
+    width:100%;
+    height:0;
+    display: inline-block;
+    content: " __________________________________________________________";
+    line-height: 0;
+    visibility: hidden
+  }
+}
+
+.top-label {
+  display: inline-block;
+}
+
+.distance-label {
+  display: inline-block;
+  float: right;
+  font-weight: 700;
+}
