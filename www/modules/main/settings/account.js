@@ -33,7 +33,7 @@
 
         $scope.$watch('settings.maxAge', function(newValue, oldValue) {
             if (newValue - $scope.settings.minAge < appConfig.settings.agesMinDistance) {
-                $scope.settings.maxAge = $scope.settings.minAge + appConfig.settings.agesMinDistance;
+                $scope.settings.maxAge = appConfig.settings.agesMinDistance + parseInt($scope.settings.minAge);
             }
         });
     }
