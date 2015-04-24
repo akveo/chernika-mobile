@@ -21,26 +21,31 @@
             getPeopleSuggestions: function() {
                 return $q.when([
                     {
+                        id: '1',
                         name: 'Asa',
                         age: 29,
                         photo: 'img/fake/asa.jpg'
                     },
                     {
+                        id: '2',
                         name: 'Leanna',
                         age: 42,
                         photo: 'img/fake/leanna.jpg'
                     },
                     {
+                        id: '5',
                         name: 'Esperanza',
                         age: 31,
                         photo: 'img/fake/esperanza.jpg'
                     },
                     {
+                        id: '3',
                         name: 'Gianna',
                         age: 31,
                         photo: 'img/fake/gianna.jpg'
                     },
                     {
+                        id: '4',
                         name: 'Sasha',
                         age: 27,
                         photo: 'img/fake/sasha.jpg'
@@ -63,8 +68,8 @@
         }
     }
 
-    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout'];
-    function swiperController($scope, peopleSuggestions, $timeout) {
+    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate'];
+    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate) {
 
         $scope.cards = peopleSuggestions;
 
@@ -76,7 +81,17 @@
             var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
             newCard.id = Math.random();
             $scope.cards.push(angular.extend({}, newCard));
-        }
+        };
+
+        $scope.dislikeFirst = function() {
+            $scope.cards.splice(0, 1);
+            //debugger;
+            //var swipeCard = TDCardDelegate.getSwipeableCard($scope);
+        };
+
+        $scope.likeFirst = function() {
+
+        };
     }
 
     CardCtrl.$inject = ['$scope'];
