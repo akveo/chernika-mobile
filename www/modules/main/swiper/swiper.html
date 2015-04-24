@@ -2,17 +2,17 @@
   <ion-content class="padding cards-container" scroll="false">
     <div class="swiper-view">
       <td-cards>
-        <td-card ng-repeat="card in cards track by card.id" on-destroy="cardDestroyed($index)"
+        <td-card ng-repeat="card in cards track by card.obj._id" on-destroy="cardDestroyed($index)"
                  on-swipe-left="cardSwipedLeft($index)"
                  on-swipe-right="cardSwipedRight($index)"
                  on-partial-swipe="cardPartialSwipe(amt)" class="list card with-footer card-{{$index}}">
           <div class="item image card-content" ng-controller="CardCtrl">
             <div class="no-text">Нет</div>
-            <div class="photo-container" ng-style="{ 'background-image': 'url(\'' + card.photo +'\')' }"></div>
+            <div class="photo-container" ng-style="{ 'background-image': 'url(\'' + card.obj.photo +'\')' }"></div>
             <div class="yes-text">Да</div>
           </div>
           <div class="item item-divider item-footer">
-            {{card.name}}, {{card.age}}
+            {{card.obj.firstName}}, {{card.obj.age}}
           </div>
         </td-card>
       </td-cards>

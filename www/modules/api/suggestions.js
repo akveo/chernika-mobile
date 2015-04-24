@@ -15,10 +15,10 @@
         this.getSuggestions = function(lat, lon) {
             return $http.get(suggestionsEndpoint, {
                 params: {
-                    lat: lat,
-                    lon: lon
+                    lon: lon,
+                    lat: lat
                 }
-            }).then(function(res) { return JSON.parse(JSON.stringify(photoStubs)); });
+            }).then(function(res) { return res.data; });
         };
 
         this.likeProfile = function(profileId) {
