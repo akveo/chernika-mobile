@@ -19,7 +19,7 @@
             return $http.get(userEndpoint);
         };
 
-        var settingsEndpoint = userEndpoint + '/profile';
+        var settingsEndpoint = userEndpoint + '/settings';
         this.getSettings = function() {
             return $http.get(settingsEndpoint).then(function(res) { return res.data; });
         };
