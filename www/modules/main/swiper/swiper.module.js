@@ -3,7 +3,7 @@
  */
 (function(angular) {
 
-    angular.module('app.main.swiper', ['angular-swipe-element'])
+    angular.module('app.main.swiper', ['angular-swipe-element', 'ionic.contrib.ui.tinderCards'])
         .config(swiperConfig);
 
     swiperConfig.$inject = ['$stateProvider'];

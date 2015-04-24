@@ -1,32 +1,32 @@
+$swiperControlsHeight: 60px;
+.swiper-tab {
+  .has-footer.has-tabs {
+    bottom: $tabs-height + $swiperControlsHeight;
+  }
+  .bar-footer {
+    height: $swiperControlsHeight;
+  }
+}
+
 .swiper-view {
   width: 100%;
   height: 100%;
   position: relative;
   .card {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80%;
     position: absolute;
-    @for $i from 1 through 3 {
-      &:nth-child(#{$i}) {
-        @include translate3d(0, ($i - 1) * 5px);
-        z-index: 5 -$i;
-      }
-    }
-    &:nth-child(4) {
-      @include translate3d(0, 15px);
-      z-index: 1;
-    }
-    &:nth-child(n + 5) {
-      @include translate3d(0, 15px);
-      z-index: 0;
-    }
+    left: 50%;
+    top: 50%;
+    margin-top: -150px;
+    margin-left: -150px;
+    width: 300px;
+    height: 300px;
 
-
-    &.useTransition {
-      -webkit-transition: -webkit-transform 0.2s ease-out;
-      transition: transform 0.2s ease-out;
+    border: 1px solid #999;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
+    border-radius: 6px;
+    .td-card {
+      width: 100%;
+      height: 100%;
     }
   }
 }
@@ -35,41 +35,6 @@
 $noRedColor: #cb0000;
 $yesGreenColor: #59FA49;
 .card {
-  .like-indicator {
-    position: absolute;
-    opacity: 0;
-    display: none;
-
-    z-index: 10;
-    top:25px;
-    border-radius: 10px;
-    font-weight: bold;
-    width: 100px;
-    height: 50px;
-    line-height: 42px;
-    font-size: 35px;
-    text-align: center;
-
-    &.yes {
-      left: 10px;
-      -webkit-transform: rotate(-30deg);
-      transform: rotate(-30deg);
-      color: $yesGreenColor;
-      border: 4px solid $yesGreenColor;
-    }
-    &.no {
-      right: 10px;
-      -webkit-transform: rotate(30deg);
-      transform: rotate(30deg);
-      color: $noRedColor;
-      border: 4px solid $noRedColor;
-    }
-  }
-  &:first-child {
-    .like-indicator {
-      display: inline-block;
-    }
-  }
   &.with-footer {
     padding-bottom: 35px;
     .item-footer {
@@ -78,5 +43,95 @@ $yesGreenColor: #59FA49;
       bottom: 0;
     }
   }
+}
+
+.controls-container {
+  text-align: center;
+  width: 100%;
+  .button {
+    border-radius: 50%;
+    border-width: 5px;
+    border-color: $stable;
+    padding: 0 10px;
+    min-height: 50px;
+    &:before, &:after {
+      font-size: 24px!important;
+    }
+  }
+}
+
+.dislike-button {
+  color: $dark!important;
+}
+
+.like-button {
+  color: $assertive!important;
+}
+
+td-cards {
+  display: block;
+}
+
+/*
+td-card.card-0 {
+  -webkit-transform: translate3d(0, 0px, 0);
+  transform: translate3d(0, 0px, 0);
+  top: 0px;
+  z-index: 10;
+}
+td-card.card-1 {
+  -webkit-transform: translate3d(0, 4px, 0);
+  transform: translate3d(0, 4px, 0);
+  z-index: 9;
+}
+td-card.card-2 {
+  -webkit-transform: translate3d(0, 8px, 0);
+  transform: translate3d(0, 8px, 0);
+  z-index: 8;
+}
+*/
+
+td-card .image {
+  position: relative;
+}
+
+td-card img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.yes-text, .no-text {
+  position: absolute;
+  opacity: 0;
+  z-index: 10;
+  top:25px;
+  border-radius: 10px;
+  font-weight: bold;
+  width: 100px;
+  height: 50px;
+  line-height: 42px;
+  font-size: 35px;
+  text-align: center;
+}
+
+.yes-text {
+  left: 10px;
+  -webkit-transform: rotate(-30deg);
+  transform: rotate(-30deg);
+  color: $yesGreenColor;
+  border: 4px solid $yesGreenColor;
+}
+.no-text {
+  right: 10px;
+  -webkit-transform: rotate(30deg);
+  transform: rotate(30deg);
+  color: $noRedColor;
+  border: 4px solid $noRedColor;
+}
+
+.fade {
+  -webkit-transition: 0.2s opacity linear;
+  transition: 0.2s opacity linear;
+  opacity: 0;
 }
 

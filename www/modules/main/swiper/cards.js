@@ -5,7 +5,8 @@
 
     angular.module('app.main.swiper')
         .factory('accountData', !isTesting ? accountData : accountDataFake)
-        .controller('swiperController', swiperController);
+        .controller('swiperController', swiperController)
+        .controller('CardCtrl', CardCtrl);
 
     accountData.$inject = [];
     function accountData() {
@@ -64,33 +65,29 @@
 
     swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout'];
     function swiperController($scope, peopleSuggestions, $timeout) {
-        var vm = this;
 
-        $scope.hello = 'world';
-        $scope.useTransition = true;
+        $scope.cards = peopleSuggestions;
 
-        $scope.suggestions = peopleSuggestions;
-
-        $scope.suggestionMoved = function(sugg, deltaX, deltaY) {
-            sugg.translateStyle = 'translate3d(' + deltaX + 'px,' + deltaY + 'px, 0)';
-            $scope.useTransition = false;
-            sugg.yesOpacity = calculateOpacity(deltaX, 1);
-            sugg.noOpacity = calculateOpacity(deltaX, -1);
+        $scope.cardDestroyed = function(index) {
+            $scope.cards.splice(index, 1);
         };
 
+        $scope.addCard = function() {
+            var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
+            newCard.id = Math.random();
+            $scope.cards.push(angular.extend({}, newCard));
+        }
+    }
 
-        $scope.suggestionMoveEnd = function(sugg, deltaX, hDir) {
-            $scope.useTransition = true;
-            $timeout(function() {
-                if (Math.abs(deltaX) > OFFSET_TO_SWIPE_ACCEPT) {
-                    $scope.suggestions = $scope.suggestions.slice(1, $scope.suggestions.length);
-                } else {
-                    delete sugg.translateStyle;
-                    delete sugg.yesOpacity;
-                    delete sugg.noOpacity;
-                }
-            }, 20);
-
+    CardCtrl.$inject = ['$scope'];
+    function CardCtrl($scope) {
+        $scope.cardSwipedLeft = function(index) {
+            console.log('LEFT SWIPE');
+            $scope.addCard();
+        };
+        $scope.cardSwipedRight = function(index) {
+            console.log('RIGHT SWIPE');
+            $scope.addCard();
         };
     }
 
