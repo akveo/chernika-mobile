@@ -65,11 +65,11 @@
 
         };
         $scope.cardSwipedLeft = function(index) {
-            suggestionsApi.dislikeProfile($scope.cards[index].id);
+            suggestionsApi.dislikeProfile($scope.cards[index].obj._id);
             $scope.addCard();
         };
         $scope.cardSwipedRight = function(index) {
-            suggestionsApi.likeProfile($scope.cards[index].id)
+            suggestionsApi.likeProfile($scope.cards[index].obj._id)
                 .then(function(data) {
                     if (data.isMatched) {
                         alert('matched');
