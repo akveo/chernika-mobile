@@ -19,38 +19,7 @@
     function accountDataFake($q) {
         return {
             getPeopleSuggestions: function() {
-                return $q.when([
-                    {
-                        id: '1',
-                        name: 'Asa',
-                        age: 29,
-                        photo: 'img/fake/asa.jpg'
-                    },
-                    {
-                        id: '2',
-                        name: 'Leanna',
-                        age: 42,
-                        photo: 'img/fake/leanna.jpg'
-                    },
-                    {
-                        id: '5',
-                        name: 'Esperanza',
-                        age: 31,
-                        photo: 'img/fake/esperanza.jpg'
-                    },
-                    {
-                        id: '3',
-                        name: 'Gianna',
-                        age: 31,
-                        photo: 'img/fake/gianna.jpg'
-                    },
-                    {
-                        id: '4',
-                        name: 'Sasha',
-                        age: 27,
-                        photo: 'img/fake/sasha.jpg'
-                    }
-                ]);
+                return $q.when();
             }
         };
     }

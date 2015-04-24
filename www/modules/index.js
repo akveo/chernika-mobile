@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'app.auth', 'app.main', 'app.api'])
+    angular.module('app', ['ionic', 'ngCordova', 'app.auth', 'app.main', 'app.api'])
         .config(appConfig)
         .run(appRun)
         .controller('SplashController', SplashController);

@@ -23,8 +23,14 @@
         });
     }
 
-    peopleSuggestionsResolve.$inject = ['accountData'];
-    function peopleSuggestionsResolve(accountData) {
-        return accountData.getPeopleSuggestions();
+    peopleSuggestionsResolve.$inject = ['suggestionsApi', '$cordovaGeolocation'];
+    function peopleSuggestionsResolve(suggestionsApi, $cordovaGeolocation) {
+        return $cordovaGeolocation
+            .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+            .then(function(position) {
+                return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
+            }, function() {
+                // TODO: Error handling
+            });
     }
 })(angular);
