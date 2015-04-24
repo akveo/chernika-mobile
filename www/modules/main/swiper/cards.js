@@ -37,19 +37,22 @@
         }
     }
 
-    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate'];
-    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate) {
+    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi'];
+    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi) {
 
-        $scope.cards = peopleSuggestions;
+        var cardTypes = peopleSuggestions;
+
+        $scope.cards = cardTypes.splice(0, 3);
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
         };
 
         $scope.addCard = function() {
-            var newCard = cardTypes[Math.floor(Math.random() * cardTypes.length)];
-            newCard.id = Math.random();
-            $scope.cards.push(angular.extend({}, newCard));
+            if (cardTypes.length) {
+                $scope.cards.push(cardTypes[0]);
+                cardTypes.splice(0, 1);
+            }
         };
 
         $scope.dislikeFirst = function() {
@@ -61,18 +64,24 @@
         $scope.likeFirst = function() {
 
         };
+        $scope.cardSwipedLeft = function(index) {
+            suggestionsApi.dislikeProfile($scope.cards[index].id);
+            $scope.addCard();
+        };
+        $scope.cardSwipedRight = function(index) {
+            suggestionsApi.likeProfile($scope.cards[index].id)
+                .then(function(data) {
+                    if (data.isMatched) {
+                        alert('matched');
+                    }
+                });
+            $scope.addCard();
+        };
     }
 
     CardCtrl.$inject = ['$scope'];
     function CardCtrl($scope) {
-        $scope.cardSwipedLeft = function(index) {
-            console.log('LEFT SWIPE');
-            $scope.addCard();
-        };
-        $scope.cardSwipedRight = function(index) {
-            console.log('RIGHT SWIPE');
-            $scope.addCard();
-        };
+
     }
 
 })(angular);

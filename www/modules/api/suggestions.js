@@ -18,7 +18,19 @@
                     lat: lat,
                     lon: lon
                 }
-            }).then(function(res) { return photoStubs; })
+            }).then(function(res) { return JSON.parse(JSON.stringify(photoStubs)); });
+        };
+
+        this.likeProfile = function(profileId) {
+            return $http.post(suggestionsEndpoint + '/like', {
+                targetId: profileId
+            }).then(function(res) { return res.data; });
+        };
+
+        this.dislikeProfile = function(profileId) {
+            return $http.post(suggestionsEndpoint + '/dislike', {
+                targetId: profileId
+            });
         };
 
     }
