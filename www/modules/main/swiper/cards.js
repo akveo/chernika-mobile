@@ -42,7 +42,7 @@
 
         var cardTypes = peopleSuggestions;
 
-        $scope.cards = cardTypes.splice(0, 3);
+        $scope.cards = cardTypes.splice(0, 6);
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
