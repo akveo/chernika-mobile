@@ -1,4 +1,5 @@
-$swiperControlsHeight: 60px;
+$swiperControlsHeight: 80px;
+$swiperControlsBorder: 5px;
 .swiper-tab {
   .has-footer.has-tabs {
     bottom: $tabs-height + $swiperControlsHeight;
@@ -6,6 +7,10 @@ $swiperControlsHeight: 60px;
   .bar-footer {
     height: $swiperControlsHeight;
   }
+}
+
+.cards-container {
+  overflow: visible;
 }
 
 .swiper-view {
@@ -50,22 +55,22 @@ $yesGreenColor: #59FA49;
   width: 100%;
   .button {
     border-radius: 50%;
-    border-width: 5px;
+    border-width: $swiperControlsBorder;
     border-color: $stable;
-    padding: 0 10px;
-    min-height: 50px;
+    padding: 0 15px;
+    min-height: $swiperControlsHeight - $swiperControlsBorder * 2;
     &:before, &:after {
-      font-size: 24px!important;
+      font-size: 34px!important;
     }
   }
 }
 
 .dislike-button {
-  color: $dark!important;
+  color: $assertive!important;
 }
 
 .like-button {
-  color: $assertive!important;
+  color: $balanced!important;
 }
 
 td-cards {
