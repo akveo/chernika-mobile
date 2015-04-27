@@ -56,13 +56,11 @@
         };
 
         $scope.dislikeFirst = function() {
-            $scope.cards.splice(0, 1);
-            //debugger;
-            //var swipeCard = TDCardDelegate.getSwipeableCard($scope);
+            $scope.cards[0].programmaticalSwipe(true);
         };
 
         $scope.likeFirst = function() {
-
+            $scope.cards[0].programmaticalSwipe(false);
         };
         $scope.cardSwipedLeft = function(index) {
             suggestionsApi.dislikeProfile($scope.cards[index].obj._id);
