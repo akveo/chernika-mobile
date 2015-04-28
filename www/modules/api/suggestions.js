@@ -7,8 +7,8 @@
     angular.module('app.api')
         .service('suggestionsApi', suggestionsApi);
 
-    suggestionsApi.$inject = ['$http', 'appConfig', '$cordovaGeolocation'];
-    function suggestionsApi($http, appConfig, $cordovaGeolocation) {
+    suggestionsApi.$inject = ['$http', 'appConfig', 'appUtilities'];
+    function suggestionsApi($http, appConfig, appUtilities) {
 
         var suggestionsEndpoint =  appConfig.api.endpoint + 'suggestions';
 
@@ -19,7 +19,14 @@
                     lat: lat
                 }
             }).then(function(res) {
-                return res.data.concat(res.data.map(function(item) { var item = JSON.parse(JSON.stringify(item)); item.obj._id += 'abs'; return item; }));
+                return res.data.concat(
+                    res.data.map(function(item) {
+                        item.obj.age = item.obj.bdate && appUtilities.getCurrentAge(appUtilities.parseVkDate(item.obj.bdate));
+                        var item = JSON.parse(JSON.stringify(item));
+                        item.obj._id += 'abs';
+                        return item;
+                    })
+                );
             });
         };
 
