@@ -1,0 +1,12 @@
+<ion-view view-title="{{profileDetails.firstName}}">
+    <ion-content scroll="false" class="profile-details">
+        <ion-slide-box show-pager="true">
+            <ion-slide class="" ng-repeat="photo in profileDetails.photos">
+                <div cropped-image="photo" target-width="screenWidth"></div>
+            </ion-slide>
+        </ion-slide-box>
+        <div class="padding">
+            <h2 class="dark" ng-bind="profileDetails.firstName"></h2>
+        </div>
+    </ion-content>
+</ion-view>

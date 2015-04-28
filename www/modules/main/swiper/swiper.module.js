@@ -8,19 +8,33 @@
 
     swiperConfig.$inject = ['$stateProvider'];
     function swiperConfig($stateProvider) {
-        $stateProvider.state('main.swiper', {
-            url: '/swiper',
-            views: {
-                'tab-swiper': {
-                    templateUrl: 'modules/main/swiper/swiper.html',
-                    controller: 'swiperController',
-                    controllerAs: 'vm',
-                    resolve: {
-                        peopleSuggestions: peopleSuggestionsResolve
+        $stateProvider
+            .state('main.swiper', {
+                url: '/swiper',
+                views: {
+                    'tab-swiper': {
+                        templateUrl: 'modules/main/swiper/swiper.html',
+                        controller: 'swiperController',
+                        controllerAs: 'vm',
+                        resolve: {
+                            peopleSuggestions: peopleSuggestionsResolve
+                        }
                     }
                 }
-            }
-        });
+            })
+            .state('main.profile-detail', {
+                url: '/swiper/:profileId',
+                views: {
+                    'tab-swiper': {
+                        templateUrl: 'modules/main/swiper/profileDetails.html',
+                        controller: 'profileDetailsCtrl',
+                        controllerAs: 'vm',
+                        resolve: {
+                            profileDetails: profileDetailsResolve
+                        }
+                    }
+                }
+            });
     }
 
     peopleSuggestionsResolve.$inject = ['suggestionsApi', '$cordovaGeolocation'];
@@ -32,5 +46,10 @@
             }, function() {
                 // TODO: Error handling
             });
+    }
+
+    profileDetailsResolve.$inject = ['profilesApi', '$stateParams'];
+    function profileDetailsResolve(profilesApi, $stateParams) {
+        return profilesApi.getProfileData($stateParams.profileId);
     }
 })(angular);

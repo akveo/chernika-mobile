@@ -14,6 +14,10 @@
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },
+            cropFactor: {
+                width: 298,
+                height: 261
+            },
             settings: {
                 agesMinDistance: 4
             }

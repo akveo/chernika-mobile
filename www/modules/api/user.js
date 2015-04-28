@@ -5,7 +5,8 @@
     'use strict';
 
     angular.module('app.api')
-        .service('userApi', userApi);
+        .service('userApi', userApi)
+        .service('profilesApi', profilesApi);
 
 
     userApi.$inject = ['$http', 'appConfig'];
@@ -19,6 +20,15 @@
             return $http.get(userEndpoint);
         };
 
+        this.getPhotos = function() {
+            return $http.get(userEndpoint + '/photos', {
+                params: {
+                    lon: lon,
+                    lat: lat
+                }
+            })
+        };
+
         var settingsEndpoint = userEndpoint + '/settings';
         this.getSettings = function() {
             return $http.get(settingsEndpoint).then(function(res) { return res.data; });
@@ -26,6 +36,14 @@
 
         this.saveSettings = function(settings) {
             return $http.put(settingsEndpoint, settings);
+        };
+    }
+
+    profilesApi.$inject = ['$http', 'appConfig'];
+    function profilesApi($http, appConfig) {
+        var profileEndpoint = appConfig.api.endpoint + 'profile';
+        this.getProfileData = function(profileId) {
+            return $http.get(profileEndpoint + '/' + profileId).then(function(res) { return res.data; });
         };
     }
 

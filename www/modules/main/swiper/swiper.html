@@ -11,7 +11,7 @@
                  class="list card with-footer card-{{$index}}">
           <div class="item image card-content" ng-controller="CardCtrl">
             <div class="no-text">Нет</div>
-            <div class="photo-container" ng-style="{ 'background-image': 'url(\'' + card.obj.photo +'\')' }"></div>
+            <a class="photo-container" ng-style="{ 'background-image': 'url(\'' + card.obj.photo +'\')' }" href="#/main/swiper/{{card.obj.id}}"></a>
             <div class="yes-text">Да</div>
           </div>
           <div class="item item-divider item-footer">
