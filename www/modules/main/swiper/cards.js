@@ -37,8 +37,8 @@
         }
     }
 
-    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi', 'userProfile'];
-    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi, userProfile) {
+    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi', 'userProfile', 'blurredModal'];
+    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi, userProfile, blurredModal) {
 
         $scope.userProfile = userProfile;
 
@@ -69,11 +69,21 @@
             $scope.addCard();
         };
         $scope.cardSwipedRight = function(index) {
-            suggestionsApi.likeProfile($scope.cards[index].obj._id)
+            var matchingProfile = $scope.cards[index].obj;
+            suggestionsApi.likeProfile(matchingProfile._id)
                 .then(function(data) {
                     if (data.isMatched) {
                         alert('matched');
                     }
+                }, function() {
+                    var newScope = $scope.$new();
+                    newScope.matchingProfile = matchingProfile;
+                    blurredModal.fromTemplateUrl('modules/main/swiper/newMatch.html', {
+                        scope: newScope,
+                        animation: 'slide-in-up'
+                    }).then(function(modal) {
+                        modal.show();
+                    });
                 });
             $scope.addCard();
         };

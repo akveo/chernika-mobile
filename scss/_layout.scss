@@ -1,0 +1,20 @@
+body.blurred {
+  > ion-nav-bar > *, ion-nav-view {
+    -webkit-filter: blur(10px);
+    filter: blur(10px);
+  }
+}
+
+.rounded-image {
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.table {
+  display: table;
+}
+
+.table-cell {
+  display: table-cell;
+  vertical-align: middle;
+}

@@ -1,0 +1,36 @@
+<ion-modal-view class="match-modal">
+    <ion-content scroll="false">
+        <div class="table">
+            <div class="table-cell">
+                <div class="row">
+                    <div class="col">
+                        <h1>Это взаимно!</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <h5>Вы и {{matchingProfile.firstName}} понравились друг другу</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="rounded-image" cropped-image="matchingProfile.photo" target-width="100"></div>
+                    </div>
+                    <div class="col">
+                        <div class="rounded-image" cropped-image="userProfile.photo" target-width="100"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a class="button button-block button-outline button-light" href="#/main/matches/{{matchingProfile._id}}" ng-click="$closeModal()"><i class="icon ion-chatbox"></i>&nbsp;Написать Сообщение</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <a class="button button-block button-outline button-light" ng-click="$closeModal()"><i class="icon ion-ios-person"></i>&nbsp;Продолжить просмотр</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

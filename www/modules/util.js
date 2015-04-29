@@ -5,6 +5,7 @@
     angular.module('app.util', [])
         .service('appUtilities', appUtilities)
         .directive('croppedImage', croppedImage)
+        .service('blurredModal', blurredModal)
         .filter('ageFromVkDate', ageFromVkDate);
 
     function appUtilities() {
@@ -63,6 +64,34 @@
             var birthDate = input && appUtilities.parseVkDate(input);
             return birthDate && appUtilities.getCurrentAge(birthDate);
 
+        };
+    }
+
+    blurredModal.$inject = ['$ionicModal', '$rootScope'];
+    function blurredModal($ionicModal, $rootScope) {
+
+        function bindScopeLifecycleEvents(childScope, modal) {
+            childScope.$parent.$on('$destroy', function() {
+                modal.remove();
+            });
+            childScope.$on('modal.shown', function() {
+                $rootScope.$contentBlurred = true;
+            });
+            childScope.$on('modal.hidden', function() {
+                $rootScope.$contentBlurred = false;
+            });
+            childScope.$closeModal = function() {
+                $rootScope.$contentBlurred = false;
+                modal.remove();
+            };
+        }
+
+        this.fromTemplateUrl = function(templateUrl, options) {
+            return $ionicModal.fromTemplateUrl(templateUrl, options)
+                .then(function(modal) {
+                    bindScopeLifecycleEvents(options.scope, modal);
+                    return modal;
+                });
         };
     }
 })(angular);
