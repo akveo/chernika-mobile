@@ -37,8 +37,10 @@
         }
     }
 
-    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi'];
-    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi) {
+    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi', 'userProfile'];
+    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi, userProfile) {
+
+        $scope.userProfile = userProfile;
 
         var cardTypes = peopleSuggestions;
 

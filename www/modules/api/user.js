@@ -17,7 +17,7 @@
             return $http.post(userEndpoint, params);
         };
         this.checkLoggedIn = function() {
-            return $http.get(userEndpoint);
+            return $http.get(userEndpoint).then(function(res) { return res.data; });
         };
 
         this.getPhotos = function() {

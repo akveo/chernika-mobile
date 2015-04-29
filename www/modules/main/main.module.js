@@ -14,8 +14,16 @@
             .state('main', {
                 url: "/main",
                 abstract: true,
-                templateUrl: "modules/main/mainLayout.html"
+                templateUrl: "modules/main/mainLayout.html",
+                resolve: {
+                    userProfile: userProfileResolve
+                }
             })
+    }
+
+    userProfileResolve.$inject = ['userApi'];
+    function userProfileResolve(userApi) {
+        return userApi.checkLoggedIn();
     }
 
 })(angular);
