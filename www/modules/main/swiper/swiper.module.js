@@ -15,10 +15,7 @@
                     'tab-swiper': {
                         templateUrl: 'modules/main/swiper/swiper.html',
                         controller: 'swiperController',
-                        controllerAs: 'vm',
-                        resolve: {
-                            peopleSuggestions: peopleSuggestionsResolve
-                        }
+                        controllerAs: 'vm'
                     }
                 }
             })
@@ -34,17 +31,6 @@
                         }
                     }
                 }
-            });
-    }
-
-    peopleSuggestionsResolve.$inject = ['suggestionsApi', '$cordovaGeolocation'];
-    function peopleSuggestionsResolve(suggestionsApi, $cordovaGeolocation) {
-        return $cordovaGeolocation
-            .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
-            .then(function(position) {
-                return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
-            }, function() {
-                // TODO: Error handling
             });
     }
 

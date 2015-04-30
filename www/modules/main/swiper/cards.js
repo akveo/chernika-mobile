@@ -4,57 +4,35 @@
 (function(angular) {
 
     angular.module('app.main.swiper')
-        .factory('accountData', !isTesting ? accountData : accountDataFake)
-        .controller('swiperController', swiperController)
-        .controller('CardCtrl', CardCtrl);
+        .service('suggestionsByLocation',suggestionsByLocation)
+        .controller('swiperController', swiperController);
 
-    accountData.$inject = [];
-    function accountData() {
-        return {
-
+    suggestionsByLocation.$inject = ['suggestionsApi', '$cordovaGeolocation'];
+    function suggestionsByLocation(suggestionsApi, $cordovaGeolocation) {
+        this.getSuggestionsByLocation = function() {
+            return $cordovaGeolocation
+                .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+                .then(function(position) {
+                    return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
+                });
         };
     }
 
-    accountDataFake.$inject = ['$q'];
-    function accountDataFake($q) {
-        return {
-            getPeopleSuggestions: function() {
-                return $q.when();
-            }
-        };
-    }
-
-    var OFFSET_TO_SWIPE_ACCEPT = 100;
-
-    function calculateOpacity(deltaX, factor) {
-        var opacity = deltaX / (2 * OFFSET_TO_SWIPE_ACCEPT) * factor;
-        if (opacity < 0) {
-            return 0;
-        } else if (opacity > 1) {
-            return 1;
-        } else {
-            return opacity;
-        }
-    }
-
-    swiperController.$inject = ['$scope', 'peopleSuggestions', '$timeout', 'TDCardDelegate', 'suggestionsApi', 'userProfile', 'blurredModal'];
-    function swiperController($scope, peopleSuggestions, $timeout, TDCardDelegate, suggestionsApi, userProfile, blurredModal) {
+    swiperController.$inject = ['$scope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$cordovaDialogs'];
+    function swiperController($scope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $cordovaDialogs) {
 
         $scope.userProfile = userProfile;
+        $scope.cards = [];
 
-        var cardTypes = peopleSuggestions;
-
-        $scope.cards = cardTypes.splice(0, 6);
+        suggestionsByLocation.getSuggestionsByLocation()
+            .then(function(suggestions) {
+                $scope.cards = suggestions;
+            }, function() {
+                $cordovaDialogs.alert('Невозможно определить текущую геолокацию.', 'Ошибка')
+            });
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
-        };
-
-        $scope.addCard = function() {
-            if (cardTypes.length) {
-                $scope.cards.push(cardTypes[0]);
-                cardTypes.splice(0, 1);
-            }
         };
 
         $scope.dislikeFirst = function() {
@@ -66,7 +44,6 @@
         };
         $scope.cardSwipedLeft = function(index) {
             suggestionsApi.dislikeProfile($scope.cards[index].obj._id);
-            $scope.addCard();
         };
         $scope.cardSwipedRight = function(index) {
             var matchingProfile = $scope.cards[index].obj;
@@ -85,13 +62,7 @@
                         modal.show();
                     });
                 });
-            $scope.addCard();
         };
-    }
-
-    CardCtrl.$inject = ['$scope'];
-    function CardCtrl($scope) {
-
     }
 
 })(angular);
