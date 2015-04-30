@@ -7,7 +7,7 @@
 // or the URL
 var pluginlist = [
     "com.ionic.keyboard",
-    "cordova-plugin-inappbrowser",
+    "https://github.com/apache/cordova-plugin-inappbrowser",
     "org.apache.cordova.console",
     "org.apache.cordova.geolocation",
     'org.apache.cordova.device',
