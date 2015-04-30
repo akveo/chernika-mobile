@@ -14,6 +14,8 @@
                 .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
                 .then(function(position) {
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
+                }, function() {
+                    return suggestionsApi.getSuggestions(27.122621, 53.687598);
                 });
         };
     }

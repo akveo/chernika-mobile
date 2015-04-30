@@ -9,8 +9,8 @@
     angular.module('app')
         .constant('appConfig', {
             api: {
-                //endpoint: 'http://akveo.com/pinder/',
-                endpoint: '/pinder/',
+                endpoint: 'http://akveo.com/pinder/',
+                //endpoint: '/pinder/',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },
