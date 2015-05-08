@@ -20,11 +20,12 @@
         };
     }
 
-    swiperController.$inject = ['$scope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$cordovaDialogs'];
-    function swiperController($scope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $cordovaDialogs) {
+    swiperController.$inject = ['$scope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$cordovaDialogs', 'appConfig'];
+    function swiperController($scope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $cordovaDialogs, appConfig) {
 
         $scope.userProfile = userProfile;
         $scope.cards = [];
+        var viewSizing = $scope.viewSizing = {};
 
         suggestionsByLocation.getSuggestionsByLocation()
             .then(function(suggestions) {
@@ -65,6 +66,34 @@
                     });
                 });
         };
+
+        function recalculateSizing() {
+            if (!viewSizing.swiperViewWidth || !viewSizing.swiperViewHeight)
+                return;
+
+            if (viewSizing.swiperViewWidth + appConfig.swiper.cardFooterHeight + appConfig.swiper.cardVerticalOffset <= viewSizing.swiperViewHeight) {
+                $scope.cardStyles = {
+                    width: viewSizing.swiperViewWidth + 'px',
+                    height: (viewSizing.swiperViewWidth + appConfig.swiper.cardFooterHeight) + 'px',
+                    'margin-left': -viewSizing.swiperViewWidth / 2 + 'px',
+                    'margin-top': -(viewSizing.swiperViewWidth + appConfig.swiper.cardFooterHeight) / 2 + 'px'
+                };
+            } else {
+                $scope.cardStyles = {
+                    height: viewSizing.swiperViewHeight + 'px',
+                    width: (viewSizing.swiperViewHeight - appConfig.swiper.cardFooterHeight) + 'px',
+                    'margin-top': -viewSizing.swiperViewHeight / 2 + 'px',
+                    'margin-left': -(viewSizing.swiperViewHeight - appConfig.swiper.cardFooterHeight) / 2 + 'px'
+                };
+            }
+
+            $scope.imageActualWidth = parseInt($scope.cardStyles.width);
+        }
+
+        $scope.$watch('viewSizing', function(oldValue, newValue) {
+            recalculateSizing();
+        }, true);
+
     }
 
 })(angular);

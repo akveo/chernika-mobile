@@ -8,7 +8,7 @@
         </div>
 
     </div>
-    <div class="swiper-view">
+    <div class="swiper-view" container-width="viewSizing.swiperViewWidth" container-height="viewSizing.swiperViewHeight">
       <td-cards max-stack-size="3">
         <td-card ng-repeat="card in cards track by card.obj._id"
                  on-destroy="cardDestroyed($index)"
@@ -16,10 +16,11 @@
                  on-td-swipe-right="cardSwipedRight($index)"
                  drag-disabled="$index"
                  swipe-programmatically="card.programmaticalSwipe"
-                 class="list card with-footer card-{{$index}}">
+                 class="list card with-footer card-{{$index}}"
+                 ng-style="cardStyles">
           <div class="item image card-content">
             <div class="no-text">Нет</div>
-            <a class="photo-container" cropped-image="card.obj.photo" target-width="298" href="#/main/swiper/{{card.obj.id}}"></a>
+                <a class="photo-container" cropped-image="card.obj.photo" target-width="imageActualWidth" href="#/main/swiper/{{card.obj.id}}"></a>
             <div class="yes-text">Да</div>
           </div>
           <div class="item item-divider item-footer">
@@ -27,21 +28,6 @@
           </div>
         </td-card>
       </td-cards>
-<!--      <div class="list card with-footer" ng-class="{ useTransition: useTransition }" ng-repeat="(index, sugg) in suggestions track by sugg.name"
-           ng-style="{ transform: sugg.translateStyle, '-webkit-transform': sugg.translateStyle, 'z-index': sugg.zIndex }"
-           swipe-element="suggestionMoveEnd(sugg, deltaX, hDir)" swipe-element-move="suggestionMoved(sugg, deltaX, deltaY)">
-        <span class="like-indicator yes" ng-style="{ opacity: sugg.yesOpacity }">ДА</span>
-        <span class="like-indicator no" ng-style="{ opacity: sugg.noOpacity }">НЕТ</span>
-
-        <div class="item item-image">
-          <img ng-src="{{sugg.photo}}">
-        </div>
-
-        <div class="item item-divider item-footer">
-          {{sugg.name}}, {{sugg.age}}
-        </div>
-
-      </div>-->
     </div>
   </ion-content>
   <ion-footer-bar keyboard-attach class="bar-light">

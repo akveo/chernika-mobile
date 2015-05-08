@@ -5,6 +5,7 @@
     angular.module('app.util', [])
         .service('appUtilities', appUtilities)
         .directive('croppedImage', croppedImage)
+        .directive('containerWidth', containerWidth)
         .service('blurredModal', blurredModal)
         .filter('ageFromVkDate', ageFromVkDate);
 
@@ -38,22 +39,33 @@
             },
             link: function(scope, element) {
                 var cropFactor = appConfig.cropFactor.width / appConfig.cropFactor.height;
-                element.css({
-                    width: scope.targetWidth + 'px',
-                    height: (scope.targetWidth / cropFactor) + 'px',
-                    overflow: 'hidden',
-                    position: 'relative'
-                });
 
-                var imageScaleFactor = scope.targetWidth / scope.imageObject.crop.width;
+                if (scope.targetWidth) {
+                    applyStyles();
+                }
 
-                scope.imageStyles = {
-                    width: scope.imageObject.width * imageScaleFactor + 'px',
-                    height: scope.imageObject.height * imageScaleFactor + 'px',
-                    position: 'absolute',
-                    top: (-scope.imageObject.crop.y * imageScaleFactor) + 'px',
-                    left: (-scope.imageObject.crop.x * imageScaleFactor) + 'px'
-                };
+                scope.$watch('targetWidth', applyStyles);
+
+                function applyStyles() {
+                    console.log(scope.targetWidth);
+                    element.css({
+                        width: scope.targetWidth + 'px',
+                        height: (scope.targetWidth / cropFactor) + 'px',
+                        overflow: 'hidden',
+                        position: 'relative'
+                    });
+
+                    var imageScaleFactor = scope.targetWidth / scope.imageObject.crop.width;
+
+                    scope.imageStyles = {
+                        width: scope.imageObject.width * imageScaleFactor + 'px',
+                        height: scope.imageObject.height * imageScaleFactor + 'px',
+                        position: 'absolute',
+                        top: (-scope.imageObject.crop.y * imageScaleFactor) + 'px',
+                        left: (-scope.imageObject.crop.x * imageScaleFactor) + 'px'
+                    };
+                }
+
             }
         };
     }
@@ -94,4 +106,26 @@
                 });
         };
     }
+
+    containerWidth.$inject = ['$window', '$timeout'];
+    function containerWidth($window, $timeout) {
+        return {
+            restrict: 'A',
+            scope: {
+                containerWidth: '=',
+                containerHeight: '='
+            },
+            priority: -8000,
+            link: {
+                post: function($scope, $element) {
+                    $timeout(function() {
+                        var computedStyle = $window.getComputedStyle($element[0]);
+                        $scope.containerWidth = parseInt(computedStyle.getPropertyValue('width'));
+                        $scope.containerHeight = parseInt(computedStyle.getPropertyValue('height'));
+                    });
+                }
+            }
+        };
+    }
+
 })(angular);

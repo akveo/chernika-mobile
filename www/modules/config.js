@@ -9,14 +9,18 @@
     angular.module('app')
         .constant('appConfig', {
             api: {
-                endpoint: 'http://akveo.com/pinder/',
-                //endpoint: '/pinder/',
+                //endpoint: 'http://akveo.com/pinder/',
+                endpoint: '/pinder/',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },
             cropFactor: {
-                width: 298,
-                height: 261
+                width: 300,
+                height: 300
+            },
+            swiper: {
+                cardFooterHeight: 37,
+                cardVerticalOffset: 12
             },
             settings: {
                 agesMinDistance: 4
