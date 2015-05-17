@@ -116,6 +116,18 @@
             }
         ];
 
+        window.addEventListener('native.keyboardshow', function() {
+            $timeout(function() {
+                $ionicScrollDelegate.scrollBottom();
+            }, 100);
+        });
+
+        window.addEventListener('native.keyboardhide', function() {
+            $timeout(function() {
+                $ionicScrollDelegate.scrollBottom();
+            }, 100);
+        });
+
         $scope.$on('$ionicView.beforeEnter', function(){
             $ionicScrollDelegate.scrollBottom();
         });
