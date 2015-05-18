@@ -47,7 +47,6 @@
                 scope.$watch('targetWidth', applyStyles);
 
                 function applyStyles() {
-                    console.log(scope.targetWidth);
                     element.css({
                         width: scope.targetWidth + 'px',
                         height: (scope.targetWidth / cropFactor) + 'px',
