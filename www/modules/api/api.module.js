@@ -4,7 +4,9 @@
 (function (angular) {
     'use strict';
 
-    angular.module('app.api', []);
+    angular.module('app.api', [
+        'btford.socket-io'
+    ]);
 
 })(angular);
 
