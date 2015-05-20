@@ -10,8 +10,8 @@
 
     appSocket.$inject = ['socketFactory', 'appConfig'];
     function appSocket(socketFactory, appConfig) {
-        var ioSocket = io.connect({
-            path: appConfig.api.endpoint + 'socket.io'
+        var ioSocket = io.connect(appConfig.api.endpoint, {
+            path: appConfig.api.socketPath
         });
 
         return socketFactory({
@@ -21,6 +21,18 @@
 
     apiRun.$inject = ['appSocket'];
     function apiRun(appSocket) {
+//        this.watchddd = function($scope, evewntName, cb) {
+//            appSocket.on(eventName, cb);
+//            $scope.$on('$destroy', function() {
+//                appSocket.off(eventName, cb);
+//            });
+//        };
     }
+
+//    function socketEventService() {
+//        this.listen = function () {
+//
+//        }
+//    }
 
 })(angular);
