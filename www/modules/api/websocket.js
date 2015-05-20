@@ -10,7 +10,7 @@
 
     appSocket.$inject = ['socketFactory', 'appConfig'];
     function appSocket(socketFactory, appConfig) {
-        var ioSocket = io.connect(appConfig.api.endpoint, {
+        var ioSocket = io.connect(appConfig.api.baseUrl, {
             path: appConfig.api.socketPath
         });
 

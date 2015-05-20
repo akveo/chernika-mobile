@@ -6,10 +6,13 @@
 
     window.isTesting = true;
 
+    var baseUrl = 'http://akveo.com/';
+
     angular.module('app')
         .constant('appConfig', {
             api: {
-                endpoint: 'http://akveo.com/pinder/',
+                baseUrl: baseUrl,
+                endpoint: baseUrl + 'pinder/',
                 socketPath: '/pinder/socket.io',
 //                endpoint: '/pinder/',
                 accessHeader: 'Access-Token',
