@@ -22,11 +22,14 @@
                 }
             })
             .state('main.match-detail', {
-                url: '/matches/:matchId',
+                url: '/matches/:chatId',
                 views: {
                     'tab-matches': {
                         templateUrl: 'modules/main/matches/chat.html',
-                        controller: 'ChatDetailCtrl'
+                        controller: 'ChatDetailCtrl',
+                        resolve: {
+                            chatDetails: chatDetailsResolve
+                        }
                     }
                 }
             })
@@ -36,5 +39,17 @@
     chatsInfoResolve.$inject = ['ChatsApi'];
     function chatsInfoResolve(ChatsApi) {
         return ChatsApi.getChatsInfo();
+    }
+
+    chatDetailsResolve.$inject = ['ChatsApi', '$stateParams', '$q'];
+    function chatDetailsResolve(ChatsApi, $stateParams, $q) {
+        var chatPromise = ChatsApi.getChat($stateParams.chatId);
+        var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
+        return $q.all([chatPromise, messagesPromise]).then(function(res) {
+            return {
+                chat: res[0],
+                message: res[1]
+            }
+        });
     }
 })(angular);

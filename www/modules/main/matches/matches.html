@@ -5,7 +5,7 @@
             on-refresh="doRefresh()">
     </ion-refresher>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/main/matches/{{chat.id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/main/matches/{{chat.chat}}">
         <img ng-src="{{chat.user.photo.src}}">
         <h2>{{chat.user.firstName}}</h2>
         <p>{{chat.message.text}}</p>

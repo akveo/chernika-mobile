@@ -159,9 +159,19 @@
         this.getChatsInfo = function() {
             return $http.get(chatsEndpoint).then(function(res) { return res.data; });
         };
+        
+        this.getChat = function (chatId) {
+            var chatEndpoint = chatsEndpoint + '/' + chatId;
+            return $http.get(chatEndpoint).then(function(res) { return res.data; });
+        };
+
+        this.getMessages = function(chatId) {
+            var messagesEndpoint = chatsEndpoint + '/' + chatId + '/messages';
+            return $http.get(messagesEndpoint).then(function(res) { return res.data; });
+        };
 
         this.sendMessage = function (message) {
-        }
+        };
 
 
     }
