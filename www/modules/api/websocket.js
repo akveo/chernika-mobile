@@ -6,6 +6,7 @@
 
     angular.module('app.api')
         .factory('appSocket', appSocket)
+        .service('socketAuthorizer', socketAuthorizer)
         .run(apiRun);
 
     appSocket.$inject = ['socketFactory', 'appConfig'];
@@ -19,8 +20,23 @@
         });
     }
 
-    apiRun.$inject = ['appSocket'];
-    function apiRun(appSocket) {
+    socketAuthorizer.$inject = ['$rootScope', 'appSocket', 'appConfig'];
+    function socketAuthorizer($rootScope, appSocket, appConfig) {
+        function onLogin() {
+            $rootScope.$on('user.login', function() {
+                appSocket.emit('authorize', localStorage[appConfig.api.tokenLocalStorageKey]);
+            });
+        }
+
+        this.init = function() {
+            onLogin();
+        }
+
+    }
+
+    apiRun.$inject = ['appSocket', 'socketAuthorizer'];
+    function apiRun(appSocket, socketAuthorizer) {
+        socketAuthorizer.init();
 //        this.watchddd = function($scope, evewntName, cb) {
 //            appSocket.on(eventName, cb);
 //            $scope.$on('$destroy', function() {

@@ -14,7 +14,10 @@
                 views: {
                     'tab-matches': {
                         templateUrl: 'modules/main/matches/matches.html',
-                        controller: 'ChatsController'
+                        controller: 'ChatsController',
+                        resolve: {
+                            chats: chatsInfoResolve
+                        }
                     }
                 }
             })
@@ -28,5 +31,10 @@
                 }
             })
         ;
+    }
+
+    chatsInfoResolve.$inject = ['ChatsApi'];
+    function chatsInfoResolve(ChatsApi) {
+        return ChatsApi.getChatsInfo();
     }
 })(angular);

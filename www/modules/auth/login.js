@@ -6,8 +6,8 @@
         .controller('DeviceLoginController', DeviceLoginController)
         .factory('vkAuthenticator', vkAuthenticator);
 
-    DeviceLoginController.$inject = ['$scope', '$state', 'vkAuthenticator', 'userApi'];
-    function DeviceLoginController($scope, $state, vkAuthenticator, userApi) {
+    DeviceLoginController.$inject = ['$scope', '$rootScope', '$state', 'vkAuthenticator', 'userApi'];
+    function DeviceLoginController($scope, $rootScope, $state, vkAuthenticator, userApi) {
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.doAuthenticate = function() {
@@ -16,6 +16,7 @@
                     return userApi.login(authParams);
                 })
                 .then(function() {
+                    $rootScope.$broadcast('user.login');
                     $state.go('main.swiper');
                 }, function error(e) {
                     // TODO: User friendly error

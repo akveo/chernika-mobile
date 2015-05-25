@@ -5,6 +5,7 @@
 
     angular.module('app.main.matches')
         .factory('Chats', Chats)
+        .service('ChatsApi', ChatsApi)
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
 
@@ -54,9 +55,9 @@
         };
     }
 
-    ChatsController.$inject = ['$scope', 'Chats'];
-    function ChatsController($scope, Chats) {
-        $scope.chats = Chats.all();
+    ChatsController.$inject = ['$scope', 'Chats', 'chats'];
+    function ChatsController($scope, Chats, chats) {
+        $scope.chats = chats;
         $scope.remove = function(chat) {
             Chats.remove(chat);
         }
@@ -149,5 +150,19 @@
                 delete newMessage.isSending;
             }, 1000);
         };
+    }
+
+    ChatsApi.$inject = ['appSocket', '$q', '$http', 'appConfig'];
+    function ChatsApi(appSocket, $q, $http, appConfig) {
+        var chatsEndpoint = appConfig.api.endpoint + 'chats';
+
+        this.getChatsInfo = function() {
+            return $http.get(chatsEndpoint).then(function(res) { return res.data; });
+        };
+
+        this.sendMessage = function (message) {
+        }
+
+
     }
 })(angular);
