@@ -14,6 +14,7 @@
             .state('main', {
                 url: "/main",
                 abstract: true,
+                controller: mainController,
                 templateUrl: "modules/main/mainLayout.html",
                 resolve: {
                     userProfile: userProfileResolve
@@ -24,6 +25,11 @@
     userProfileResolve.$inject = ['userApi'];
     function userProfileResolve(userApi) {
         return userApi.checkLoggedIn();
+    }
+
+    mainController.$inject = ['$scope', 'userProfile'];
+    function mainController($scope, userProfile) {
+        $scope.userProfile = userProfile;
     }
 
 })(angular);

@@ -6,15 +6,14 @@
 
     window.isTesting = true;
 
-    var baseUrl = 'http://akveo.com/';
+    var baseUrl = 'http://localhost:3300/';
 
     angular.module('app')
         .constant('appConfig', {
             api: {
                 baseUrl: baseUrl,
-                endpoint: baseUrl + 'pinder/',
-                socketPath: '/pinder/socket.io',
-//                endpoint: '/pinder/',
+                endpoint: baseUrl,
+                socketPath: '/socket.io',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },

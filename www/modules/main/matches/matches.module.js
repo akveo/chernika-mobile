@@ -23,6 +23,9 @@
             })
             .state('main.match-detail', {
                 url: '/matches/:chatId',
+                params: {
+                    name: 'Собеседник'
+                },
                 views: {
                     'tab-matches': {
                         templateUrl: 'modules/main/matches/chat.html',
@@ -46,9 +49,12 @@
         var chatPromise = ChatsApi.getChat($stateParams.chatId);
         var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
         return $q.all([chatPromise, messagesPromise]).then(function(res) {
+            var chat = res[0];
+            var messages = res[1];
+            chat.name = $stateParams.name;
             return {
-                chat: res[0],
-                message: res[1]
+                chat: chat,
+                messages: messages
             }
         });
     }

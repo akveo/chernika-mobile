@@ -11,13 +11,13 @@
                 on-refresh="doRefresh()">
         </ion-refresher>
         <div class="card"
-             ng-repeat="msg in messages track by msg.messageId"
-             ng-class="{ 'out-message': msg.isYour, 'in-message': !msg.isYour, sending: msg.isSending }">
+             ng-repeat="msg in messages track by msg._id"
+             ng-class="{ 'out-message': isMsgYours(msg), 'in-message': !isMsgYours(msg), 'sending': msg.isSending }">
             <div class="item item-divider msg-header">
-                <span class="name" ng-bind="msg.isYour ? 'Вы' : chat.name"></span>
-                <span class="time pull-right" ng-bind="msg.date | date : 'HH:mm'"></span>
+                <span class="name" ng-bind="isMsgYours(msg) ? 'Вы' : chat.name"></span>
+                <span class="time pull-right" ng-bind="msg.created | date : 'HH:mm'"></span>
             </div>
-            <div class="item item-text-wrap msg-content" ng-bind="msg.content"></div>
+            <div class="item item-text-wrap msg-content" ng-bind="msg.text"></div>
         </div>
 
     </ion-content>
