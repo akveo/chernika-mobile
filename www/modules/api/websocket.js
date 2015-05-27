@@ -27,6 +27,11 @@
             $rootScope.$on('user.login', function() {
                 appSocket.emit('authorize', localStorage[appConfig.api.tokenLocalStorageKey]);
             });
+
+            appSocket.on('authorize', function () {
+                var token = localStorage[appConfig.api.tokenLocalStorageKey];
+                token && appSocket.emit('authorize', token);
+            });
         }
 
         this.init = function() {
