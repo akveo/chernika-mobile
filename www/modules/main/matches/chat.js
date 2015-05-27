@@ -8,12 +8,20 @@
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
 
-    ChatsController.$inject = ['$scope', 'chats'];
-    function ChatsController($scope, chats) {
+    ChatsController.$inject = ['$scope', 'chats', 'socketEventService'];
+    function ChatsController($scope, chats, socketEventService) {
         $scope.chats = chats;
         $scope.remove = function() {
 
-        }
+        };
+
+        socketEventService.listen($scope, 'new_message', function (msg) {
+            chats.forEach(function (chat) {
+                if(chat.chat == msg.chat) {
+                    chat.message = msg;
+                }
+            });
+        })
     }
 
     ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
