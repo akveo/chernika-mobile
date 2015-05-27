@@ -16,8 +16,8 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
         $scope.chat = chatDetails.chat;
         $scope.messages = chatDetails.messages;
 
@@ -41,27 +41,39 @@
             $ionicScrollDelegate.scrollBottom();
         });
 
+        socketEventService.listen($scope, 'new_message', function(msg) {
+            $scope.messages.every(function(scopeMsg, index) {
+                if (msg.created == scopeMsg.created) {
+                    $scope.messages[index] = msg;
+                    return false;
+                }
+                return true;
+            }) && $scope.messages.push(msg);
+        });
+
         $scope.sendMessage = function() {
             var newMessage = {
-                messageId: new Date().getTime(),
-                isYour: true,
-                content: $scope.activeMessage,
-                date: new Date().getTime(),
-                isSending: true
+                chat: $scope.chat._id,
+                sender: $scope.userProfile._id,
+                text: $scope.activeMessage,
+                created: new Date().getTime()
             };
+
+            ChatsApi.sendMessage(newMessage);
+
+            newMessage.isSending = true;
             $scope.messages.push(newMessage);
+
             delete $scope.activeMessage;
+
             $timeout(function() {
                 $ionicScrollDelegate.scrollBottom(true);
             });
-            $timeout(function() {
-                delete newMessage.isSending;
-            }, 1000);
         };
     }
 
-    ChatsApi.$inject = ['appSocket', '$q', '$http', 'appConfig'];
-    function ChatsApi(appSocket, $q, $http, appConfig) {
+    ChatsApi.$inject = ['appSocket', '$http', 'appConfig'];
+    function ChatsApi(appSocket, $http, appConfig) {
         var chatsEndpoint = appConfig.api.endpoint + 'chats';
 
         this.getChatsInfo = function() {
@@ -79,8 +91,7 @@
         };
 
         this.sendMessage = function (message) {
+            appSocket.emit('new_message', message);
         };
-
-
     }
 })(angular);

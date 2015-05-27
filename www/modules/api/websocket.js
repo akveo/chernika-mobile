@@ -7,6 +7,7 @@
     angular.module('app.api')
         .factory('appSocket', appSocket)
         .service('socketAuthorizer', socketAuthorizer)
+        .service('socketEventService', socketEventService)
         .run(apiRun);
 
     appSocket.$inject = ['socketFactory', 'appConfig'];
@@ -34,21 +35,19 @@
 
     }
 
+    socketEventService.$inject = ['appSocket'];
+    function socketEventService(appSocket) {
+        this.listen = function($scope, eventName, cb) {
+            appSocket.addListener(eventName, cb);
+            $scope.$on('$destroy', function() {
+                appSocket.removeListener(eventName, cb);
+            });
+        }
+    }
+
     apiRun.$inject = ['appSocket', 'socketAuthorizer'];
     function apiRun(appSocket, socketAuthorizer) {
         socketAuthorizer.init();
-//        this.watchddd = function($scope, evewntName, cb) {
-//            appSocket.on(eventName, cb);
-//            $scope.$on('$destroy', function() {
-//                appSocket.off(eventName, cb);
-//            });
-//        };
     }
-
-//    function socketEventService() {
-//        this.listen = function () {
-//
-//        }
-//    }
 
 })(angular);
