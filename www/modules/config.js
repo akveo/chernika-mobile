@@ -6,6 +6,7 @@
 
     window.isTesting = true;
 
+//    var baseUrl = 'http://localhost:3300/';
     var baseUrl = 'http://akveo.com/';
 
     angular.module('app')
@@ -13,6 +14,7 @@
             api: {
                 baseUrl: baseUrl,
                 endpoint: baseUrl + 'pinder/',
+//                endpoint: baseUrl,
                 socketPath: '/socket.io',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
@@ -29,6 +31,7 @@
                 agesMinDistance: 4
             }
         });
+
 
 
 })(angular);
