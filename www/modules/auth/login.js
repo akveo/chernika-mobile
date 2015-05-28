@@ -26,7 +26,7 @@
         });
 
         $scope.doAuthenticate = function() {
-            vkApi.initiateLogin(['photos']);
+            vkApi.initiateLogin(['photos', 'offline']);
         };
     }
 
