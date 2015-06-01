@@ -11,7 +11,8 @@ var pluginlist = [
     "org.apache.cordova.console",
     "org.apache.cordova.geolocation",
     'org.apache.cordova.device',
-    'org.apache.cordova.dialogs'
+    'org.apache.cordova.dialogs',
+    'com.akveo.cordova-vk --variable VK_APP_ID=4851553'
 ];
 
 // no need to configure below
