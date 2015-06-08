@@ -14,10 +14,22 @@
         $scope.remove = function() {
 
         };
+        $scope.isChatHighlighted = function(chat) {
+            var msg = chat.message;
+            return !msg.wasRead && msg.sender != $scope.userProfile._id;
+        };
 
         socketEventService.listen($scope, 'new_message', function (msg) {
             chats.forEach(function (chat) {
                 if(chat.chat == msg.chat) {
+                    chat.message = msg;
+                }
+            });
+        });
+
+        socketEventService.listen($scope, 'message_read', function (msg) {
+            chats.forEach(function (chat) {
+                if(chat.chat == msg.chat && $scope.isChatHighlighted(chat)) {
                     chat.message = msg;
                 }
             });
@@ -28,6 +40,7 @@
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
         $scope.chat = chatDetails.chat;
         $scope.messages = chatDetails.messages;
+        readMessages();
 
         window.addEventListener('native.keyboardshow', function() {
             $timeout(function() {
@@ -56,7 +69,7 @@
                     return false;
                 }
                 return true;
-            }) && $scope.messages.push(msg);
+            }) && addMessage(msg);
         });
 
         $scope.sendMessage = function() {
@@ -78,6 +91,17 @@
                 $ionicScrollDelegate.scrollBottom(true);
             });
         };
+
+        function readMessages() {
+            $scope.messages.forEach(function (msg) {
+                !msg.wasRead && msg.sender != $scope.userProfile._id && ChatsApi.readMessage(msg);
+            });
+        }
+
+        function addMessage(msg) {
+            $scope.messages.push(msg);
+            ChatsApi.readMessage(msg);
+        }
     }
 
     ChatsApi.$inject = ['appSocket', '$http', 'appConfig'];
@@ -95,11 +119,15 @@
 
         this.getMessages = function(chatId) {
             var messagesEndpoint = chatsEndpoint + '/' + chatId + '/messages';
-            return $http.get(messagesEndpoint).then(function(res) { console.log(res.data); return res.data; });
+            return $http.get(messagesEndpoint).then(function(res) { return res.data; });
         };
 
         this.sendMessage = function (message) {
             appSocket.emit('new_message', message);
         };
+
+        this.readMessage = function(message) {
+            appSocket.emit('message_read', message);
+        }
     }
 })(angular);
