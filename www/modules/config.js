@@ -15,7 +15,8 @@
                 baseUrl: baseUrl,
                 endpoint: baseUrl + 'pinder/',
 //                endpoint: baseUrl,
-                socketPath: '/socket.io',
+//                socketPath: '/socket.io',
+                socketPath: '/pinder/socket.io',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },
