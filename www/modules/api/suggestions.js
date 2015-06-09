@@ -21,7 +21,6 @@
             }).then(function(res) {
                 return res.data.concat(
                     res.data.map(function(item) {
-                        item.obj.age = item.obj.bdate && appUtilities.getCurrentAge(appUtilities.parseVkDate(item.obj.bdate));
                         var item = JSON.parse(JSON.stringify(item));
                         item.obj._id += 'abs';
                         return item;

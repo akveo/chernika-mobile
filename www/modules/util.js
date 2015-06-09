@@ -6,8 +6,7 @@
         .service('appUtilities', appUtilities)
         .directive('croppedImage', croppedImage)
         .directive('containerWidth', containerWidth)
-        .service('blurredModal', blurredModal)
-        .filter('ageFromVkDate', ageFromVkDate);
+        .service('blurredModal', blurredModal);
 
     function appUtilities() {
         this.queryToObject = function(query) {
@@ -16,15 +15,6 @@
                 acc[splittedParts[0]] = splittedParts[1];
                 return acc;
             }, {});
-        };
-        this.parseVkDate = function(dateStr) {
-            var splittedDate = dateStr.split('.');
-            return new Date(splittedDate[2], splittedDate[1] - 1, splittedDate[0]);
-        };
-        this.getCurrentAge = function(birthDate) {
-            var today = new Date();
-            return today.getYear() - birthDate.getYear() -
-                ((today.getMonth() > birthDate.getMonth() || (today.getMonth() == birthDate.getMonth() && today.getDate() >= birthDate.getDate())) ? 0 : 1);
         };
     }
 
@@ -66,15 +56,6 @@
                 }
 
             }
-        };
-    }
-
-    ageFromVkDate.$inject = ['appUtilities'];
-    function ageFromVkDate(appUtilities) {
-        return function(input) {
-            var birthDate = input && appUtilities.parseVkDate(input);
-            return birthDate && appUtilities.getCurrentAge(birthDate);
-
         };
     }
 
