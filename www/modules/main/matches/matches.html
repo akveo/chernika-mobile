@@ -10,7 +10,7 @@
         <h2>
             {{chat.user.firstName}}
         </h2>
-        <p ng-class="{'bold': isChatHighlighted(chat)}">{{chat.message.text}}</p>
+        <p ng-class="{'bold': isChatHighlighted(chat)}">{{chat.message.text || 'Сделай первый шаг!'}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <ion-option-button class="button-assertive" ng-click="remove(chat)">

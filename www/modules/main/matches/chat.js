@@ -15,8 +15,10 @@
 
         };
         $scope.isChatHighlighted = function(chat) {
-            var msg = chat.message;
-            return !msg.wasRead && msg.sender != $scope.userProfile._id;
+            if (chat.msg) {
+                var msg = chat.message;
+                return !msg.wasRead && msg.sender != $scope.userProfile._id;
+            }
         };
 
         socketEventService.listen($scope, 'new_message', function (msg) {
