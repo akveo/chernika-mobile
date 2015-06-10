@@ -19,13 +19,7 @@
                     lat: lat
                 }
             }).then(function(res) {
-                return res.data.concat(
-                    res.data.map(function(item) {
-                        var item = JSON.parse(JSON.stringify(item));
-                        item.obj._id += 'abs';
-                        return item;
-                    })
-                );
+                return res.data;
             });
         };
 
