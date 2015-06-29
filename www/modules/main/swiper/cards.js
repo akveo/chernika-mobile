@@ -53,17 +53,15 @@
             suggestionsApi.likeProfile(matchingProfile._id)
                 .then(function(data) {
                     if (data.isMatched) {
-                        alert('matched');
+                        var newScope = $scope.$new();
+                        newScope.matchingProfile = matchingProfile;
+                        blurredModal.fromTemplateUrl('modules/main/swiper/newMatch.html', {
+                            scope: newScope,
+                            animation: 'slide-in-up'
+                        }).then(function(modal) {
+                            modal.show();
+                        });
                     }
-                }, function() {
-                    var newScope = $scope.$new();
-                    newScope.matchingProfile = matchingProfile;
-                    blurredModal.fromTemplateUrl('modules/main/swiper/newMatch.html', {
-                        scope: newScope,
-                        animation: 'slide-in-up'
-                    }).then(function(modal) {
-                        modal.show();
-                    });
                 });
         };
 
