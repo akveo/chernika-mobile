@@ -44,13 +44,13 @@
         return ChatsApi.getChatsInfo();
     }
 
-    chatDetailsResolve.$inject = ['ChatsApi', 'profilesApi', '$stateParams', '$q', '$rootScope'];
-    function chatDetailsResolve(ChatsApi, profilesApi, $stateParams, $q, $rootScope) {
+    chatDetailsResolve.$inject = ['ChatsApi', 'profilesApi', '$stateParams', '$q', 'userProfile'];
+    function chatDetailsResolve(ChatsApi, profilesApi, $stateParams, $q, userProfile) {
         var chatPromise = ChatsApi.getChat($stateParams.chatId);
         var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
         var userPromise = chatPromise
             .then(function (chat) {
-                var chatUserId = chat.users[0] == $rootScope.userProfile._id ? chat.users[1] : chat.users[0];
+                var chatUserId = chat.users[0] == userProfile._id ? chat.users[1] : chat.users[0];
                 return profilesApi.getProfileInfo(chatUserId)
             })
             .then(function (profileInfo) {
