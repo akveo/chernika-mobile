@@ -18,31 +18,6 @@ $swiperControlsBorder: 5px;
   color: $positive;
 }
 
-$defaultSwiperContentWidth: 300px;
-$defaultSwiperContentHeight: 300px;
-.default-swiper-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: $defaultSwiperContentWidth;
-  height: $defaultSwiperContentHeight;
-  margin-left: -$defaultSwiperContentWidth/2;
-  margin-top: -$defaultSwiperContentHeight/2;
-  text-align: center;
-  display: table;
-  .default-content {
-    display: table-cell;
-    vertical-align: middle;
-  }
-
-  .icon-text {
-    font-size: 22px;
-  }
-  .hint-text {
-    font-size: 16px;
-  }
-}
-
 .swiper-view {
   width: 100%;
   height: 100%;

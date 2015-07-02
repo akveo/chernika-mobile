@@ -5,7 +5,7 @@
   The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{chat.name}}">
-    <ion-content class="padding">
+    <ion-content class="padding" ng-show="messages.length">
         <ion-refresher
                 pulling-text="Более ранние сообщения..."
                 on-refresh="doRefresh()">
@@ -19,8 +19,18 @@
             </div>
             <div class="item item-text-wrap msg-content" ng-bind="msg.text"></div>
         </div>
-
     </ion-content>
+
+    <ion-content class="padding" ng-show="!messages.length" scroll="false">
+        <div class="empty-chat-inspiration centered-block" ng-if="!messages.length">
+            <div class="default-content">
+                <div class="text-top">Вы понравились друг другу</div>
+                <div class="rounded-image" cropped-image="user.photo" target-width="150"></div>
+                <div class="text-bottom">{{motivationalMsg}}</div>
+            </div>
+        </div>
+    </ion-content>
+
     <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
         <label class="item-input-wrapper">
             <input type="text" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage" on-focus="inputUp()" on-blur="inputDown()" />

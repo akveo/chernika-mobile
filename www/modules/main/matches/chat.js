@@ -42,6 +42,8 @@
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
         $scope.chat = chatDetails.chat;
         $scope.messages = chatDetails.messages;
+        $scope.user = chatDetails.user;
+        $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)]
         readMessages();
 
         window.addEventListener('native.keyboardshow', function() {
@@ -133,7 +135,7 @@
         }
     }
 
-    var inspirationalMsgs = [
+    var motivationalMsgs = [
         'Пообщайтесь с Вашей парой',
         'Сделайте первый шаг!',
         'Напишите Вашей паре',

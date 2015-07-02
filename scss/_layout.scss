@@ -22,3 +22,27 @@ body.blurred {
 .bold {
   font-weight: bold;
 }
+
+$centeredBlockWidth: 300px;
+$centeredBlockHeight: 300px;
+.centered-block {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: $centeredBlockWidth;
+  height: $centeredBlockHeight;
+  margin-left: -$centeredBlockWidth/2;
+  margin-top: -$centeredBlockHeight/2;
+  text-align: center;
+  display: table;
+  .default-content {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .icon-text {
+    font-size: 22px;
+  }
+  .hint-text {
+    font-size: 16px;
+  }
+}
