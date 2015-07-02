@@ -45,6 +45,10 @@
         this.getProfileData = function(profileId) {
             return $http.get(profileEndpoint + '/' + profileId).then(function(res) { return res.data; });
         };
+
+        this.getProfileInfo = function (profileId) {
+            return $http.get(profileEndpoint + '/' + profileId + '/info').then(function(res) { return res.data; });
+        }
     }
 
 })(angular);
