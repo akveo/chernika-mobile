@@ -13,6 +13,11 @@ $swiperControlsBorder: 5px;
   overflow: visible;
 }
 
+.geo-icon {
+  font-size: 100px;
+  color: $positive;
+}
+
 $defaultSwiperContentWidth: 300px;
 $defaultSwiperContentHeight: 300px;
 .default-swiper-content {

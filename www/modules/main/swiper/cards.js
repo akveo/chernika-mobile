@@ -14,8 +14,8 @@
                 .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
                 .then(function(position) {
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
-                }, function() {
-                    return suggestionsApi.getSuggestions(27.122621, 53.687598);
+                }, function(err) {
+                    throw err;
                 });
         };
     }
@@ -24,14 +24,17 @@
     function swiperController($scope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $cordovaDialogs, appConfig) {
 
         $scope.userProfile = userProfile;
+        $scope.geoEnabled = true;
         $scope.cards = [];
         var viewSizing = $scope.viewSizing = {};
 
         suggestionsByLocation.getSuggestionsByLocation()
             .then(function(suggestions) {
                 $scope.cards = suggestions;
-            }, function() {
-                $cordovaDialogs.alert('Невозможно определить текущую геолокацию.', 'Ошибка')
+            }, function(err) {
+                if (err.PERMISSION_DENIED) {
+                    $scope.geoEnabled = false;
+                }
             });
 
         $scope.cardDestroyed = function(index) {

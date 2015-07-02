@@ -1,10 +1,16 @@
 <ion-view view-title="Люди" class="swiper-tab">
   <ion-content class="padding cards-container" scroll="false">
     <div class="default-swiper-content list">
-        <div class="default-content">
+        <div class="default-content" ng-if="geoEnabled">
             <div class="rounded-image" cropped-image="userProfile.photo" target-width="100"></div>
             <div class="icon-text padding" ng-class="{ invisible: cards.length }"><i class="icon ion-loading-c"></i></div>
             <div class="hint-text" ng-class="{ invisible: cards.length }">Ищем новых людей недалеко от Вас</div>
+        </div>
+        <div class="default-content" ng-if="!geoEnabled">
+            <div class="ion-ios-navigate-outline geo-icon"></div>
+            <div class="hint-text">
+                Для поиска новых пар включите геолокацию в настройках вашего устройства
+            </div>
         </div>
 
     </div>
