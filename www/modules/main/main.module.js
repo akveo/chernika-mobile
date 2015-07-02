@@ -27,9 +27,9 @@
         return userApi.checkLoggedIn();
     }
 
-    mainController.$inject = ['$scope', 'userProfile'];
-    function mainController($scope, userProfile) {
-        $scope.userProfile = userProfile;
+    mainController.$inject = ['$rootScope', 'userProfile'];
+    function mainController($rootScope, userProfile) {
+        $rootScope.userProfile = userProfile;
     }
 
 })(angular);

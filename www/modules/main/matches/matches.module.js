@@ -44,17 +44,27 @@
         return ChatsApi.getChatsInfo();
     }
 
-    chatDetailsResolve.$inject = ['ChatsApi', '$stateParams', '$q'];
-    function chatDetailsResolve(ChatsApi, $stateParams, $q) {
+    chatDetailsResolve.$inject = ['ChatsApi', 'profilesApi', '$stateParams', '$q', '$rootScope'];
+    function chatDetailsResolve(ChatsApi, profilesApi, $stateParams, $q, $rootScope) {
         var chatPromise = ChatsApi.getChat($stateParams.chatId);
         var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
-        return $q.all([chatPromise, messagesPromise]).then(function(res) {
+        var userPromise = chatPromise
+            .then(function (chat) {
+                var chatUserId = chat.users[0] == $rootScope.userProfile._id ? chat.users[1] : chat.users[0];
+                return profilesApi.getProfileInfo(chatUserId)
+            })
+            .then(function (profileInfo) {
+                return profileInfo;
+            });
+        return $q.all([chatPromise, messagesPromise, userPromise]).then(function(res) {
             var chat = res[0];
             var messages = res[1];
-            chat.name = $stateParams.name;
+            var user = res[2];
+            chat.name = user.firstName;
             return {
                 chat: chat,
-                messages: messages
+                messages: messages,
+                user: user
             }
         });
     }
