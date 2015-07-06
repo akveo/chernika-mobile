@@ -15,7 +15,7 @@
 
         };
         $scope.isChatHighlighted = function(chat) {
-            if (chat.msg) {
+            if (chat.message) {
                 var msg = chat.message;
                 return !msg.wasRead && msg.sender != $scope.userProfile._id;
             }
