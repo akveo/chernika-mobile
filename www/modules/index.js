@@ -23,8 +23,8 @@
         //$ionicConfigProvider.tabs.position('bottom');
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'noConnectionModal'];
-    function appRun($ionicPlatform, connectionListener, noConnectionModal) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener'];
+    function appRun($ionicPlatform, connectionListener) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -36,7 +36,6 @@
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
-            noConnectionModal.activate();
             connectionListener.listenConnection();
         });
     }

@@ -42,6 +42,7 @@
     ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
         $scope.isLoading = true;
+        $scope.hasConnection = true;
 
         chatDetails.getDetails()
             .then(function (details) {
@@ -51,9 +52,9 @@
                 $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)]
                 readMessages();
                 $scope.isLoading = false
+            }, function () {
+                $scope.hasConnection = false;
             });
-
-
 
         window.addEventListener('native.keyboardshow', function() {
             $timeout(function() {
