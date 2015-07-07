@@ -58,6 +58,10 @@
             }, 100);
         });
 
+        $scope.tracker = function (msg) {
+            return msg._id + msg.created;
+        };
+
         $scope.isMsgYours = function (msg) {
             return msg.sender == $scope.userProfile._id;
         };
@@ -81,7 +85,7 @@
                 chat: $scope.chat._id,
                 sender: $scope.userProfile._id,
                 text: $scope.activeMessage,
-                created: new Date().getTime()
+                created: new Date().toISOString()
             };
 
             ChatsApi.sendMessage(newMessage);
