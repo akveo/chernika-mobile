@@ -1,0 +1,12 @@
+<div class="modal no-connection-modal">
+    <ion-content class="padding" ng-show="!messages.length" scroll="false">
+        <div class="centered-block" ng-if="!messages.length">
+            <div class="default-content" ng-if="!geoEnabled">
+                <div class="ion-wifi centered-block-icon"></div>
+                <div class="hint-text">
+                    Увы, соединение с интернетом потеряно
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</div>

@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app.main', ['app.main.matches', 'app.main.settings', 'app.main.swiper', 'app.api'])
+    angular.module('app.main', ['app.main.matches', 'app.main.settings', 'app.main.swiper', 'app.main.common', 'app.api'])
         .config(appConfig);
 
     appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
