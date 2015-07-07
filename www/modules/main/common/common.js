@@ -4,7 +4,8 @@
 (function(angular) {
 
     angular.module('app.main.common')
-        .service('noConnectionModal', noConnectionModal);
+        .service('noConnectionModal', noConnectionModal)
+        .directive('loading', loading);
 
     noConnectionModal.$inject = ['$rootScope', '$ionicModal'];
     function noConnectionModal($rootScope, $ionicModal) {
@@ -26,5 +27,16 @@
         }
 
     }
+
+    function loading() {
+        return {
+            restrict: 'E',
+            templateUrl: 'modules/main/common/loading.html',
+            scope: {
+                isLoading: '=isLoading'
+            }
+        };
+    }
+
 
 })(angular);

@@ -5,6 +5,7 @@
 
     angular.module('app.main.matches')
         .service('ChatsApi', ChatsApi)
+        .service('chatDetails', chatDetails)
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
 
@@ -40,11 +41,19 @@
 
     ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
-        $scope.chat = chatDetails.chat;
-        $scope.messages = chatDetails.messages;
-        $scope.user = chatDetails.user;
-        $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)]
-        readMessages();
+        $scope.isLoading = true;
+
+        chatDetails.getDetails()
+            .then(function (details) {
+                $scope.chat = details.chat;
+                $scope.messages = details.messages;
+                $scope.user = details.user;
+                $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)]
+                readMessages();
+                $scope.isLoading = false
+            });
+
+
 
         window.addEventListener('native.keyboardshow', function() {
             $timeout(function() {
@@ -137,6 +146,33 @@
         this.readMessage = function(message) {
             appSocket.emit('message_read', message);
         }
+    }
+
+    chatDetails.$inject = ['ChatsApi', 'profilesApi', '$stateParams', '$q', '$rootScope'];
+    function chatDetails(ChatsApi, profilesApi, $stateParams, $q, $rootScope) {
+        this.getDetails = function () {
+            var chatPromise = ChatsApi.getChat($stateParams.chatId);
+            var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
+            var userPromise = chatPromise
+                .then(function (chat) {
+                    var chatUserId = chat.users[0] == $rootScope.userProfile._id ? chat.users[1] : chat.users[0];
+                    return profilesApi.getProfileInfo(chatUserId)
+                })
+                .then(function (profileInfo) {
+                    return profileInfo;
+                });
+            return $q.all([chatPromise, messagesPromise, userPromise]).then(function(res) {
+                var chat = res[0];
+                var messages = res[1];
+                var user = res[2];
+                chat.name = user.firstName;
+                return {
+                    chat: chat,
+                    messages: messages,
+                    user: user
+                }
+            });
+        };
     }
 
     var motivationalMsgs = [

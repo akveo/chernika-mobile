@@ -29,10 +29,7 @@
                 views: {
                     'tab-matches': {
                         templateUrl: 'modules/main/matches/chat.html',
-                        controller: 'ChatDetailCtrl',
-                        resolve: {
-                            chatDetails: chatDetailsResolve
-                        }
+                        controller: 'ChatDetailCtrl'
                     }
                 }
             })
@@ -44,28 +41,4 @@
         return ChatsApi.getChatsInfo();
     }
 
-    chatDetailsResolve.$inject = ['ChatsApi', 'profilesApi', '$stateParams', '$q', 'userProfile'];
-    function chatDetailsResolve(ChatsApi, profilesApi, $stateParams, $q, userProfile) {
-        var chatPromise = ChatsApi.getChat($stateParams.chatId);
-        var messagesPromise = ChatsApi.getMessages($stateParams.chatId);
-        var userPromise = chatPromise
-            .then(function (chat) {
-                var chatUserId = chat.users[0] == userProfile._id ? chat.users[1] : chat.users[0];
-                return profilesApi.getProfileInfo(chatUserId)
-            })
-            .then(function (profileInfo) {
-                return profileInfo;
-            });
-        return $q.all([chatPromise, messagesPromise, userPromise]).then(function(res) {
-            var chat = res[0];
-            var messages = res[1];
-            var user = res[2];
-            chat.name = user.firstName;
-            return {
-                chat: chat,
-                messages: messages,
-                user: user
-            }
-        });
-    }
 })(angular);
