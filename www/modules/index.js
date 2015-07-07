@@ -6,6 +6,7 @@
 
     angular.module('app', ['ionic', 'ngCordova', 'app.auth', 'app.main', 'app.api'])
         .config(appConfig)
+        .service('connectionListener', connectionListener)
         .run(appRun)
         .controller('SplashController', SplashController);
 
@@ -22,8 +23,8 @@
         //$ionicConfigProvider.tabs.position('bottom');
     }
 
-    appRun.$inject = ['$ionicPlatform'];
-    function appRun($ionicPlatform) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener'];
+    function appRun($ionicPlatform, connectionListener) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -35,6 +36,7 @@
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+            connectionListener.listenConnection();
         });
     }
 
@@ -46,5 +48,32 @@
             }, function() {
                 $state.go('login');
             });
+    }
+
+    connectionListener.$inject = ['$rootScope', 'appSocket'];
+    function connectionListener($rootScope, appSocket) {
+
+        var online = false;
+
+        function setOffline() {
+            if (online) {
+                online = false;
+                $rootScope.$broadcast('connection.off');
+            }
+        }
+
+        function setOnline() {
+            if (!online) {
+                online = true;
+                $rootScope.$broadcast('connection.on');
+            }
+        }
+
+        this.listenConnection = function () {
+            document.addEventListener("online", setOnline, false);
+            document.addEventListener("offline", setOffline, false);
+            appSocket.on('connect', setOnline);
+            appSocket.on('disconnect',setOffline)
+        };
     }
 })(angular);
