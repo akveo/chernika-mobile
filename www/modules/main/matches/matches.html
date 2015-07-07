@@ -1,22 +1,27 @@
 <ion-view view-title="Совпадения">
-  <ion-content>
-    <ion-refresher
-            pulling-text="Pull to refresh..."
-            on-refresh="doRefresh()">
-    </ion-refresher>
-    <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" ui-sref="main.match-detail({chatId: chat.chat, name: chat.user.firstName})">
-        <img ng-src="{{chat.user.photo.src}}">
-        <h2>
-            {{chat.user.firstName}}
-        </h2>
-        <p ng-class="{'bold': isChatHighlighted(chat)}">{{chat.message.text || 'Вы понравились друг другу!'}}</p>
-        <i class="icon ion-chevron-right icon-accessory"></i>
+    <loading is-loading="isLoading && hasConnection"></loading>
+    <no-connection has-connection="hasConnection"></no-connection>
 
-        <ion-option-button class="button-assertive" ng-click="remove(chat)">
-          Delete
-        </ion-option-button>
-      </ion-item>
-    </ion-list>
-  </ion-content>
+    <div class="main-content" ng-if="(!isLoading && hasConnection)">
+        <ion-content>
+            <ion-refresher
+                    pulling-text="Pull to refresh..."
+                    on-refresh="doRefresh()">
+            </ion-refresher>
+            <ion-list>
+                <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" ui-sref="main.match-detail({chatId: chat.chat, name: chat.user.firstName})">
+                    <img ng-src="{{chat.user.photo.src}}">
+                    <h2>
+                        {{chat.user.firstName}}
+                    </h2>
+                    <p ng-class="{'bold': isChatHighlighted(chat)}">{{chat.message.text || 'Вы понравились друг другу!'}}</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+
+                    <ion-option-button class="button-assertive" ng-click="remove(chat)">
+                        Delete
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </div>
 </ion-view>

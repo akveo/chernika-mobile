@@ -9,9 +9,19 @@
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
 
-    ChatsController.$inject = ['$scope', 'chats', 'socketEventService'];
-    function ChatsController($scope, chats, socketEventService) {
-        $scope.chats = chats;
+    ChatsController.$inject = ['$scope', 'ChatsApi', 'socketEventService'];
+    function ChatsController($scope, ChatsApi, socketEventService) {
+        $scope.isLoading = true;
+        $scope.hasConnection = true;
+
+        ChatsApi.getChatsInfo()
+            .then(function (chats) {
+                $scope.isLoading = false;
+                $scope.chats = chats;
+            }, function (error) {
+                $scope.hasConnection = false;
+            });
+
         $scope.remove = function() {
 
         };
