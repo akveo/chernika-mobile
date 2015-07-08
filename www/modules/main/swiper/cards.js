@@ -32,7 +32,7 @@
             .then(function(suggestions) {
                 $scope.cards = suggestions;
             }, function(err) {
-                if (err.PERMISSION_DENIED) {
+                if (err.code == 1 ) { //PERMISSION_DENIED
                     $scope.geoEnabled = false;
                 }
             });
