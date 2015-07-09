@@ -33,7 +33,7 @@
         };
 
         socketEventService.listen($scope, 'new_message', function (msg) {
-            chats.forEach(function (chat) {
+            $scope.chats.forEach(function (chat) {
                 if(chat.chat == msg.chat) {
                     chat.message = msg;
                 }
@@ -41,7 +41,7 @@
         });
 
         socketEventService.listen($scope, 'message_read', function (msg) {
-            chats.forEach(function (chat) {
+            $scope.chats.forEach(function (chat) {
                 if(chat.chat == msg.chat && $scope.isChatHighlighted(chat)) {
                     chat.message = msg;
                 }
@@ -53,6 +53,10 @@
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
         $scope.isLoading = true;
         $scope.hasConnection = true;
+
+        $scope.activeMessage = {
+            text: ''
+        };
 
         chatDetails.getDetails()
             .then(function (details) {
@@ -104,7 +108,7 @@
             var newMessage = {
                 chat: $scope.chat._id,
                 sender: $scope.userProfile._id,
-                text: $scope.activeMessage,
+                text: $scope.activeMessage.text,
                 created: new Date().toISOString()
             };
 
@@ -113,7 +117,7 @@
             newMessage.isSending = true;
             $scope.messages.push(newMessage);
 
-            delete $scope.activeMessage;
+            delete $scope.activeMessage.text;
 
             $timeout(function() {
                 $ionicScrollDelegate.scrollBottom(true);
