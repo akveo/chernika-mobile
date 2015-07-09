@@ -1,5 +1,8 @@
 <ion-view view-title="{{profileDetails.firstName}}">
-    <ion-content scroll="false" class="profile-details">
+    <loading is-loading="isLoading && hasConnection"></loading>
+    <no-connection has-connection="hasConnection"></no-connection>
+
+    <ion-content scroll="false" class="profile-details" ng-if="(!isLoading && hasConnection)">
         <ion-slide-box show-pager="true">
             <ion-slide class="" ng-repeat="photo in profileDetails.photos">
                 <div cropped-image="photo" target-width="screenWidth"></div>

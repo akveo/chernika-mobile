@@ -25,17 +25,10 @@
                     'tab-swiper': {
                         templateUrl: 'modules/main/swiper/profileDetails.html',
                         controller: 'profileDetailsCtrl',
-                        controllerAs: 'vm',
-                        resolve: {
-                            profileDetails: profileDetailsResolve
-                        }
+                        controllerAs: 'vm'
                     }
                 }
             });
     }
 
-    profileDetailsResolve.$inject = ['profilesApi', '$stateParams'];
-    function profileDetailsResolve(profilesApi, $stateParams) {
-        return profilesApi.getProfileData($stateParams.profileId);
-    }
 })(angular);

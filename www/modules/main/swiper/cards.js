@@ -15,7 +15,8 @@
                 .then(function(position) {
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
                 }, function(err) {
-                    throw err;
+                    return suggestionsApi.getSuggestions(53.883873, 27.507375);
+//                    throw err;
                 });
         };
     }
