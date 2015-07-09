@@ -11,20 +11,23 @@
 
     ChatsController.$inject = ['$scope', 'ChatsApi', 'socketEventService'];
     function ChatsController($scope, ChatsApi, socketEventService) {
-        $scope.isLoading = true;
-        $scope.hasConnection = true;
+        $scope.isContentSeen = false;
+
+        $scope.$broadcast('connection.loading.start');
 
         ChatsApi.getChatsInfo()
             .then(function (chats) {
-                $scope.isLoading = false;
+                $scope.isContentSeen = true;
                 $scope.chats = chats;
+                $scope.$broadcast('connection.loading.success');
             }, function (error) {
-                $scope.hasConnection = false;
+                $scope.$broadcast('connection.error', error);
             });
 
         $scope.remove = function() {
 
         };
+
         $scope.isChatHighlighted = function(chat) {
             if (chat.message) {
                 var msg = chat.message;
@@ -51,23 +54,24 @@
 
     ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
     function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
-        $scope.isLoading = true;
-        $scope.hasConnection = true;
-
+        $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
         };
+
+        $scope.$broadcast('connection.loading.start');
 
         chatDetails.getDetails()
             .then(function (details) {
                 $scope.chat = details.chat;
                 $scope.messages = details.messages;
                 $scope.user = details.user;
-                $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)]
+                $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
                 readMessages();
-                $scope.isLoading = false
-            }, function () {
-                $scope.hasConnection = false;
+                $scope.isContentSeen = true;
+                $scope.$broadcast('connection.loading.success');
+            }, function (error) {
+                $scope.$broadcast('connection.error', error);
             });
 
         window.addEventListener('native.keyboardshow', function() {

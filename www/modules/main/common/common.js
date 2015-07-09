@@ -4,65 +4,80 @@
 (function(angular) {
 
     angular.module('app.main.common')
-        .service('noConnectionModal', noConnectionModal)
         .controller('noConnectionCtrl', noConnectionCtrl)
-        .directive('noConnection', noConnection)
-        .directive('loading', loading);
-
-    noConnectionModal.$inject = ['$rootScope', '$ionicModal'];
-    function noConnectionModal($rootScope, $ionicModal) {
-        var that = this;
-
-        $ionicModal.fromTemplateUrl('modules/main/common/noConnection.html', {
-            animation: 'slide-in-up'
-        }).then(function(modal) {
-            that.modal = modal;
-        });
-
-        this.activate = function() {
-            $rootScope.$on('connection.off', function () {
-                that.modal.show();
-            });
-            $rootScope.$on('connection.on', function () {
-                that.modal.hide();
-            });
-        }
-
-    }
-
-    function loading() {
-        return {
-            restrict: 'E',
-            templateUrl: 'modules/main/common/loading.html',
-            scope: {
-                isLoading: '=isLoading'
-            }
-        };
-    }
+        .controller('cleverLoaderCtrl', cleverLoaderCtrl)
+        .directive('cleverLoader', cleverLoader)
+        .directive('noConnection', noConnection);
 
     function noConnection() {
         return {
             restrict: 'E',
             templateUrl: 'modules/main/common/noConnection.html',
             scope: {
-                hasConnection: '=hasConnection'
+                showNoConnectionBanner: '='
             },
             controller: noConnectionCtrl
         }
     }
 
-    noConnectionCtrl.$inject = ['$rootScope', '$scope'];
-    function noConnectionCtrl($rootScope, $scope) {
+    noConnectionCtrl.$inject = ['$scope'];
+    function noConnectionCtrl($scope) {
 
-        $rootScope.$on('connection.off', function () {
-            debugger;
-            $scope.hasConnection = false;
+        $scope.$on('connection.off', function () {
+            $scope.showNoConnectionBanner = true;
         });
 
-        $rootScope.$on('connection.on', function () {
-            $scope.hasConnection = true;
+        $scope.$on('connection.on', function () {
+            $scope.showNoConnectionBanner = false;
         });
 
+        $scope.$on('connection.error', function() {
+            $scope.showNoConnectionBanner = true;
+        });
+
+        $scope.$on('connection.loading.success', function() {
+            $scope.showNoConnectionBanner = false;
+        })
+
+    }
+
+    function cleverLoader() {
+        return {
+            restrict: 'E',
+            templateUrl: 'modules/main/common/cleverLoader.html',
+            scope: {
+                withNoConnectionBanner: '@',
+                isSeen: '='
+            },
+            controller: cleverLoaderCtrl
+        }
+    }
+
+    cleverLoaderCtrl.$inject = ['$scope','$rootScope'];
+    function cleverLoaderCtrl($scope, $rootScope) {
+        $scope.showNoConnectionBanner = false;
+        $scope.isLoading = $scope.isSeen;
+
+        $scope.$on('connection.loading.start', function () {
+            $scope.isLoading = true;
+            updateIsSeen();
+        });
+
+        $scope.$on('connection.loading.success', function () {
+            $scope.isLoading = false;
+            updateIsSeen();
+        });
+
+        if ($scope.withNoConnectionBanner) {
+            $scope.$watch('showNoConnectionBanner', function(oldValue, newValue) {
+                $scope.isLoading = !newValue;
+                updateIsSeen();
+            })
+        }
+
+        function updateIsSeen() {
+            $scope.isSeen = $scope.withNoConnectionBanner ? $scope.isLoading || $scope.showNoConnectionBanner : $scope.isLoading;
+        }
     }
 
 

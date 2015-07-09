@@ -1,0 +1,14 @@
+<div ng-show="isSeen">
+    <div class="loading" ng-show="isLoading">
+        <ion-content class="padding" scroll="false">
+            <div class="centered-block">
+                <div class="default-content">
+                    <div class="ion-loading-c centered-block-icon"></div>
+                </div>
+            </div>
+        </ion-content>
+    </div>
+    <div ng-if="withNoConnectionBanner">
+        <no-connection show-no-connection-banner="showNoConnectionBanner"></no-connection>
+    </div>
+</div>

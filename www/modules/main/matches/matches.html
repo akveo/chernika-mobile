@@ -1,8 +1,7 @@
 <ion-view view-title="Совпадения">
-    <loading is-loading="isLoading && hasConnection"></loading>
-    <no-connection has-connection="hasConnection"></no-connection>
+    <clever-loader is-seen="true" with-no-connection-banner="true"></clever-loader>
 
-    <div class="main-content" ng-if="(!isLoading && hasConnection)">
+    <div class="main-content" ng-if="isContentSeen">
         <ion-content>
             <ion-refresher
                     pulling-text="Pull to refresh..."
