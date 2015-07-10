@@ -22,9 +22,17 @@
             })
     }
 
-    userProfileResolve.$inject = ['userApi'];
-    function userProfileResolve(userApi) {
-        return userApi.checkLoggedIn();
+    userProfileResolve.$inject = ['userApi', '$ionicLoading'];
+    function userProfileResolve(userApi, $ionicLoading) {
+        $ionicLoading.show();
+
+        function onCheckedLogin(loginData) {
+            $ionicLoading.hide();
+            return loginData;
+        }
+        
+        return userApi.checkLoggedIn()
+            .then(onCheckedLogin, onCheckedLogin);
     }
 
     mainController.$inject = ['$rootScope', 'userProfile'];

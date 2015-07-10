@@ -7,8 +7,8 @@
         .factory('vkAuthenticator', vkAuthenticator)
         .service('vkApi', vkApi);
 
-    DeviceLoginController.$inject = ['$scope', '$rootScope', '$state', 'vkApi', 'userApi', 'vkAuthenticator'];
-    function DeviceLoginController($scope, $rootScope, $state, vkApi, userApi, vkAuthenticator) {
+    DeviceLoginController.$inject = ['$scope', '$rootScope', '$state', 'vkApi', 'userApi', 'vkAuthenticator', '$ionicLoading'];
+    function DeviceLoginController($scope, $rootScope, $state, vkApi, userApi, vkAuthenticator, $ionicLoading) {
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.$onVkSdkEvent('vkSdk.newToken', function(evt) {
@@ -31,13 +31,16 @@
         };
 
         function afterTokenReceive(params) {
+            $ionicLoading.show();
             return userApi
                 .login(params)
                 .then(function() {
                     $rootScope.$broadcast('user.login');
+                    $ionicLoading.hide();
                     $state.go('main.swiper');
                 }, function error(e) {
                     // TODO: User friendly error
+                    $ionicLoading.hide();
                     alert('Service temporary unavailable. Please try again later');
                 });
         }
