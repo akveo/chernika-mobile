@@ -4,42 +4,9 @@
 (function(angular) {
 
     angular.module('app.main.common')
-        .controller('noConnectionCtrl', noConnectionCtrl)
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
-        .directive('cleverLoader', cleverLoader)
-        .directive('noConnection', noConnection);
-
-    function noConnection() {
-        return {
-            restrict: 'E',
-            templateUrl: 'modules/main/common/noConnection.html',
-            scope: {
-                showNoConnectionBanner: '='
-            },
-            controller: noConnectionCtrl
-        }
-    }
-
-    noConnectionCtrl.$inject = ['$scope'];
-    function noConnectionCtrl($scope) {
-
-        $scope.$on('connection.off', function () {
-            $scope.showNoConnectionBanner = true;
-        });
-
-        $scope.$on('connection.on', function () {
-            $scope.showNoConnectionBanner = false;
-        });
-
-        $scope.$on('connection.error', function() {
-            $scope.showNoConnectionBanner = true;
-        });
-
-        $scope.$on('connection.loading.success', function() {
-            $scope.showNoConnectionBanner = false;
-        })
-
-    }
+        .service('noConnectionBannerListener', noConnectionBannerListener)
+        .directive('cleverLoader', cleverLoader);
 
     function cleverLoader() {
         return {
@@ -53,8 +20,8 @@
         }
     }
 
-    cleverLoaderCtrl.$inject = ['$scope','$rootScope'];
-    function cleverLoaderCtrl($scope, $rootScope) {
+    cleverLoaderCtrl.$inject = ['$scope','noConnectionBannerListener'];
+    function cleverLoaderCtrl($scope, noConnectionBannerListener) {
         $scope.showNoConnectionBanner = false;
         $scope.isLoading = $scope.isSeen;
 
@@ -69,7 +36,9 @@
         });
 
         if ($scope.withNoConnectionBanner) {
-            $scope.$watch('showNoConnectionBanner', function(oldValue, newValue) {
+            noConnectionBannerListener.init($scope, 'showNoConnectionBanner');
+
+            $scope.$watch('showNoConnectionBanner', function(newValue, oldValue) {
                 $scope.isLoading = !newValue;
                 updateIsSeen();
             })
@@ -80,5 +49,24 @@
         }
     }
 
+    function noConnectionBannerListener() {
+        this.init = function($scope, showBannerProp) {
+            $scope.$on('connection.off', function () {
+                $scope[showBannerProp] = true;
+            });
+
+            $scope.$on('connection.on', function () {
+                $scope[showBannerProp] = false;
+            });
+
+            $scope.$on('connection.error', function() {
+                $scope[showBannerProp] = true;
+            });
+
+            $scope.$on('connection.loading.success', function() {
+                $scope[showBannerProp] = false;
+            })
+        }
+    }
 
 })(angular);

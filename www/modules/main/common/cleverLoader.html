@@ -8,7 +8,5 @@
             </div>
         </ion-content>
     </div>
-    <div ng-if="withNoConnectionBanner">
-        <no-connection show-no-connection-banner="showNoConnectionBanner"></no-connection>
-    </div>
+    <div ng-if="withNoConnectionBanner" ng-include="'modules/main/common/noConnection.html'"></div>
 </div>
