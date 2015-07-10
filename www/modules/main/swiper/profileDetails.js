@@ -8,20 +8,31 @@
         .service('profileDetails', profileDetails)
         .controller('profileDetailsCtrl', profileDetailsCtrl);
 
-    profileDetailsCtrl.$inject = ['$scope', 'profileDetails'];
-    function profileDetailsCtrl($scope, profileDetails) {
+    profileDetailsCtrl.$inject = ['$scope', 'profileDetails', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
+    function profileDetailsCtrl($scope, profileDetails, onConnectionChangePropertyListener, onLoadingPropertyListener) {
         $scope.screenWidth = screen.width;
         $scope.isContentSeen = false;
+
+        onConnectionChangePropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onGoodConnection: true,
+            onBadConnection: false
+        });
+
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onSuccess: true,
+            onStart: false
+        });
 
         $scope.$broadcast('connection.loading.start');
 
         profileDetails.getProfileDetails()
             .then(function (profileDetails) {
                 $scope.profileDetails = profileDetails;
-                $scope.isContentSeen = true;
                 $scope.$broadcast('connection.loading.success');
             }, function (error) {
-                $scope.$broadcast('connection.error', error);
+                $scope.$broadcast('connection.loading.error', error);
             });
     }
 

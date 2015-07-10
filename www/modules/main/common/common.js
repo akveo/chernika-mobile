@@ -6,6 +6,7 @@
     angular.module('app.main.common')
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
         .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
+        .service('onLoadingPropertyListener', onLoadingPropertyListener)
         .directive('cleverLoader', cleverLoader);
 
     function cleverLoader() {
@@ -20,8 +21,8 @@
         }
     }
 
-    cleverLoaderCtrl.$inject = ['$scope','onConnectionChangePropertyListener'];
-    function cleverLoaderCtrl($scope, onConnectionChangePropertyListener) {
+    cleverLoaderCtrl.$inject = ['$scope','onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
+    function cleverLoaderCtrl($scope, onConnectionChangePropertyListener, onLoadingPropertyListener) {
         $scope.showNoConnectionBanner = false;
         $scope.isLoading = $scope.isSeen;
 
@@ -42,6 +43,12 @@
                 onBadConnection: true
             });
 
+            onLoadingPropertyListener.listen($scope, {
+                prop: 'showNoConnectionBanner',
+                onError: true,
+                onSuccess: false
+            });
+
             $scope.$watch('showNoConnectionBanner', function(newValue, oldValue) {
                 $scope.isLoading = !newValue;
                 updateIsSeen();
@@ -58,26 +65,39 @@
             var prop = opts.prop;
             var onBadConnection = opts.onBadConnection;
             var onGoodConnection = opts.onGoodConnection;
-            var handleConnectionErrors = opts.handleConnectionErrors !== false;
 
-            $scope.$on('connection.off', function () {
+            isProperty(onBadConnection) && $scope.$on('connection.off', function () {
                 $scope[prop] = onBadConnection;
             });
 
-            $scope.$on('connection.on', function () {
+            isProperty(onGoodConnection) && $scope.$on('connection.on', function () {
                 $scope[prop] = onGoodConnection;
             });
-
-            $scope.$on('connection.loading.success', function() {
-                $scope[prop] = onGoodConnection;
-            });
-
-            if (handleConnectionErrors) {
-                $scope.$on('connection.error', function() {
-                    $scope[prop] = onBadConnection;
-                });
-            }
         }
     }
 
+    function onLoadingPropertyListener() {
+        this.listen = function($scope, opts) {
+            var prop = opts.prop;
+            var onError = opts.onError;
+            var onSuccess = opts.onSuccess;
+            var onStart = opts.onStart;
+
+            isProperty(onError) && $scope.$on('connection.loading.error', function() {
+                $scope[prop] = onError;
+            });
+
+            isProperty(onSuccess) && $scope.$on('connection.loading.success', function() {
+                $scope[prop] = onSuccess;
+            });
+
+            isProperty(onStart) && $scope.$on('connection.loading.start', function() {
+                $scope[prop] = onStart;
+            });
+        };
+    }
+
+    function isProperty(prop) {
+        return prop !== undefined;
+    }
 })(angular);

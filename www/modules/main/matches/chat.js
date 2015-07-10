@@ -9,19 +9,30 @@
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
 
-    ChatsController.$inject = ['$scope', 'ChatsApi', 'socketEventService'];
-    function ChatsController($scope, ChatsApi, socketEventService) {
+    ChatsController.$inject = ['$scope', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
+    function ChatsController($scope, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener) {
         $scope.isContentSeen = false;
+
+        onConnectionChangePropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onGoodConnection: true,
+            onBadConnection: false
+        });
+
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onSuccess: true,
+            onStart: false
+        });
 
         $scope.$broadcast('connection.loading.start');
 
         ChatsApi.getChatsInfo()
             .then(function (chats) {
-                $scope.isContentSeen = true;
                 $scope.chats = chats;
                 $scope.$broadcast('connection.loading.success');
             }, function (error) {
-                $scope.$broadcast('connection.error', error);
+                $scope.$broadcast('connection.loading.error', error);
             });
 
         $scope.remove = function() {
@@ -52,12 +63,24 @@
         })
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener) {
         $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
         };
+
+        onConnectionChangePropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onGoodConnection: true,
+            onBadConnection: false
+        });
+
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onSuccess: true,
+            onStart: false
+        });
 
         $scope.$broadcast('connection.loading.start');
 
@@ -68,10 +91,9 @@
                 $scope.user = details.user;
                 $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
                 readMessages();
-                $scope.isContentSeen = true;
                 $scope.$broadcast('connection.loading.success');
             }, function (error) {
-                $scope.$broadcast('connection.error', error);
+                $scope.$broadcast('connection.loading.error', error);
             });
 
         window.addEventListener('native.keyboardshow', function() {
