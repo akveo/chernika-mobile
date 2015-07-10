@@ -5,7 +5,7 @@
 
     angular.module('app.main.common')
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
-        .service('noConnectionBannerListener', noConnectionBannerListener)
+        .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
         .directive('cleverLoader', cleverLoader);
 
     function cleverLoader() {
@@ -20,8 +20,8 @@
         }
     }
 
-    cleverLoaderCtrl.$inject = ['$scope','noConnectionBannerListener'];
-    function cleverLoaderCtrl($scope, noConnectionBannerListener) {
+    cleverLoaderCtrl.$inject = ['$scope','onConnectionChangePropertyListener'];
+    function cleverLoaderCtrl($scope, onConnectionChangePropertyListener) {
         $scope.showNoConnectionBanner = false;
         $scope.isLoading = $scope.isSeen;
 
@@ -36,7 +36,11 @@
         });
 
         if ($scope.withNoConnectionBanner) {
-            noConnectionBannerListener.init($scope, 'showNoConnectionBanner');
+            onConnectionChangePropertyListener.listen($scope, {
+                prop: 'showNoConnectionBanner',
+                onGoodConnection: false,
+                onBadConnection: true
+            });
 
             $scope.$watch('showNoConnectionBanner', function(newValue, oldValue) {
                 $scope.isLoading = !newValue;
@@ -49,23 +53,30 @@
         }
     }
 
-    function noConnectionBannerListener() {
-        this.init = function($scope, showBannerProp) {
+    function onConnectionChangePropertyListener() {
+        this.listen = function($scope, opts) {
+            var prop = opts.prop;
+            var onBadConnection = opts.onBadConnection;
+            var onGoodConnection = opts.onGoodConnection;
+            var handleConnectionErrors = opts.handleConnectionErrors !== false;
+
             $scope.$on('connection.off', function () {
-                $scope[showBannerProp] = true;
+                $scope[prop] = onBadConnection;
             });
 
             $scope.$on('connection.on', function () {
-                $scope[showBannerProp] = false;
-            });
-
-            $scope.$on('connection.error', function() {
-                $scope[showBannerProp] = true;
+                $scope[prop] = onGoodConnection;
             });
 
             $scope.$on('connection.loading.success', function() {
-                $scope[showBannerProp] = false;
-            })
+                $scope[prop] = onGoodConnection;
+            });
+
+            if (handleConnectionErrors) {
+                $scope.$on('connection.error', function() {
+                    $scope[prop] = onBadConnection;
+                });
+            }
         }
     }
 
