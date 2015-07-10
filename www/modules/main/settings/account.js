@@ -38,15 +38,18 @@
         });
     }
 
-    settingsTimeoutSaver.$inject = ['$timeout', 'userApi'];
-    function settingsTimeoutSaver($timeout, userApi) {
+    settingsTimeoutSaver.$inject = ['$timeout', 'userApi', '$rootScope'];
+    function settingsTimeoutSaver($timeout, userApi, $rootScope) {
         var lastChangeTooRecent = 0;
         this.saveSettings = function(settingsObject) {
             var settingsCopy = angular.copy(settingsObject);
             lastChangeTooRecent++;
             $timeout(function() {
                 if (!--lastChangeTooRecent) {
-                    userApi.saveSettings(settingsCopy);
+                    userApi.saveSettings(settingsCopy)
+                        .then(function() {
+                            $rootScope.$broadcast('settings.changed');
+                        });
                 }
             }, 500);
         };

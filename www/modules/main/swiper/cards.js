@@ -29,14 +29,9 @@
         $scope.cards = [];
         var viewSizing = $scope.viewSizing = {};
 
-        suggestionsByLocation.getSuggestionsByLocation()
-            .then(function(suggestions) {
-                $scope.cards = suggestions;
-            }, function(err) {
-                if (err.code == 1 ) { //PERMISSION_DENIED
-                    $scope.geoEnabled = false;
-                }
-            });
+        $scope.$on('settings.changed', load);
+
+        load();
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
@@ -95,6 +90,18 @@
         $scope.$watch('viewSizing', function(oldValue, newValue) {
             recalculateSizing();
         }, true);
+
+        function load() {
+            $scope.cards = [];
+            suggestionsByLocation.getSuggestionsByLocation()
+                .then(function(suggestions) {
+                    $scope.cards = suggestions;
+                }, function(err) {
+                    if (err.code == 1 ) { //PERMISSION_DENIED
+                        $scope.geoEnabled = false;
+                    }
+                });
+        }
 
     }
 
