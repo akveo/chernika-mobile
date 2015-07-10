@@ -25,15 +25,9 @@
             onStart: false
         });
 
-        $scope.$broadcast('connection.loading.start');
+        $scope.$on('connection.on', load);
 
-        ChatsApi.getChatsInfo()
-            .then(function (chats) {
-                $scope.chats = chats;
-                $scope.$broadcast('connection.loading.success');
-            }, function (error) {
-                $scope.$broadcast('connection.loading.error', error);
-            });
+        load();
 
         $scope.remove = function() {
 
@@ -60,7 +54,18 @@
                     chat.message = msg;
                 }
             });
-        })
+        });
+
+        function load() {
+            $scope.$broadcast('connection.loading.start');
+            ChatsApi.getChatsInfo()
+                .then(function (chats) {
+                    $scope.chats = chats;
+                    $scope.$broadcast('connection.loading.success');
+                }, function (error) {
+                    $scope.$broadcast('connection.loading.error', error);
+                });
+        }
     }
 
     ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
@@ -82,19 +87,9 @@
             onStart: false
         });
 
-        $scope.$broadcast('connection.loading.start');
+        $scope.$on('connection.on', load);
 
-        chatDetails.getDetails()
-            .then(function (details) {
-                $scope.chat = details.chat;
-                $scope.messages = details.messages;
-                $scope.user = details.user;
-                $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
-                readMessages();
-                $scope.$broadcast('connection.loading.success');
-            }, function (error) {
-                $scope.$broadcast('connection.loading.error', error);
-            });
+        load();
 
         window.addEventListener('native.keyboardshow', function() {
             $timeout(function() {
@@ -159,6 +154,21 @@
         function addMessage(msg) {
             $scope.messages.push(msg);
             ChatsApi.readMessage(msg);
+        }
+
+        function load() {
+            $scope.$broadcast('connection.loading.start');
+            chatDetails.getDetails()
+                .then(function (details) {
+                    $scope.chat = details.chat;
+                    $scope.messages = details.messages;
+                    $scope.user = details.user;
+                    $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
+                    readMessages();
+                    $scope.$broadcast('connection.loading.success');
+                }, function (error) {
+                    $scope.$broadcast('connection.loading.error', error);
+                });
         }
     }
 

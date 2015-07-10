@@ -25,15 +25,20 @@
             onStart: false
         });
 
-        $scope.$broadcast('connection.loading.start');
+        $scope.$on('connection.on', load);
 
-        profileDetails.getProfileDetails()
-            .then(function (profileDetails) {
-                $scope.profileDetails = profileDetails;
-                $scope.$broadcast('connection.loading.success');
-            }, function (error) {
-                $scope.$broadcast('connection.loading.error', error);
-            });
+        load();
+
+        function load() {
+            $scope.$broadcast('connection.loading.start');
+            profileDetails.getProfileDetails()
+                .then(function (profileDetails) {
+                    $scope.profileDetails = profileDetails;
+                    $scope.$broadcast('connection.loading.success');
+                }, function (error) {
+                    $scope.$broadcast('connection.loading.error', error);
+                });
+        }
     }
 
     profileDetails.$inject = ['profilesApi', '$stateParams'];
