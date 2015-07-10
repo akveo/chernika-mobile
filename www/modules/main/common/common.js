@@ -26,15 +26,14 @@
         $scope.showNoConnectionBanner = false;
         $scope.isLoading = $scope.isSeen;
 
-        $scope.$on('connection.loading.start', function () {
-            $scope.isLoading = true;
-            updateIsSeen();
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isLoading',
+            onSuccess: false,
+            onStart: true,
+            onError: false
         });
 
-        $scope.$on('connection.loading.success', function () {
-            $scope.isLoading = false;
-            updateIsSeen();
-        });
+        $scope.$watch('isLoading', updateIsSeen);
 
         if ($scope.withNoConnectionBanner) {
             onConnectionChangePropertyListener.listen($scope, {
@@ -50,7 +49,7 @@
             });
 
             $scope.$watch('showNoConnectionBanner', function(newValue, oldValue) {
-                $scope.isLoading = !newValue;
+                $scope.isLoading = newValue === true ? false : $scope.isLoading;
                 updateIsSeen();
             })
         }
