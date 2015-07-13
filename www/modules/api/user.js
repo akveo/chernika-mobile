@@ -21,12 +21,7 @@
         };
 
         this.getPhotos = function() {
-            return $http.get(userEndpoint + '/photos', {
-                params: {
-                    lon: lon,
-                    lat: lat
-                }
-            })
+            return $http.get(userEndpoint + '/photos').then(function(res) { return res.data; });;
         };
 
         var settingsEndpoint = userEndpoint + '/settings';

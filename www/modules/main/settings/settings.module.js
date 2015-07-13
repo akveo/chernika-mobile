@@ -28,6 +28,18 @@
                         }
                     }
                 }
+            })
+            .state('main.settings-photo', {
+                url: '/settings/photo',
+                views: {
+                    'tab-settings': {
+                        templateUrl: 'modules/main/settings/photoSettings.html',
+                        controller: 'PhotoSettingsController',
+                        resolve: {
+                            userPhotos: userPhotosResolve
+                        }
+                    }
+                }
             });
     }
 
@@ -35,4 +47,10 @@
     function currentSettingsResolve(userApi) {
         return userApi.getSettings();
     }
+
+    userPhotosResolve.$inject = ['userApi'];
+    function userPhotosResolve(userApi) {
+        return userApi.getPhotos();
+    }
+
 })(angular);
