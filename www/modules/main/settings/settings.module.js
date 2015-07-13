@@ -8,18 +8,27 @@
 
     swiperConfig.$inject = ['$stateProvider'];
     function swiperConfig($stateProvider) {
-        $stateProvider.state('main.settings', {
-            url: '/settings',
-            views: {
-                'tab-settings': {
-                    templateUrl: 'modules/main/settings/settings.html',
-                    controller: 'AccountCtrl',
-                    resolve: {
-                        currentSettings: currentSettingsResolve
+        $stateProvider
+            .state('main.settings', {
+                url: '/settings',
+                views: {
+                    'tab-settings': {
+                        templateUrl: 'modules/main/settings/settings.html'
                     }
                 }
-            }
-        });
+        })
+            .state('main.settings-search', {
+                url: '/settings/search',
+                views: {
+                    'tab-settings': {
+                        templateUrl: 'modules/main/settings/searchSettings.html',
+                        controller: 'AccountCtrl',
+                        resolve: {
+                            currentSettings: currentSettingsResolve
+                        }
+                    }
+                }
+            });
     }
 
     currentSettingsResolve.$inject = ['userApi'];
