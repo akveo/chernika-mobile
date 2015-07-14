@@ -23,6 +23,10 @@ body.blurred {
   font-weight: bold;
 }
 
+.inline-block {
+  display: inline-block;
+}
+
 $centeredBlockWidth: 300px;
 $centeredBlockHeight: 300px;
 .centered-block {

@@ -16,8 +16,46 @@
   display: inline-block;
 }
 
+$photoSettingsGutter: 15px;
 .distance-label {
   display: inline-block;
   float: right;
   font-weight: 700;
+}
+
+.photos-settings {
+  padding: 10px;
+  line-height: 0;
+
+  .photo {
+    display: inline-block;
+
+    &.main-photo {
+      margin-right: $photoSettingsGutter;
+    }
+  }
+
+  .first-row, .second-row {
+    font-size: 0;
+  }
+
+  .first-row .small-photos {
+    display: inline-block;
+    .photo {
+      display: block;
+      &:first-child {
+        margin-bottom: $photoSettingsGutter;
+      }
+    }
+  }
+
+  .second-row {
+    margin-top: $photoSettingsGutter;
+    .photo {
+      margin-right: $photoSettingsGutter;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
