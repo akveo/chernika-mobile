@@ -35,6 +35,7 @@
                 }
 
                 scope.$watch('targetWidth', applyStyles);
+                scope.$watch('imageObject', applyStyles);
 
                 function applyStyles() {
                     element.css({

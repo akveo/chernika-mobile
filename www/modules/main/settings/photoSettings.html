@@ -2,27 +2,27 @@
     <ion-content>
         <div class="photos-settings">
             <div class="first-row">
-                <div class="photo main-photo">
+                <div class="photo main-photo" ng-drop="true" ng-drop-success="onDropComplete($data,$event)" ng-if="true">
                     <div cropped-image="photos[0]" target-width="photosWidth.bigPhotoWidth"></div>
                 </div>
                 <div class="small-photos">
-                    <div class="photo">
-                        <div cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
+                    <div data-tap-disabled="true" ng-drag-data="photos[1]" ng-drag="true" class="photo">
+                        <div cropped-image="photos[1]" target-width="photosWidth.smallPhotoWidth"></div>
                     </div>
-                    <div class="photo">
-                        <div cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
+                    <div data-tap-disabled="true" ng-drag-data="photos[2]" ng-drag="true" class="photo">
+                        <div cropped-image="photos[2]" target-width="photosWidth.smallPhotoWidth"></div>
                     </div>
                 </div>
             </div>
             <div class="second-row">
-                <div class="photo">
+                <div data-tap-disabled="true" ng-drag-data="photos[0]" ng-drag="true" class="photo">
                     <div cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
                 </div>
-                <div class="photo">
-                    <div cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
+                <div data-tap-disabled="true" class="photo" ng-drag-data="photos[1]" ng-drag="true">
+                    <div cropped-image="photos[1]" target-width="photosWidth.smallPhotoWidth"></div>
                 </div>
-                <div class="photo">
-                    <div cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
+                <div class="photo" ng-drag-data="photos[2]" ng-drag="true">
+                    <div data-tap-disabled="true" cropped-image="photos[2]" target-width="photosWidth.smallPhotoWidth"></div>
                 </div>
             </div>
         </div>

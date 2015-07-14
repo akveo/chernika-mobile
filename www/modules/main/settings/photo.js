@@ -4,12 +4,16 @@
         .service('photoSettingsWidthCalculator', photoSettingsWidthCalculator)
         .controller('PhotoSettingsController', PhotoSettingsController);
 
-    PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator'];
-    function PhotoSettingsController($scope, userPhotos, photoSettingsWidthCalculator) {
+    PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator', '$rootScope'];
+    function PhotoSettingsController($scope, userPhotos, photoSettingsWidthCalculator, $rootScope) {
         $scope.photos = userPhotos;
         $scope.photosWidth = photoSettingsWidthCalculator.calculate();
-        console.log($scope.photosWidth);
-        console.log(userPhotos);
+
+        $scope.onDropComplete=function(data,evt){
+            var draggedPhotoIndex = $scope.photos.indexOf(data);
+            $scope.photos[draggedPhotoIndex] = $scope.photos[0];
+            $scope.photos[0] = data;
+        }
     }
 
     photoSettingsWidthCalculator.$inject = [];
