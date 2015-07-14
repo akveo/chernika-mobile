@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'ngCordova', 'app.auth', 'app.main', 'app.api'])
+    angular.module('app', ['ionic', 'ngCordova', 'app.auth', 'app.main', 'app.api', 'ngDraggable'])
         .config(appConfig)
         .service('connectionListener', connectionListener)
         .run(appRun)
