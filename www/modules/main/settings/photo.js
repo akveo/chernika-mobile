@@ -9,10 +9,12 @@
         $scope.photos = userPhotos;
         $scope.photosWidth = photoSettingsWidthCalculator.calculate();
 
-        $scope.onDropComplete=function(data,evt){
-            var draggedPhotoIndex = $scope.photos.indexOf(data);
-            $scope.photos[draggedPhotoIndex] = $scope.photos[0];
-            $scope.photos[0] = data;
+        $scope.onDropComplete=function(dropIndex, data){
+            var draggedIndex = $scope.photos.indexOf(data);
+            if (dropIndex == 0 || draggedIndex == 0) {
+                $scope.photos[draggedIndex] = $scope.photos[dropIndex];
+                $scope.photos[dropIndex] = data;
+            }
         }
     }
 
