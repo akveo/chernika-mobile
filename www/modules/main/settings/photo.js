@@ -2,6 +2,7 @@
 
     angular.module('app.main.settings')
         .service('photoSettingsWidthCalculator', photoSettingsWidthCalculator)
+        .directive('draggablePhoto', draggablePhoto)
         .controller('PhotoSettingsController', PhotoSettingsController);
 
     PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator', '$rootScope'];
@@ -32,6 +33,24 @@
             return {
                 smallPhotoWidth: smallPhotoWidth,
                 bigPhotoWidth: bigPhotoWidth
+            }
+        }
+    }
+
+    function draggablePhoto() {
+        return {
+            restrict: 'A',
+            scope: true,
+            templateUrl: 'modules/main/settings/draggablePhoto.html',
+            link: function (scope, element, attrs) {
+                scope.index = parseInt(attrs.photoIndex);
+                scope.width = attrs.photoWidth;
+
+                var dragEl = angular.element(element[0].querySelector('[ng-drag]'));
+
+                scope.onRelease = function () {
+                    console.log(dragEl.hasClass('dragging'));
+                };
             }
         }
     }

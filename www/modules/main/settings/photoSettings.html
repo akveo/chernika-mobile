@@ -2,28 +2,16 @@
     <ion-content>
         <div class="photos-settings">
             <div class="first-row">
-                <div class="photo main-photo" ng-drop="true" ng-drop-success="onDropComplete(0, $data)" ng-if="true">
-                    <div data-tap-disabled="true" ng-drag-data="photos[0]" ng-drag="true" cropped-image="photos[0]" target-width="photosWidth.bigPhotoWidth"></div>
-                </div>
+                <div class="photo" draggable-photo photo-index="0" photo-width="{{photosWidth.bigPhotoWidth}}"></div>
                 <div class="small-photos">
-                    <div ng-drop="true" ng-drop-success="onDropComplete(1, $data)" class="photo" ng-if="true">
-                        <div data-tap-disabled="true" ng-drag-data="photos[1]" ng-drag="true" cropped-image="photos[1]" target-width="photosWidth.smallPhotoWidth"></div>
-                    </div>
-                    <div ng-drop="true" ng-drop-success="onDropComplete(2, $data)" class="photo" ng-if="true">
-                        <div data-tap-disabled="true" ng-drag-data="photos[2]" ng-drag="true" cropped-image="photos[2]" target-width="photosWidth.smallPhotoWidth"></div>
-                    </div>
+                    <div class="photo" draggable-photo photo-index="1" photo-width="{{photosWidth.smallPhotoWidth}}"></div>
+                    <div class="photo" draggable-photo photo-index="2" photo-width="{{photosWidth.smallPhotoWidth}}"></div>
                 </div>
             </div>
             <div class="second-row">
-                <div ng-drop="true" ng-drop-success="onDropComplete(1, $data)" class="photo" ng-if="true">
-                    <div data-tap-disabled="true" ng-drag-data="photos[1]" ng-drag="true" cropped-image="photos[0]" target-width="photosWidth.smallPhotoWidth"></div>
-                </div>
-                <div ng-drop="true" ng-drop-success="onDropComplete(1, $data)" class="photo" ng-if="true">
-                    <div data-tap-disabled="true" ng-drag-data="photos[1]" ng-drag="true" cropped-image="photos[1]" target-width="photosWidth.smallPhotoWidth"></div>
-                </div>
-                <div ng-drop="true" ng-drop-success="onDropComplete(2, $data)" class="photo" ng-if="true">
-                    <div ng-drag-data="photos[2]" ng-drag="true" data-tap-disabled="true" cropped-image="photos[2]" target-width="photosWidth.smallPhotoWidth"></div>
-                </div>
+                <div class="photo" draggable-photo photo-index="1" photo-width="{{photosWidth.smallPhotoWidth}}"></div>
+                <div class="photo" draggable-photo photo-index="1" photo-width="{{photosWidth.smallPhotoWidth}}"></div>
+                <div class="photo" draggable-photo photo-index="2" photo-width="{{photosWidth.smallPhotoWidth}}"></div>
             </div>
         </div>
     </ion-content>

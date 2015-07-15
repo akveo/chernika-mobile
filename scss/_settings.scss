@@ -29,10 +29,6 @@ $photoSettingsGutter: 15px;
 
   .photo {
     display: inline-block;
-
-    &.main-photo {
-      margin-right: $photoSettingsGutter;
-    }
   }
 
   .first-row, .second-row {
@@ -41,6 +37,7 @@ $photoSettingsGutter: 15px;
 
   .first-row .small-photos {
     display: inline-block;
+    margin-left: $photoSettingsGutter ;
     .photo {
       display: block;
       &:first-child {
