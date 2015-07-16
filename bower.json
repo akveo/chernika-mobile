@@ -14,6 +14,6 @@
     "socket.io-client": "~1.3.5",
     "ionicons": "~2.0.1",
     "ngDraggable": "~0.1.8",
-    "ng-img-crop": "git@github.com:akveo/ngImgCrop.git#dca9bd41d4cc35342fadadea013dedbdb503e0cc"
+    "ng-img-crop": "git@github.com:akveo/ngImgCrop.git#f25dc40a7236b88575aca40be3a07ae09d1e26dd"
   }
 }
