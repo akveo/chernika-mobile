@@ -88,6 +88,13 @@
         });
 
         $scope.$on('connection.on', load);
+        $scope.$watch('isContentSeen', function (newValue) {
+            if (newValue === true) {
+                $timeout(function() {
+                    $ionicScrollDelegate.scrollBottom(true);
+                }, 300);
+            }
+        });
 
         load();
 
@@ -110,10 +117,6 @@
         $scope.isMsgYours = function (msg) {
             return msg.sender == $scope.userProfile._id;
         };
-
-        $scope.$on('$ionicView.beforeEnter', function(){
-            $ionicScrollDelegate.scrollBottom();
-        });
 
         socketEventService.listen($scope, 'new_message', function(msg) {
             $scope.messages.every(function(scopeMsg, index) {
