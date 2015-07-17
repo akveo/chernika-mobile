@@ -1,14 +1,17 @@
-<ion-view view-title="{{profileDetails.firstName}}">
+<ion-view>
+    <ion-nav-title>{{profileDetails.firstName}}</ion-nav-title>
     <clever-loader is-seen="true" with-no-connection-banner="true"></clever-loader>
 
-    <ion-content scroll="false" class="profile-details" ng-if="isContentSeen">
-        <ion-slide-box show-pager="true">
-            <ion-slide class="" ng-repeat="photo in profileDetails.photos">
-                <div cropped-image="photo" target-width="screenWidth"></div>
-            </ion-slide>
-        </ion-slide-box>
-        <div class="padding">
-            <h2 class="dark">{{profileDetails.firstName}}, {{profileDetails.age}}</h2>
-        </div>
-    </ion-content>
+    <div class="main-content" ng-if="isContentSeen">
+        <ion-content scroll="false" class="profile-details">
+            <ion-slide-box show-pager="true">
+                <ion-slide class="" ng-repeat="photo in profileDetails.photos">
+                    <div cropped-image="photo" target-width="screenWidth"></div>
+                </ion-slide>
+            </ion-slide-box>
+            <div class="padding">
+                <h2 class="dark">{{profileDetails.firstName}}, {{profileDetails.age}}</h2>
+            </div>
+        </ion-content>
+    </div>
 </ion-view>
