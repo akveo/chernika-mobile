@@ -4,6 +4,9 @@ $swiperControlsBorder: 5px;
   .has-footer.has-tabs {
     bottom: $tabs-height + $swiperControlsHeight;
   }
+  .has-footer.has-tabs-top {
+    bottom: $swiperControlsHeight;
+  }
   .bar-footer {
     height: $swiperControlsHeight;
   }
