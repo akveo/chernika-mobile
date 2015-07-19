@@ -77,10 +77,22 @@
                 scope.photo = scope.photos[scope.index];
 
                 var dragEl = angular.element(element[0].querySelector('[ng-drag]'));
+                var bgIconContainer = angular.element(element[0].querySelector('.bg-icon-container'));
+
+                scope.$watch('width', applyStyles);
 
                 scope.onRelease = function () {
                     dragEl.hasClass('dragging') || scope.$emit('draggable.selected', scope.photo);
                 };
+
+                function applyStyles() {
+                    bgIconContainer.css({
+                        'width': scope.width + 'px',
+                        'height': scope.height + 'px',
+                        'line-height': scope.width + 'px',
+                        'font-size': (scope.width * 0.5) + 'px',
+                    });
+                }
             }
         }
     }

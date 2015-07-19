@@ -31,6 +31,12 @@ $photoSettingsGutter: 15px;
     display: inline-block;
   }
 
+  .bg-icon-container {
+    position: absolute;
+    text-align: center;
+    color: $positive;
+  }
+
   .first-row, .second-row {
     font-size: 0;
   }

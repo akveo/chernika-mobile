@@ -1,3 +1,6 @@
 <div ng-drop="true" ng-drop-success="onDropComplete(index, $data)">
+    <div class="bg-icon-container">
+        <div class="icon ion-person"></div>
+    </div>
     <div on-release="onRelease()" data-tap-disabled="true"  ng-drag-data="photos[index]" ng-drag="true" cropped-image="photos[index]" target-width="width"></div>
 </div>
