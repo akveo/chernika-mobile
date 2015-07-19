@@ -81,8 +81,13 @@
 
                 scope.$watch('width', applyStyles);
 
+                scope.onTouch = function() {
+                    dragEl.addClass('selected');
+                };
+
                 scope.onRelease = function () {
                     dragEl.hasClass('dragging') || scope.$emit('draggable.selected', scope.photo);
+                    dragEl.removeClass('selected');
                 };
 
                 function applyStyles() {
@@ -104,7 +109,9 @@
             templateUrl: 'modules/main/settings/photoCrop.html',
             link: function (scope, element, attrs) {
                 var canvas = element.find('canvas');
-                scope.areaMinWidth = screen.width / 1.5;
+
+                var elWidth = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
+                scope.areaMinWidth = elWidth / 1.5;
 
                 scope.$watch('selectedPhoto', applyStyles);
 
@@ -117,14 +124,13 @@
                 };
 
                 function applyStyles() {
-                    var width = screen.width;
+                    var width = elWidth;
                     var scale = width / scope.selectedPhoto.width;
                     var height = scope.selectedPhoto.height * scale;
                     element.css({
                         width: width + 'px',
                         height: height + 'px',
-                        overflow: 'hidden',
-                        position: 'relative'
+                        overflow: 'hidden'
                     });
                 }
             }

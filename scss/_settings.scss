@@ -30,6 +30,16 @@ $photoSettingsGutter: 15px;
   .photo {
     display: inline-block;
   }
+  
+  [ng-drag] {
+    background-color: #ffffff;
+  }
+  
+  .selected {
+    img {
+      opacity: 0.8;
+    }
+  }
 
   .bg-icon-container {
     position: absolute;
