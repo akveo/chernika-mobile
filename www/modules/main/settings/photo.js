@@ -7,8 +7,8 @@
         .directive('cropModal', cropModal)
         .controller('PhotoSettingsController', PhotoSettingsController);
 
-    PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi'];
-    function PhotoSettingsController($scope, userPhotos, photoSettingsWidthCalculator, cropModalGetter, userApi) {
+    PhotoSettingsController.$inject = ['$scope', '$rootScope', 'userPhotos', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi'];
+    function PhotoSettingsController($scope, $rootScope, userPhotos, photoSettingsWidthCalculator, cropModalGetter, userApi) {
         $scope.photos = userPhotos;
         $scope.selectedPhoto = $scope.photos[0];
         $scope.currentCrop = {};
@@ -33,6 +33,7 @@
                 height: $scope.currentCrop.height,
                 width: $scope.currentCrop.width
             };
+            savePhotos();
             $scope.cropModal.hide();
         };
 
@@ -43,6 +44,7 @@
             if (dropIndex == 0 || draggedIndex == 0) {
                 $scope.photos[draggedIndex] = dropPhoto;
                 $scope.photos[dropIndex] = draggedPhoto;
+                savePhotos();
             }
         }
 
@@ -50,6 +52,13 @@
             evt.stopPropagation();
             $scope.selectedPhoto = photo;
             $scope.cropModal.show();
+        }
+
+        function savePhotos() {
+            return userApi.savePhotos($scope.photos)
+                .then(function () {
+                    $rootScope.$broadcast('settings.photos.changed');
+                })
         }
     }
 

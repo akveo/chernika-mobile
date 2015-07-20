@@ -26,7 +26,7 @@
         };
 
         this.savePhotos = function(photos) {
-          return $http.put(photosEndpoint, photos);
+          return $http.put(photosEndpoint, {photos: photos});
         };
 
         var settingsEndpoint = userEndpoint + '/settings';
