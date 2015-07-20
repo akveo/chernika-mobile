@@ -1,6 +1,6 @@
-<div ng-drop="true" ng-drop-success="onDropComplete(index, $data)">
+<div ng-drop="true" ng-drop-success="onDropComplete($data)">
     <div class="bg-icon-container">
         <div class="icon ion-person"></div>
     </div>
-    <div on-touch="onTouch()" on-release="onRelease()" ng-drag-data="photos[index]" ng-drag="true" cropped-image="photos[index]" target-width="width"></div>
+    <div on-touch="onTouch()" on-release="onRelease()" ng-drag-data="photo" ng-drag="true" cropped-image="photo" target-width="width" ng-if="photo"></div>
 </div>

@@ -55,7 +55,6 @@ $photoSettingsGutter: 15px;
     display: inline-block;
     margin-left: $photoSettingsGutter ;
     .photo {
-      display: block;
       &:first-child {
         margin-bottom: $photoSettingsGutter;
       }

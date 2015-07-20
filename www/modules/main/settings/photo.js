@@ -14,6 +14,9 @@
         $scope.currentCrop = {};
         $scope.photosWidth = photoSettingsWidthCalculator.calculate();
 
+        $scope.$on('draggable.selected', onDraggableSelected);
+        $scope.$on('draggable.dropComplete', onDropComplete);
+
         cropModal.getModal($scope)
             .then(function(modal) {
                $scope.cropModal = modal;
@@ -33,19 +36,21 @@
             $scope.cropModal.hide();
         };
 
-        $scope.onDropComplete = function(dropIndex, data){
-            var draggedIndex = $scope.photos.indexOf(data);
+        function onDropComplete(evt, draggedPhoto, dropPhoto){
+            evt.stopPropagation();
+            var draggedIndex = $scope.photos.indexOf(draggedPhoto);
+            var dropIndex = $scope.photos.indexOf(dropPhoto);
             if (dropIndex == 0 || draggedIndex == 0) {
-                $scope.photos[draggedIndex] = $scope.photos[dropIndex];
-                $scope.photos[dropIndex] = data;
+                $scope.photos[draggedIndex] = dropPhoto;
+                $scope.photos[dropIndex] = draggedPhoto;
             }
-        };
+        }
 
-        $scope.$on('draggable.selected', function (evt, photo) {
+        function onDraggableSelected(evt, photo) {
             evt.stopPropagation();
             $scope.selectedPhoto = photo;
             $scope.cropModal.show();
-        })
+        }
     }
 
     photoSettingsWidthCalculator.$inject = [];
@@ -69,35 +74,57 @@
     function draggablePhoto() {
         return {
             restrict: 'A',
-            scope: true,
+            scope: {
+                photo: '=',
+                width: '=photoWidth'
+            },
             templateUrl: 'modules/main/settings/draggablePhoto.html',
-            link: function (scope, element, attrs) {
-                scope.index = parseInt(attrs.photoIndex);
-                scope.width = attrs.photoWidth;
-                scope.photo = scope.photos[scope.index];
-
-                var dragEl = angular.element(element[0].querySelector('[ng-drag]'));
+            link: function (scope, element) {
+                var dragEl;
                 var bgIconContainer = angular.element(element[0].querySelector('.bg-icon-container'));
 
                 scope.$watch('width', applyStyles);
-
-                scope.onTouch = function() {
-                    dragEl.addClass('selected');
-                };
-
-                scope.onRelease = function () {
-                    dragEl.hasClass('dragging') || scope.$emit('draggable.selected', scope.photo);
-                    dragEl.removeClass('selected');
-                };
+                scope.$watch('photo', attachHandlers);
 
                 function applyStyles() {
                     bgIconContainer.css({
                         'width': scope.width + 'px',
-                        'height': scope.height + 'px',
+                        'height': scope.width + 'px',
                         'line-height': scope.width + 'px',
-                        'font-size': (scope.width * 0.5) + 'px',
+                        'font-size': (scope.width * 0.5) + 'px'
+                    });
+                    element.css({
+                        'width': scope.width + 'px',
+                        'height': scope.width + 'px'
                     });
                 }
+
+                function attachHandlers() {
+                    dragEl = angular.element(element[0].querySelector('[ng-drag]'));
+                    if (scope.photo) {
+                        scope.onTouch = onTouch;
+                        scope.onRelease = onRelease;
+                        scope.onDropComplete = onDropComplete;
+                    } else {
+                        scope.onTouch = scope.onRelease = scope.onDropComplete = dummy;
+                    }
+                }
+
+                function onTouch () {
+                    dragEl.addClass('selected');
+                }
+
+                function onRelease() {
+                    dragEl.hasClass('dragging') || scope.$emit('draggable.selected', scope.photo);
+                    dragEl.removeClass('selected');
+                }
+
+                function onDropComplete (draggedPhoto) {
+                    var dropPhoto = scope.photo;
+                    scope.$emit('draggable.dropComplete', draggedPhoto, dropPhoto);
+                }
+
+                function dummy() {}
             }
         }
     }
