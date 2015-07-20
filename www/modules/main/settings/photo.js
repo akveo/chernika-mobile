@@ -7,12 +7,10 @@
         .directive('cropModal', cropModal)
         .controller('PhotoSettingsController', PhotoSettingsController);
 
-    PhotoSettingsController.$inject = ['$scope', '$rootScope', 'userPhotos', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi'];
-    function PhotoSettingsController($scope, $rootScope, userPhotos, photoSettingsWidthCalculator, cropModalGetter, userApi) {
-        $scope.photos = userPhotos;
-        $scope.selectedPhoto = $scope.photos[0];
+    PhotoSettingsController.$inject = ['$scope', '$rootScope', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
+    function PhotoSettingsController($scope, $rootScope, photoSettingsWidthCalculator, cropModalGetter, userApi, onConnectionChangePropertyListener, onLoadingPropertyListener) {
+        $scope.selectedPhoto = {};
         $scope.currentCrop = {};
-        $scope.photosWidth = photoSettingsWidthCalculator.calculate();
 
         $scope.$on('draggable.selected', onDraggableSelected);
         $scope.$on('draggable.dropComplete', onDropComplete);
@@ -21,6 +19,22 @@
             .then(function(modal) {
                $scope.cropModal = modal;
             });
+
+        onConnectionChangePropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onGoodConnection: true,
+            onBadConnection: false
+        });
+
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onSuccess: true,
+            onStart: false
+        });
+
+        $scope.$on('connection.on', load);
+
+        load();
 
         $scope.closeCrop = function () {
             $scope.cropModal.hide();
@@ -59,6 +73,18 @@
                 .then(function () {
                     $rootScope.$broadcast('settings.photos.changed');
                 })
+        }
+
+        function load() {
+            $scope.$broadcast('connection.loading.start');
+            userApi.getPhotos()
+                .then(function (photos) {
+                    $scope.photos = photos;
+                    $scope.photosWidth = photoSettingsWidthCalculator.calculate();
+                    $scope.$broadcast('connection.loading.success');
+                }, function (error) {
+                    $scope.$broadcast('connection.loading.error', error);
+                });
         }
     }
 
@@ -146,9 +172,6 @@
                 var canvas = element.find('canvas');
                 var cropContainer = angular.element(element[0].querySelector('.crop-container'));
 
-                var cropWidth = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
-                scope.areaMinWidth = cropWidth / 1.5;
-
                 scope.$watch('selectedPhoto', applyStyles);
 
                 scope.onCropChange = function(crop) {
@@ -160,9 +183,10 @@
                 };
 
                 function applyStyles() {
-                    var width = cropWidth;
+                    var width = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
                     var scale = width / scope.selectedPhoto.width;
                     var height = scope.selectedPhoto.height * scale;
+                    scope.areaMinWidth = width / 1.5;
                     cropContainer.css({
                         width: width + 'px',
                         height: height + 'px',

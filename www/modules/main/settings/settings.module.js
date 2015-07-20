@@ -16,7 +16,7 @@
                         templateUrl: 'modules/main/settings/settings.html'
                     }
                 }
-        })
+            })
             .state('main.settings-search', {
                 url: '/settings/search',
                 views: {
@@ -35,9 +35,6 @@
                     'tab-settings': {
                         templateUrl: 'modules/main/settings/photoSettings.html',
                         controller: 'PhotoSettingsController',
-                        resolve: {
-                            userPhotos: userPhotosResolve
-                        }
                     }
                 }
             });
@@ -46,11 +43,6 @@
     currentSettingsResolve.$inject = ['userApi'];
     function currentSettingsResolve(userApi) {
         return userApi.getSettings();
-    }
-
-    userPhotosResolve.$inject = ['userApi'];
-    function userPhotosResolve(userApi) {
-        return userApi.getPhotos();
     }
 
 })(angular);

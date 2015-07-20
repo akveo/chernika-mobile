@@ -45,6 +45,7 @@ $photoSettingsGutter: 15px;
     position: absolute;
     text-align: center;
     color: $positive;
+    border: 3px dashed $positive;
   }
 
   .first-row, .second-row {
