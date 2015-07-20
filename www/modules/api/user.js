@@ -20,8 +20,13 @@
             return $http.get(userEndpoint).then(function(res) { return res.data; });
         };
 
+        var photosEndpoint = userEndpoint + '/photos';
         this.getPhotos = function() {
-            return $http.get(userEndpoint + '/photos').then(function(res) { return res.data; });;
+            return $http.get(photosEndpoint).then(function(res) { return res.data; });;
+        };
+
+        this.savePhotos = function(photos) {
+          return $http.put(photosEndpoint, photos);
         };
 
         var settingsEndpoint = userEndpoint + '/settings';

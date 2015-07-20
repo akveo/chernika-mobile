@@ -1,4 +1,4 @@
-<div class="modal full-screen-modal crop-modal">
+<div class="modal full-screen-modal crop-modal" crop-modal>
     <ion-header-bar class="bar-positive">
         <h1 class="title">Обрежьте фото</h1>
         <span class="header-btns">
@@ -7,6 +7,8 @@
         </span>
     </ion-header-bar>
     <ion-content scroll="false">
-        <div photo-crop class="center-absolute"></div>
+        <div class="center-absolute crop-container">
+            <img-crop area-type="square" area-min-size="areaMinWidth" image="selectedPhoto.src" on-change="onCropChange($crop)"></img-crop>
+        </div>
     </ion-content>
 </div>

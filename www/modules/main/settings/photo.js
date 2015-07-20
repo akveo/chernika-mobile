@@ -2,13 +2,13 @@
 
     angular.module('app.main.settings')
         .service('photoSettingsWidthCalculator', photoSettingsWidthCalculator)
-        .service('cropModal', cropModal)
+        .service('cropModalGetter', cropModalGetter)
         .directive('draggablePhoto', draggablePhoto)
-        .directive('photoCrop', photoCrop)
+        .directive('cropModal', cropModal)
         .controller('PhotoSettingsController', PhotoSettingsController);
 
-    PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator', 'cropModal'];
-    function PhotoSettingsController($scope, userPhotos, photoSettingsWidthCalculator, cropModal) {
+    PhotoSettingsController.$inject = ['$scope', 'userPhotos', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi'];
+    function PhotoSettingsController($scope, userPhotos, photoSettingsWidthCalculator, cropModalGetter, userApi) {
         $scope.photos = userPhotos;
         $scope.selectedPhoto = $scope.photos[0];
         $scope.currentCrop = {};
@@ -17,7 +17,7 @@
         $scope.$on('draggable.selected', onDraggableSelected);
         $scope.$on('draggable.dropComplete', onDropComplete);
 
-        cropModal.getModal($scope)
+        cropModalGetter.getModal($scope)
             .then(function(modal) {
                $scope.cropModal = modal;
             });
@@ -129,16 +129,16 @@
         }
     }
 
-    function photoCrop() {
+    function cropModal() {
         return {
             restrict: 'A',
             scope: true,
-            templateUrl: 'modules/main/settings/photoCrop.html',
-            link: function (scope, element, attrs) {
+            link: function (scope, element) {
                 var canvas = element.find('canvas');
+                var cropContainer = angular.element(element[0].querySelector('.crop-container'));
 
-                var elWidth = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
-                scope.areaMinWidth = elWidth / 1.5;
+                var cropWidth = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
+                scope.areaMinWidth = cropWidth / 1.5;
 
                 scope.$watch('selectedPhoto', applyStyles);
 
@@ -151,10 +151,10 @@
                 };
 
                 function applyStyles() {
-                    var width = elWidth;
+                    var width = cropWidth;
                     var scale = width / scope.selectedPhoto.width;
                     var height = scope.selectedPhoto.height * scale;
-                    element.css({
+                    cropContainer.css({
                         width: width + 'px',
                         height: height + 'px',
                         overflow: 'hidden'
@@ -164,8 +164,8 @@
         }
     }
 
-    cropModal.$inject = ['$ionicModal'];
-    function cropModal($ionicModal) {
+    cropModalGetter.$inject = ['$ionicModal'];
+    function cropModalGetter($ionicModal) {
         this.getModal = function(scope) {
             return $ionicModal.fromTemplateUrl('modules/main/settings/cropModal.html', {scope: scope})
                 .then(function(modal) {
