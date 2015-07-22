@@ -39,6 +39,7 @@ $centeredBlockHeight: 300px;
   margin-top: -$centeredBlockHeight/2;
   text-align: center;
   display: table;
+  z-index: 1;
   .default-content {
     display: table-cell;
     vertical-align: middle;

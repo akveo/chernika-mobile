@@ -7,16 +7,15 @@
         .service('suggestionsByLocation',suggestionsByLocation)
         .controller('swiperController', swiperController);
 
-    suggestionsByLocation.$inject = ['suggestionsApi', '$cordovaGeolocation'];
-    function suggestionsByLocation(suggestionsApi, $cordovaGeolocation) {
+    suggestionsByLocation.$inject = ['suggestionsApi', 'multiplatformGeolocation'];
+    function suggestionsByLocation(suggestionsApi, multiplatformGeolocation) {
         this.getSuggestionsByLocation = function() {
-            return $cordovaGeolocation
-                .getCurrentPosition({timeout: 10000, enableHighAccuracy: false})
+            return multiplatformGeolocation
+                .getCurrentPosition()
                 .then(function(position) {
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
                 }, function(err) {
-                    return suggestionsApi.getSuggestions(53.883873, 27.507375);
-//                    throw err;
+                    throw err;
                 });
         };
     }
@@ -64,6 +63,11 @@
                 });
         };
 
+        $scope.switchToLocationSettings = function () {
+            var diagnostic = window.cordova.plugins.diagnostic;
+            $scope.platformId == 'android' && diagnostic.switchToLocationSettings();
+        };
+
         function recalculateSizing() {
             if (!viewSizing.swiperViewWidth || !viewSizing.swiperViewHeight)
                 return;
@@ -97,9 +101,7 @@
                 .then(function(suggestions) {
                     $scope.cards = suggestions;
                 }, function(err) {
-                    if (err.code == 1 ) { //PERMISSION_DENIED
-                        $scope.geoEnabled = false;
-                    }
+                    $scope.geoEnabled = false;
                 });
         }
 

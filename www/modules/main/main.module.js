@@ -38,6 +38,7 @@
     mainController.$inject = ['$rootScope', 'userProfile'];
     function mainController($rootScope, userProfile) {
         $rootScope.userProfile = userProfile;
+        $rootScope.platformId = window.cordova ? (window.cordova.platformId == 'android' ? 'android' : 'ios') : 'desktop'
     }
 
 })(angular);

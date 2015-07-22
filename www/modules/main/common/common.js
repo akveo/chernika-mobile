@@ -7,7 +7,36 @@
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
         .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
         .service('onLoadingPropertyListener', onLoadingPropertyListener)
+        .service('multiplatformGeolocation', multiplatformGeolocation)
         .directive('cleverLoader', cleverLoader);
+
+    multiplatformGeolocation.inject = ['$q'];
+    function multiplatformGeolocation ($q) {
+        var self = this;
+
+        this.getCurrentPosition = function (opts) {
+            var q = $q.defer();
+
+            self.locationModule.getCurrentPosition(function (result) {
+                q.resolve(result);
+            }, function (err) {
+                q.reject(err);
+            }, opts || self.positionOptions);
+
+            return q.promise;
+        };
+
+        this.init = function () {
+            var PRIORITY_BALANCED_POWER_ACCURACY = 102;
+            self.positionOptions = {
+                timeout: 30000,
+                enableHighAccuracy: false,
+                priority: PRIORITY_BALANCED_POWER_ACCURACY
+            };
+
+            self.locationModule = window.cordova && window.cordova.platformId == 'android' ? LocationServices : navigator.geolocation;
+        }
+    }
 
     function cleverLoader() {
         return {

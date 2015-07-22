@@ -9,8 +9,9 @@
         <div class="default-content" ng-if="!geoEnabled">
             <div class="ion-ios-navigate-outline centered-block-icon"></div>
             <div class="hint-text">
-                Для поиска новых пар включите геолокацию в настройках вашего устройства
+                Ошибка геолокации. Для поиска новых пар включите геолокацию в настройках вашего устройства
             </div>
+            <button ng-show="platformId == 'android'" ng-click="switchToLocationSettings()" class="button icon-left ion-settings button-positive" style="margin-top: 10px">Перейти</button>
         </div>
 
     </div>
