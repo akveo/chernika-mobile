@@ -29,6 +29,10 @@
           return $http.put(photosEndpoint, {photos: photos});
         };
 
+        this.addDevice = function (deviceInfo) {
+            return $http.put(userEndpoint + '/devices', {device: deviceInfo});
+        };
+
         var settingsEndpoint = userEndpoint + '/settings';
         this.getSettings = function() {
             return $http.get(settingsEndpoint).then(function(res) { return res.data; });
