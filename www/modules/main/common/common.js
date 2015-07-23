@@ -7,6 +7,7 @@
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
         .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
         .service('onLoadingPropertyListener', onLoadingPropertyListener)
+        .service('PushInitializer', PushInitializer)
         .service('multiplatformGeolocation', multiplatformGeolocation)
         .directive('cleverLoader', cleverLoader);
 
@@ -35,6 +36,25 @@
             };
 
             self.locationModule = window.cordova && window.cordova.platformId == 'android' ? LocationServices : navigator.geolocation;
+        }
+    }
+
+    PushInitializer.$inject = ['$rootScope', '$ionicPush', 'userApi'];
+    function PushInitializer($rootScope, $ionicPush, userApi) {
+        this.init = function () {
+            $rootScope.$on('user.login', function () {
+                return $ionicPush.register({
+                    canShowAlert: true,
+                    canSetBadge: true,
+                    canPlaySound: true,
+                    canRunActionsOnWake: true
+                });
+            });
+
+            $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
+                userApi.addDevice(data);
+                $rootScope.deviceToken = data.token;
+            });
         }
     }
 
