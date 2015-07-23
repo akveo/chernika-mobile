@@ -30,6 +30,11 @@
             },
             settings: {
                 agesMinDistance: 4
+            },
+            ionic: {
+                appId: '52e42ca3',
+                apiKey: '7ab0ed289078bababcf259dbb7e01645e2ecada5bd9ac14d',
+                devPush: true
             }
         });
 

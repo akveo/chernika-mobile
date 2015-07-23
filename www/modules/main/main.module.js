@@ -22,13 +22,26 @@
             })
     }
 
-    userProfileResolve.$inject = ['userApi', '$ionicLoading'];
-    function userProfileResolve(userApi, $ionicLoading) {
+    userProfileResolve.$inject = ['userApi', '$ionicLoading', '$rootScope', '$ionicUser'];
+    function userProfileResolve(userApi, $ionicLoading, $rootScope, $ionicUser) {
         $ionicLoading.show();
 
         function onCheckedLogin(loginData) {
-            $ionicLoading.hide();
-            return loginData;
+            var ionicUser = $ionicUser.get();
+            ionicUser.user_id = $ionicUser.generateGUID();
+
+            angular.extend(ionicUser, {
+                pinderId: loginData._id,
+                vkId: loginData.vkId
+            });
+
+            return $ionicUser.identify(ionicUser)
+                .then(function(){
+                    $rootScope.identified = true;
+                    $rootScope.ionicUser = ionicUser;
+                    $ionicLoading.hide();
+                    return loginData;
+                });
         }
         
         return userApi.checkLoggedIn()

@@ -15,8 +15,7 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "ve.com.sigis.plugin.location"
+    "cordova-plugin-whitelist"
   ],
   "cordovaPlatforms": [
     "ios"

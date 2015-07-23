@@ -1,10 +1,10 @@
 {
   "name": "pinder-mobile",
-  "app_id": "",
+  "app_id": "52e42ca3",
   "proxies": [
-      {
-        "path": "/pinder",
-        "proxyUrl": "http://akveo.com/pinder/"
-      }
-    ]
+    {
+      "path": "/pinder",
+      "proxyUrl": "http://akveo.com/pinder/"
+    }
+  ]
 }

@@ -4,14 +4,14 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'ngCordova', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
+    angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push','app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
         .config(appConfig)
         .service('connectionListener', connectionListener)
         .run(appRun)
         .controller('SplashController', SplashController);
 
-    appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicConfigProvider'];
-    function appConfig($urlRouterProvider, $stateProvider, $ionicConfigProvider) {
+    appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicAppProvider', 'appConfig'];
+    function appConfig($urlRouterProvider, $stateProvider, $ionicAppProvider, appConfig) {
         $urlRouterProvider.otherwise('/splash');
 
         $stateProvider
@@ -20,11 +20,16 @@
                 template: '<ion-view hide-nav-bar="true"></ion-view>',
                 controller: 'SplashController'
             });
-        //$ionicConfigProvider.tabs.position('bottom');
+
+        $ionicAppProvider.identify({
+            app_id: appConfig.ionic.appId,
+            api_key: appConfig.ionic.apiKey,
+            dev_push: appConfig.ionic.devPush
+        });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', '$ionicPush'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, $ionicPush) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -38,6 +43,16 @@
             }
             multiplatformGeolocation.init();
             connectionListener.listenConnection();
+            $ionicPush.register({
+                canShowAlert: true,
+                canSetBadge: true,
+                canPlaySound: true,
+                canRunActionsOnWake: true,
+                onNotification: function(notification) {
+                    console.log(notification);
+                    return true;
+                }
+            });
         });
     }
 
