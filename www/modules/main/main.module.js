@@ -22,30 +22,18 @@
             })
     }
 
-    userProfileResolve.$inject = ['userApi', '$ionicLoading', '$rootScope', '$ionicUser'];
-    function userProfileResolve(userApi, $ionicLoading, $rootScope, $ionicUser) {
+    userProfileResolve.$inject = ['userApi', '$ionicLoading', '$rootScope'];
+    function userProfileResolve(userApi, $ionicLoading, $rootScope) {
         $ionicLoading.show();
 
-        function onCheckedLogin(loginData) {
-            var ionicUser = $ionicUser.get();
-            ionicUser.user_id = $ionicUser.generateGUID();
-
-            angular.extend(ionicUser, {
-                pinderId: loginData._id,
-                vkId: loginData.vkId
-            });
-
-            return $ionicUser.identify(ionicUser)
-                .then(function(){
-                    $rootScope.identified = true;
-                    $rootScope.ionicUser = ionicUser;
-                    $ionicLoading.hide();
-                    return loginData;
-                });
+        function onCheckedLogIn(loginData) {
+            $rootScope.$broadcast('user.login.checked', loginData);
+            $ionicLoading.hide();
+            return loginData;
         }
-        
+
         return userApi.checkLoggedIn()
-            .then(onCheckedLogin, onCheckedLogin);
+            .then(onCheckedLogIn, onCheckedLogIn);
     }
 
     mainController.$inject = ['$rootScope', 'userProfile'];

@@ -8,6 +8,7 @@
         .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
         .service('onLoadingPropertyListener', onLoadingPropertyListener)
         .service('PushInitializer', PushInitializer)
+        .service('IonicUserInitializer', IonicUserInitializer)
         .service('multiplatformGeolocation', multiplatformGeolocation)
         .directive('cleverLoader', cleverLoader);
 
@@ -42,18 +43,43 @@
     PushInitializer.$inject = ['$rootScope', '$ionicPush', 'userApi'];
     function PushInitializer($rootScope, $ionicPush, userApi) {
         this.init = function () {
-            $rootScope.$on('user.login', function () {
+            $rootScope.$on('user.login.checked', function () {
                 return $ionicPush.register({
                     canShowAlert: true,
                     canSetBadge: true,
                     canPlaySound: true,
-                    canRunActionsOnWake: true
+                    canRunActionsOnWake: true,
+                    onNotification: function(notification) {
+                        // Handle new push notifications here
+                        console.log(notification);
+                        return true;
+                    }
                 });
             });
 
             $rootScope.$on('$cordovaPush:tokenReceived', function(event, data) {
                 userApi.addDevice(data);
                 $rootScope.deviceToken = data.token;
+            });
+        }
+    }
+
+    IonicUserInitializer.$inject = ['$rootScope','$ionicUser'];
+    function IonicUserInitializer($rootScope, $ionicUser) {
+        this.init = function () {
+            $rootScope.$on('user.login.checked', function (event, loginData) {
+                var ionicUser = $ionicUser.get();
+                ionicUser.user_id = $ionicUser.generateGUID();
+
+                angular.extend(ionicUser, {
+                    pinderId: loginData._id
+                });
+
+                return $ionicUser.identify(ionicUser)
+                    .then(function(){
+                        $rootScope.ionicUser = ionicUser;
+                        return loginData;
+                    });
             });
         }
     }
