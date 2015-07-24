@@ -136,7 +136,13 @@
                 created: new Date().toISOString()
             };
 
-            ChatsApi.sendMessage(newMessage);
+            ChatsApi.sendMessage({
+                receiver: {
+                    _id: $scope.userProfile._id,
+                    name: $scope.user.firstName
+                },
+                message: newMessage
+            });
 
             newMessage.isSending = true;
             $scope.messages.push(newMessage);
