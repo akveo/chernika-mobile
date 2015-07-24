@@ -138,7 +138,7 @@
 
             ChatsApi.sendMessage({
                 receiver: {
-                    _id: $scope.userProfile._id,
+                    _id: $scope.user._id,
                     name: $scope.user.firstName
                 },
                 message: newMessage
