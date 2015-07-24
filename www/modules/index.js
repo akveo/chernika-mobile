@@ -24,6 +24,7 @@
         $ionicAppProvider.identify({
             app_id: appConfig.ionic.appId,
             api_key: appConfig.ionic.apiKey,
+            gcm_id: appConfig.ionic.gcmId,
             dev_push: appConfig.ionic.devPush
         });
     }

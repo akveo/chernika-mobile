@@ -6,17 +6,17 @@
 
     window.isTesting = true;
 
-    var baseUrl = 'http://localhost:3300/';
-//    var baseUrl = 'http://akveo.com/';
+//    var baseUrl = 'http://localhost:3300/';
+    var baseUrl = 'http://akveo.com/';
 
     angular.module('app')
         .constant('appConfig', {
             api: {
                 baseUrl: baseUrl,
-//                endpoint: baseUrl + 'pinder/',
-                endpoint: baseUrl,
-                socketPath: '/socket.io',
-//                socketPath: '/pinder/socket.io',
+                endpoint: baseUrl + 'pinder/',
+//                endpoint: baseUrl,
+//                socketPath: '/socket.io',
+                socketPath: '/pinder/socket.io',
                 accessHeader: 'Access-Token',
                 tokenLocalStorageKey: 'pinderSession'
             },
@@ -34,7 +34,8 @@
             ionic: {
                 appId: '52e42ca3',
                 apiKey: '7ab0ed289078bababcf259dbb7e01645e2ecada5bd9ac14d',
-                devPush: true
+                gcmId: '165099633205',
+                devPush: false
             }
         });
 
