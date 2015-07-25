@@ -7,6 +7,11 @@
 // or the URL
 var pluginlist = [
     "com.ionic.keyboard",
+    "fr.louisbl.cordova.locationservices",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-network-information",
+    "cordova.plugins.diagnostic",
+    "com.phonegap.plugins.PushPlugin",
     "https://github.com/apache/cordova-plugin-inappbrowser",
     "org.apache.cordova.console",
     "org.apache.cordova.geolocation",
