@@ -4,7 +4,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push','app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
+    angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
         .config(appConfig)
         .service('connectionListener', connectionListener)
         .run(appRun)
@@ -29,8 +29,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -46,6 +46,7 @@
             connectionListener.listenConnection();
             PushInitializer.init();
             IonicUserInitializer.init();
+            $ionicAnalytics.register();
         });
     }
 
