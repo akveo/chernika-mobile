@@ -107,14 +107,23 @@
 
         function load() {
             $scope.cards = [];
+            var loadStart = new Date();
             suggestionsByLocation.getSuggestionsByLocation()
                 .then(function(suggestions) {
+                    var loadEnd = new Date();
+                    suggestionTimeToAnalytics(loadEnd - loadStart);
                     $scope.cards = suggestions;
                 }, function(err) {
-                    console.log(err);
                     $scope.geoEnabled = false;
+                    suggestionTimeToAnalytics
                     $rootScope.$broadcast('geolocation.error', err)
                 });
+        }
+
+        function suggestionTimeToAnalytics(msTimeDiff) {
+            $ionicAnalytics.track('SuggestionTime', {
+                seconds: msTimeDiff ? msTimeDiff/1000 : Infinity
+            });
         }
 
     }
