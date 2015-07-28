@@ -44,7 +44,7 @@
     PushInitializer.$inject = ['$rootScope', '$ionicPush', 'userApi'];
     function PushInitializer($rootScope, $ionicPush, userApi) {
         this.init = function () {
-            $rootScope.$on('user.login.checked', function () {
+            $rootScope.$on('user.ionic.identified', function () {
                 return $ionicPush.register({
                     canShowAlert: true,
                     canSetBadge: true,
@@ -70,16 +70,19 @@
         this.init = function () {
             $rootScope.$on('user.login.checked', function (event, loginData) {
                 var ionicUser = $ionicUser.get();
-                ionicUser.user_id = $ionicUser.generateGUID();
+
+                ionicUser.user_id = loginData.vkId.toString();
 
                 angular.extend(ionicUser, {
-                    pinderId: loginData._id
+                    pinderId: loginData._id,
+                    vkId: loginData.vkId,
+                    sex: loginData.sex,
+                    age: loginData.age
                 });
-
                 return $ionicUser.identify(ionicUser)
                     .then(function(){
                         $rootScope.ionicUser = ionicUser;
-                        return loginData;
+                        $rootScope.$broadcast('user.ionic.identified')
                     });
             });
         }
