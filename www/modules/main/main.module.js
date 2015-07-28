@@ -36,10 +36,13 @@
             .then(onCheckedLogIn, onCheckedLogIn);
     }
 
-    mainController.$inject = ['$rootScope', 'userProfile'];
-    function mainController($rootScope, userProfile) {
+    mainController.$inject = ['$rootScope', '$scope', '$state', 'userProfile'];
+    function mainController($rootScope, $scope, $state, userProfile) {
         $rootScope.userProfile = userProfile;
-        $rootScope.platformId = window.cordova ? (window.cordova.platformId == 'android' ? 'android' : 'ios') : 'desktop'
+        $rootScope.platformId = window.cordova ? (window.cordova.platformId == 'android' ? 'android' : 'ios') : 'desktop';
+        $scope.tabGo = function (state, params) {
+            $state.go(state, params);
+        }
     }
 
 })(angular);
