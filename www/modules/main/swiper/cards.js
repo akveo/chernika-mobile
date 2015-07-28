@@ -20,8 +20,8 @@
         };
     }
 
-    swiperController.$inject = ['$scope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$cordovaDialogs', 'appConfig'];
-    function swiperController($scope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $cordovaDialogs, appConfig) {
+    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$ionicAnalytics', 'appConfig'];
+    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $ionicAnalytics, appConfig) {
 
         $scope.userProfile = userProfile;
         $scope.geoEnabled = true;
@@ -45,6 +45,7 @@
         };
         $scope.cardSwipedLeft = function(index) {
             suggestionsApi.dislikeProfile($scope.cards[index].obj._id);
+            swipeToAnalytics(false, $scope.cards[index].obj);
         };
         $scope.cardSwipedRight = function(index) {
             var matchingProfile = $scope.cards[index].obj;
@@ -61,12 +62,21 @@
                         });
                     }
                 });
+            swipeToAnalytics(true, $scope.cards[index].obj);
         };
 
         $scope.switchToLocationSettings = function () {
             var diagnostic = window.cordova.plugins.diagnostic;
             $scope.platformId == 'android' && diagnostic.switchToLocationSettings();
         };
+
+        function swipeToAnalytics(isLike, cardObj) {
+            $ionicAnalytics.track('LikeDislikeProfile', {
+                like: isLike,
+                targetSex: cardObj.sex,
+                targetAge: cardObj.age
+            });
+        }
 
         function recalculateSizing() {
             if (!viewSizing.swiperViewWidth || !viewSizing.swiperViewHeight)
@@ -101,7 +111,9 @@
                 .then(function(suggestions) {
                     $scope.cards = suggestions;
                 }, function(err) {
+                    console.log(err);
                     $scope.geoEnabled = false;
+                    $rootScope.$broadcast('geolocation.error', err)
                 });
         }
 

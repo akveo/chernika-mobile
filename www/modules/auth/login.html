@@ -36,6 +36,6 @@
         </ion-slide-box>
     </ion-content>
     <ion-footer-bar align-title="left" class="login-page-footer">
-        <button class="login-button login-vk" ng-click="doAuthenticate()">Войти через ВКонтакте</button>
+        <button class="login-button login-vk" ion-track-tap="LoginButtonClicked" ng-click="doAuthenticate()">Войти через ВКонтакте</button>
     </ion-footer-bar>
 </ion-view>

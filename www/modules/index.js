@@ -7,6 +7,7 @@
     angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
         .config(appConfig)
         .service('connectionListener', connectionListener)
+        .service('ScopeEventsToAnalytics', ScopeEventsToAnalytics)
         .run(appRun)
         .controller('SplashController', SplashController);
 
@@ -29,8 +30,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'ScopeEventsToAnalytics'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, ScopeEventsToAnalytics) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -47,6 +48,7 @@
             PushInitializer.init();
             IonicUserInitializer.init();
             $ionicAnalytics.register();
+            ScopeEventsToAnalytics.init();
         });
     }
 
@@ -84,6 +86,35 @@
             document.addEventListener("offline", setOffline, false);
             appSocket.on('connect', setOnline);
             appSocket.on('disconnect',setOffline)
+        };
+    }
+
+    ScopeEventsToAnalytics.$inject = ['$rootScope', '$ionicAnalytics'];
+    function ScopeEventsToAnalytics($rootScope, $ionicAnalytics) {
+        this.init = function() {
+            $rootScope.$on('user.login', function() {
+                $ionicAnalytics.track('UserLoggedIn');
+            });
+
+            $rootScope.$on('connection.off', function() {
+                $ionicAnalytics.track('ConnectionStateChange', {
+                    isOn: false
+                });
+            });
+
+            $rootScope.$on('connection.off', function() {
+                $ionicAnalytics.track('ConnectionStateChange', {
+                    isOn: true
+                });
+            });
+
+            $rootScope.$on('geolocation.error', function (event, posError) {
+                window.cordova && $ionicAnalytics.track('GeolocationError', {
+                    timeout: posError.code === PositionError.TIMEOUT,
+                    positionUnavailible: posError.code === PositionError.POSITION_UNAVAILABLE,
+                    permissionDenied: posError.code === PositionError.PERMISSION_DENIED
+                });
+            })
         };
     }
 })(angular);
