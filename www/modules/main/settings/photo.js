@@ -76,14 +76,14 @@
         }
 
         function load() {
-            $scope.$broadcast('connection.loading.start');
+            $scope.$broadcast('connection.loading.start', {api: 'userApi', method: 'getPhotos'});
             userApi.getPhotos()
                 .then(function (photos) {
                     $scope.photos = photos;
                     $scope.photosWidth = photoSettingsWidthCalculator.calculate();
-                    $scope.$broadcast('connection.loading.success');
+                    $scope.$broadcast('connection.loading.success', {api: 'userApi', method: 'getPhotos'});
                 }, function (error) {
-                    $scope.$broadcast('connection.loading.error', error);
+                    $scope.$broadcast('connection.loading.error', {api: 'userApi', method: 'getPhotos', error: error});
                 });
         }
     }

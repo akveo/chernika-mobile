@@ -5,6 +5,7 @@
 
     angular.module('app.main.common')
         .controller('cleverLoaderCtrl', cleverLoaderCtrl)
+        .service('LoadingEventsToAnalytics', LoadingEventsToAnalytics)
         .service('onConnectionChangePropertyListener', onConnectionChangePropertyListener)
         .service('onLoadingPropertyListener', onLoadingPropertyListener)
         .service('PushInitializer', PushInitializer)
@@ -84,6 +85,35 @@
         }
     }
 
+    LoadingEventsToAnalytics.$inject = ['$ionicAnalytics'];
+    function LoadingEventsToAnalytics($ionicAnalytics) {
+        this.init = function (scope) {
+            scope.$on('connection.loading.start', function (event, data) {
+                $ionicAnalytics.track('ConnectionLoading', {
+                    state: 'start',
+                    api: data.api,
+                    method: data.method
+                });
+            });
+
+            scope.$on('connection.loading.success', function (event, data) {
+                $ionicAnalytics.track('ConnectionLoading', {
+                    state: 'success',
+                    api: data.api,
+                    method: data.method
+                });
+            });
+
+            scope.$on('connection.loading.error', function (event, data) {
+                $ionicAnalytics.track('ConnectionLoading', {
+                    state: 'error',
+                    api: data.api,
+                    method: data.method
+                });
+            });
+        };
+    }
+
     function cleverLoader() {
         return {
             restrict: 'E',
@@ -96,10 +126,12 @@
         }
     }
 
-    cleverLoaderCtrl.$inject = ['$scope','onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
-    function cleverLoaderCtrl($scope, onConnectionChangePropertyListener, onLoadingPropertyListener) {
+    cleverLoaderCtrl.$inject = ['$scope','onConnectionChangePropertyListener', 'onLoadingPropertyListener', 'LoadingEventsToAnalytics'];
+    function cleverLoaderCtrl($scope, onConnectionChangePropertyListener, onLoadingPropertyListener, LoadingEventsToAnalytics) {
         $scope.showNoConnectionBanner = false;
         $scope.isLoading = $scope.isSeen;
+
+        LoadingEventsToAnalytics.init($scope);
 
         onLoadingPropertyListener.listen($scope, {
             prop: 'isLoading',

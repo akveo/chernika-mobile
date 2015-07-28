@@ -7,7 +7,7 @@
     angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
         .config(appConfig)
         .service('connectionListener', connectionListener)
-        .service('ScopeEventsToAnalytics', ScopeEventsToAnalytics)
+        .service('RootScopeEventsToAnalytics', RootScopeEventsToAnalytics)
         .run(appRun)
         .controller('SplashController', SplashController);
 
@@ -30,8 +30,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'ScopeEventsToAnalytics'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, ScopeEventsToAnalytics) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -48,7 +48,7 @@
             PushInitializer.init();
             IonicUserInitializer.init();
             $ionicAnalytics.register();
-            ScopeEventsToAnalytics.init();
+            RootScopeEventsToAnalytics.init();
         });
     }
 
@@ -64,19 +64,20 @@
 
     connectionListener.$inject = ['$rootScope', 'appSocket'];
     function connectionListener($rootScope, appSocket) {
+        var self = this;
 
-        var online = false;
+        self.online = false;
 
         function setOffline() {
-            if (online) {
-                online = false;
+            if (self.online) {
+                self.online = false;
                 $rootScope.$broadcast('connection.off');
             }
         }
 
         function setOnline() {
-            if (!online) {
-                online = true;
+            if (!self.online) {
+                self.online = true;
                 $rootScope.$broadcast('connection.on');
             }
         }
@@ -87,10 +88,14 @@
             appSocket.on('connect', setOnline);
             appSocket.on('disconnect',setOffline)
         };
+
+        this.getStatus = function () {
+            return self.online;
+        }
     }
 
-    ScopeEventsToAnalytics.$inject = ['$rootScope', '$ionicAnalytics'];
-    function ScopeEventsToAnalytics($rootScope, $ionicAnalytics) {
+    RootScopeEventsToAnalytics.$inject = ['$rootScope', '$ionicAnalytics'];
+    function RootScopeEventsToAnalytics($rootScope, $ionicAnalytics) {
         this.init = function() {
             $rootScope.$on('user.login', function() {
                 $ionicAnalytics.track('UserLoggedIn');
@@ -102,7 +107,7 @@
                 });
             });
 
-            $rootScope.$on('connection.off', function() {
+            $rootScope.$on('connection.on', function() {
                 $ionicAnalytics.track('ConnectionStateChange', {
                     isOn: true
                 });

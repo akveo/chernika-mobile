@@ -57,13 +57,13 @@
         });
 
         function load() {
-            $scope.$broadcast('connection.loading.start');
+            $scope.$broadcast('connection.loading.start', {api: 'ChatsApi', method: 'getChatsInfo'});
             ChatsApi.getChatsInfo()
                 .then(function (chats) {
                     $scope.chats = chats;
-                    $scope.$broadcast('connection.loading.success');
+                    $scope.$broadcast('connection.loading.success', {api: 'ChatsApi', method: 'getChatsInfo'});
                 }, function (error) {
-                    $scope.$broadcast('connection.loading.error', error);
+                    $scope.$broadcast('connection.loading.error', {api: 'ChatsApi', method: 'getChatsInfo', error: error});
                 });
         }
     }
@@ -184,7 +184,7 @@
         }
 
         function load() {
-            $scope.$broadcast('connection.loading.start');
+            $scope.$broadcast('connection.loading.start', {api: 'chatDetails', method: 'getDetails'});
             chatDetails.getDetails()
                 .then(function (details) {
                     $scope.chat = details.chat;
@@ -192,9 +192,9 @@
                     $scope.user = details.user;
                     $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
                     readMessages();
-                    $scope.$broadcast('connection.loading.success');
+                    $scope.$broadcast('connection.loading.success', {api: 'chatDetails', method: 'getDetails'});
                 }, function (error) {
-                    $scope.$broadcast('connection.loading.error', error);
+                    $scope.$broadcast('connection.loading.error', {api: 'chatDetails', method: 'getDetails', error: error});
                 });
         }
     }

@@ -30,13 +30,13 @@
         load();
 
         function load() {
-            $scope.$broadcast('connection.loading.start');
+            $scope.$broadcast('connection.loading.start', {api: 'profilesApi', method: 'getProfileData'});
             profileDetails.getProfileDetails()
                 .then(function (profileDetails) {
                     $scope.profileDetails = profileDetails;
-                    $scope.$broadcast('connection.loading.success');
+                    $scope.$broadcast('connection.loading.success', {api: 'profilesApi', method: 'getProfileData'});
                 }, function (error) {
-                    $scope.$broadcast('connection.loading.error', error);
+                    $scope.$broadcast('connection.loading.error', {api: 'profilesApi', method: 'getProfileData', error: error});
                 });
         }
     }
