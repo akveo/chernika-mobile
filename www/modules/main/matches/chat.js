@@ -68,8 +68,8 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$ionicAnalytics'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $ionicAnalytics) {
         $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
@@ -149,6 +149,8 @@
 
             delete $scope.activeMessage.text;
 
+            messageToAnalytics(newMessage);
+
             $timeout(function() {
                 $ionicScrollDelegate.scrollBottom(true);
             });
@@ -163,6 +165,22 @@
         function addMessage(msg) {
             $scope.messages.push(msg);
             ChatsApi.readMessage(msg);
+        }
+
+        function messageToAnalytics(message) {
+            $timeout(function () {
+                $scope.messages.forEach(function (scopeMessage) {
+                    if (scopeMessage.created == message.created) {
+                        message = scopeMessage;
+                    }
+                });
+                $ionicAnalytics.track('NewMessage', {
+                    sent: !message.isSending,
+                    targetSex: $scope.user.sex,
+                    targetAge: $scope.user.age,
+                    firstMessage: $scope.messages.length == 1
+                });
+            }, 30000)
         }
 
         function load() {
@@ -216,7 +234,7 @@
             var userPromise = chatPromise
                 .then(function (chat) {
                     var chatUserId = chat.users[0] == $rootScope.userProfile._id ? chat.users[1] : chat.users[0];
-                    return profilesApi.getProfileInfo(chatUserId)
+                    return profilesApi.getProfileData(chatUserId)
                 })
                 .then(function (profileInfo) {
                     return profileInfo;
