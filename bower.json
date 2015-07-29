@@ -17,6 +17,6 @@
     "ngDraggable": "git@github.com:akveo/ngDraggable.git#d6f3bdac9ee6e30a51356a05f7f32ded325d64a2",
     "ionic-service-core": "~0.1.7",
     "ionic-service-push": "~0.1.8",
-    "ionic-service-analytics": "~0.2.0"
+    "ionic-service-analytics": "#0.2.0"
   }
 }
