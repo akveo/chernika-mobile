@@ -12,10 +12,14 @@
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.$onVkSdkEvent('vkSdk.newToken', function(evt) {
-            afterTokenReceive({
-                user_id: evt.detail.userId,
-                access_token: evt.detail.accessToken
-            });
+            VkSdk.getUser(evt.detail.userId, function(r) {
+                var vkUser = !r.error && r.response && r.response.length > 0 ? r.response[0] : {};
+                afterTokenReceive({
+                    user_id: evt.detail.userId,
+                    access_token: evt.detail.accessToken,
+                    vkUser: vkUser
+                });
+            })
         });
 
         $scope.doAuthenticate = function() {
