@@ -10,14 +10,14 @@
     PhotoSettingsController.$inject = ['$scope', '$rootScope', 'photoSettingsWidthCalculator', 'cropModalGetter', 'userApi', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
     function PhotoSettingsController($scope, $rootScope, photoSettingsWidthCalculator, cropModalGetter, userApi, onConnectionChangePropertyListener, onLoadingPropertyListener) {
         $scope.selectedPhoto = {};
-        $scope.currentCrop = {};
+        $scope.initialCrop = {};
 
         $scope.$on('draggable.selected', onDraggableSelected);
         $scope.$on('draggable.dropComplete', onDropComplete);
 
         cropModalGetter.getModal($scope)
-            .then(function(modal) {
-               $scope.cropModal = modal;
+            .then(function(modalController) {
+               $scope.cropModalController = modalController;
             });
 
         onConnectionChangePropertyListener.listen($scope, {
@@ -37,19 +37,18 @@
         load();
 
         $scope.closeCrop = function () {
-            $scope.cropModal.hide();
+            $scope.$broadcast('cropModal.hide')
+        };
+
+        $scope.showCrop = function () {
+            $scope.$broadcast('cropModal.show')
         };
 
         $scope.saveCrop = function () {
-            $scope.selectedPhoto.crop = {
-                x: $scope.currentCrop.x,
-                y: $scope.currentCrop.y,
-                height: $scope.currentCrop.height,
-                width: $scope.currentCrop.width
-            };
-            savePhotos();
-            $scope.cropModal.hide();
+            $scope.$broadcast('crop.save');
         };
+
+        $scope.$on('crop.saved', onCropSaved);
 
         function onDropComplete(evt, draggedPhoto, dropPhoto){
             evt.stopPropagation();
@@ -62,10 +61,16 @@
             }
         }
 
+        function onCropSaved(evt) {
+            evt.stopPropagation();
+            savePhotos();
+            $scope.closeCrop();
+        }
+
         function onDraggableSelected(evt, photo) {
             evt.stopPropagation();
             $scope.selectedPhoto = photo;
-            $scope.cropModal.show();
+            $scope.showCrop()
         }
 
         function savePhotos() {
@@ -171,16 +176,32 @@
             link: function (scope, element) {
                 var canvas = element.find('canvas');
                 var cropContainer = angular.element(element[0].querySelector('.crop-container'));
+                scope.currentCrop = {};
 
-                scope.$watch('selectedPhoto', applyStyles);
+                scope.$watch('selectedPhoto', onNewPhoto);
 
                 scope.onCropChange = function(crop) {
-                    var scale = scope.selectedPhoto.height / canvas[0].height;
-                    scope.currentCrop.height = crop.size * scale;
-                    scope.currentCrop.width = crop.size * scale;
-                    scope.currentCrop.x = crop.x * scale;
-                    scope.currentCrop.y = crop.y * scale;
+                    angular.extend(scope.currentCrop, crop);
                 };
+
+                scope.$on('crop.save', function () {
+                    angular.extend(scope.selectedPhoto.crop, scope.currentCrop);
+                    scope.$emit('crop.saved', scope.selectedPhoto.crop);
+                });
+
+                scope.$on('cropModal.show', function () {
+                    angular.extend(scope.initialCrop, scope.selectedPhoto.crop);
+                    scope.cropModalController.show();
+                });
+
+                scope.$on('cropModal.hide', function () {
+                    scope.cropModalController.hide();
+                });
+
+                function onNewPhoto(newP) {
+                    angular.extend(scope.initialCrop, newP.crop);
+                    applyStyles();
+                }
 
                 function applyStyles() {
                     var width = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
