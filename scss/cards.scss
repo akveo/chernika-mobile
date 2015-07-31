@@ -21,6 +21,30 @@ $swiperControlsBorder: 5px;
   color: $positive;
 }
 
+.centered-block.swiper-info {
+  display: block;
+  margin-top: -80px;
+  height: auto;
+  .default-content {
+    display: inline-block;
+  }
+  .rounded-image {
+    margin-bottom: 5px;
+  }
+  .hint-text {
+    margin-top: 5px;
+  }
+  .icon-text {
+    transition: max-height 1s ease, opacity 1s ease;
+    max-height: 50px;
+    opacity: 1;
+    &.shrinked {
+      max-height: 0;
+      opacity: 0;
+    }
+  }
+}
+
 .swiper-view {
   width: 100%;
   height: 100%;

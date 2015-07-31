@@ -26,6 +26,7 @@
         $scope.userProfile = userProfile;
         $scope.geoEnabled = true;
         $scope.cards = [];
+        $scope.loading = true;
         var viewSizing = $scope.viewSizing = {};
 
         $scope.$on('settings.changed', load);
@@ -106,6 +107,7 @@
         }, true);
 
         function load() {
+            $scope.loading = true;
             $scope.cards = [];
             var loadStart = new Date();
             suggestionsByLocation.getSuggestionsByLocation()
@@ -113,8 +115,10 @@
                     var loadEnd = new Date();
                     suggestionTimeToAnalytics(loadEnd - loadStart);
                     $scope.cards = suggestions;
+                    $scope.loading = false;
                 }, function(err) {
                     $scope.geoEnabled = false;
+                    $scope.loading = false;
                     suggestionTimeToAnalytics
                     $rootScope.$broadcast('geolocation.error', err)
                 });
