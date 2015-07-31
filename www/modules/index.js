@@ -8,6 +8,7 @@
         .config(appConfig)
         .service('connectionListener', connectionListener)
         .service('RootScopeEventsToAnalytics', RootScopeEventsToAnalytics)
+        .service('appStateListener', appStateListener)
         .run(appRun)
         .controller('SplashController', SplashController);
 
@@ -30,8 +31,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics', 'appStateListener'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics, appStateListener) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -45,6 +46,7 @@
             }
             multiplatformGeolocation.init();
             connectionListener.listenConnection();
+            appStateListener.listenState();
             PushInitializer.init();
             IonicUserInitializer.init();
             $ionicAnalytics.register();
@@ -91,6 +93,17 @@
 
         this.getStatus = function () {
             return self.online;
+        }
+    }
+    
+    appStateListener.$inject = ['$rootScope'];
+    function appStateListener($rootScope) {
+        function resume() {
+            $rootScope.$broadcast('app.resume');
+        }
+
+        this.listenState = function () {
+            document.addEventListener("resume", resume, false);
         }
     }
 

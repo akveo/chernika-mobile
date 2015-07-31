@@ -30,6 +30,9 @@
         var viewSizing = $scope.viewSizing = {};
 
         $scope.$on('settings.changed', load);
+        $scope.$on('app.resume', function () {
+            $scope.cards.length || load();
+        });
 
         load();
 
