@@ -11,6 +11,7 @@ var pluginlist = [
     "cordova-plugin-whitelist",
     "cordova-plugin-network-information",
     "cordova.plugins.diagnostic",
+    "com.ionic.deploy",
     "com.phonegap.plugins.PushPlugin",
     "https://github.com/apache/cordova-plugin-inappbrowser",
     "org.apache.cordova.console",
