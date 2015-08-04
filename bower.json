@@ -2,14 +2,14 @@
   "name": "pinder-mobile",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-rc.2"
+    "ionic": "driftyco/ionic-bower#1.0.0-rc.5"
   },
   "dependencies": {
     "angular-swipe-element": "~0.0.2",
     "devices.css": "*",
     "angular-cookies": "~1.3.15",
     "ionic-ion-tinder-cards": "https://github.com/akveo/ionic-ion-tinder-cards.git",
-    "ngCordova": "~0.1.15-alpha",
+    "ngCordova": "#0.1.15-alpha",
     "angular-socket-io": "~0.7.0",
     "socket.io-client": "~1.3.5",
     "ionicons": "~2.0.1",
