@@ -20,8 +20,8 @@
         };
     }
 
-    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$ionicAnalytics', 'appConfig'];
-    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $ionicAnalytics, appConfig) {
+    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$ionicAnalytics', 'appConfig', 'ChatsApi'];
+    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $ionicAnalytics, appConfig, ChatsApi) {
 
         $scope.userProfile = userProfile;
         $scope.geoEnabled = true;
@@ -54,18 +54,25 @@
         $scope.cardSwipedRight = function(index) {
             var matchingProfile = $scope.cards[index].obj;
             suggestionsApi.likeProfile(matchingProfile._id)
-                .then(function(data) {
-                    if (data.isMatched) {
-                        var newScope = $scope.$new();
-                        newScope.matchingProfile = matchingProfile;
-                        blurredModal.fromTemplateUrl('modules/main/swiper/newMatch.html', {
-                            scope: newScope,
-                            animation: 'slide-in-up'
-                        }).then(function(modal) {
+              .then(function(data) {
+                  if (data.isMatched) {
+                      var newScope = $scope.$new();
+                      newScope.matchingProfile = matchingProfile;
+                      var modal;
+                      blurredModal.fromTemplateUrl('modules/main/swiper/newMatch.html', {
+                          scope: newScope,
+                          animation: 'slide-in-up'
+                      })
+                        .then(function(m) {
+                            modal = m;
+                            return ChatsApi.getMatchedProfileChat(matchingProfile._id);
+                        })
+                        .then(function (chat) {
+                            newScope.chatId = chat.chat;
                             modal.show();
                         });
-                    }
-                });
+                  }
+              });
             swipeToAnalytics(true, $scope.cards[index].obj);
         };
 

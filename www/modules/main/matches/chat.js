@@ -4,7 +4,6 @@
 (function(angular) {
 
     angular.module('app.main.matches')
-        .service('ChatsApi', ChatsApi)
         .service('chatDetails', chatDetails)
         .controller('ChatsController', ChatsController)
         .controller('ChatDetailCtrl', ChatDetailCtrl);
@@ -196,33 +195,6 @@
                 }, function (error) {
                     $scope.$broadcast('connection.loading.error', {api: 'chatDetails', method: 'getDetails', error: error});
                 });
-        }
-    }
-
-    ChatsApi.$inject = ['appSocket', '$http', 'appConfig'];
-    function ChatsApi(appSocket, $http, appConfig) {
-        var chatsEndpoint = appConfig.api.endpoint + 'chats';
-
-        this.getChatsInfo = function() {
-            return $http.get(chatsEndpoint).then(function(res) { return res.data; });
-        };
-        
-        this.getChat = function (chatId) {
-            var chatEndpoint = chatsEndpoint + '/' + chatId;
-            return $http.get(chatEndpoint).then(function(res) { return res.data; });
-        };
-
-        this.getMessages = function(chatId) {
-            var messagesEndpoint = chatsEndpoint + '/' + chatId + '/messages';
-            return $http.get(messagesEndpoint).then(function(res) { return res.data; });
-        };
-
-        this.sendMessage = function (message) {
-            appSocket.emit('new_message', message);
-        };
-
-        this.readMessage = function(message) {
-            appSocket.emit('message_read', message);
         }
     }
 
