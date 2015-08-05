@@ -69,6 +69,7 @@
         var self = this;
 
         self.online = false;
+        self.paused = false;
 
         function setOffline() {
             if (self.online) {
@@ -84,11 +85,21 @@
             }
         }
 
+        function paused() {
+            ionic.Platform.isIOS() && setOffline();
+        }
+
+        function resumed() {
+            ionic.Platform.isIOS() && setOnline();
+        }
+
         this.listenConnection = function () {
             document.addEventListener("online", setOnline, false);
             document.addEventListener("offline", setOffline, false);
             appSocket.on('connect', setOnline);
-            appSocket.on('disconnect',setOffline)
+            appSocket.on('disconnect', setOffline);
+            $rootScope.$on('app.pause', paused);
+            $rootScope.$on('app.resume', resumed);
         };
 
         this.getStatus = function () {
@@ -102,8 +113,13 @@
             $rootScope.$broadcast('app.resume');
         }
 
+        function pause() {
+            $rootScope.$broadcast('app.pause');
+        }
+
         this.listenState = function () {
             document.addEventListener("resume", resume, false);
+            document.addEventListener("pause", pause, false);
         }
     }
 
