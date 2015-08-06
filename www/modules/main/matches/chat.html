@@ -33,7 +33,7 @@
 
         <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
             <label class="item-input-wrapper">
-                <input type="text" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage.text" on-focus="inputUp()" on-blur="inputDown()" />
+                <input type="text" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage.text" />
             </label>
             <button class="button button-clear ion-play" ng-click="sendMessage()" ng-disabled="!activeMessage.text"></button>
         </ion-footer-bar>

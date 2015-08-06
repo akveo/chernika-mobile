@@ -11,7 +11,8 @@
         .service('PushInitializer', PushInitializer)
         .service('IonicUserInitializer', IonicUserInitializer)
         .service('multiplatformGeolocation', multiplatformGeolocation)
-        .directive('cleverLoader', cleverLoader);
+        .directive('cleverLoader', cleverLoader)
+        .directive('onReturn', onReturn);
 
     multiplatformGeolocation.inject = ['$q'];
     function multiplatformGeolocation ($q) {
@@ -87,6 +88,26 @@
             });
         }
     }
+
+    onReturn.$inject = ['$timeout'];
+    function onReturn($timeout){
+        return {
+            restrict: 'A',
+            scope: {
+                'onReturn': '&'
+            },
+            link: function(scope, element, attr){
+                element.bind('keydown', function(e){
+                    if(e.which == 13){
+                        $timeout(function(){
+                            scope.onReturn();
+                        });
+                    }
+                });
+            }
+        }
+    }
+
 
     LoadingEventsToAnalytics.$inject = ['$ionicAnalytics'];
     function LoadingEventsToAnalytics($ionicAnalytics) {
