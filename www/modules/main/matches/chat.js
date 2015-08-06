@@ -164,6 +164,9 @@
         function addMessage(msg) {
             $scope.messages.push(msg);
             ChatsApi.readMessage(msg);
+            $timeout(function() {
+                $ionicScrollDelegate.scrollBottom(true);
+            });
         }
 
         function messageToAnalytics(message) {
