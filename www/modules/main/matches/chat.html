@@ -33,9 +33,9 @@
 
         <ion-footer-bar keyboard-attach class="bar-stable item-input-inset">
             <label class="item-input-wrapper">
-                <input type="text" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage.text" />
+                <input type="text" id="chatInput" placeholder="Ваше сообщение" on-return="sendMessage()" ng-model="activeMessage.text" />
             </label>
-            <button class="button button-clear ion-play" ng-click="sendMessage()" ng-disabled="!activeMessage.text"></button>
+            <button class="button button-clear ion-play touch-area-sm" refocus="chatInput" ng-click="sendMessage()" ng-disabled="!activeMessage.text"></button>
         </ion-footer-bar>
     </div>
 </ion-view>
