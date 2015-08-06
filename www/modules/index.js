@@ -31,8 +31,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics', 'appStateListener', '$ionicConfig'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics, appStateListener, $ionicConfig) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics', 'appStateListener', '$ionicConfig', '$rootScope'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics, appStateListener, $ionicConfig, $rootScope) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -44,6 +44,13 @@
                 // org.apache.cordova.statusbar required
                 StatusBar.styleLightContent();
             }
+
+            $rootScope.$on('$stateChangeStart',
+              function(event, toState, toParams, fromState, fromParams){
+                 if (toState.name == 'login' && fromState.name.indexOf('main') != -1) {
+                     event.preventDefault();
+                 }
+              });
 
             $ionicConfig.views.swipeBackEnabled(false);
 
