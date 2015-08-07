@@ -128,31 +128,33 @@
         });
 
         $scope.sendMessage = function() {
-            var newMessage = {
-                chat: $scope.chat._id,
-                sender: $scope.userProfile._id,
-                text: $scope.activeMessage.text,
-                created: new Date().toISOString()
-            };
+            if ($scope.activeMessage.text) {
+                var newMessage = {
+                    chat: $scope.chat._id,
+                    sender: $scope.userProfile._id,
+                    text: $scope.activeMessage.text,
+                    created: new Date().toISOString()
+                };
 
-            ChatsApi.sendMessage({
-                receiver: {
-                    _id: $scope.user._id,
-                    name: $scope.user.firstName
-                },
-                message: newMessage
-            });
+                ChatsApi.sendMessage({
+                    receiver: {
+                        _id: $scope.user._id,
+                        name: $scope.user.firstName
+                    },
+                    message: newMessage
+                });
 
-            newMessage.isSending = true;
-            $scope.messages.push(newMessage);
+                newMessage.isSending = true;
+                $scope.messages.push(newMessage);
 
-            delete $scope.activeMessage.text;
+                delete $scope.activeMessage.text;
 
-            messageToAnalytics(newMessage);
+                messageToAnalytics(newMessage);
 
-            $timeout(function() {
-                $ionicScrollDelegate.scrollBottom(true);
-            });
+                $timeout(function() {
+                    $ionicScrollDelegate.scrollBottom(true);
+                });
+            }
         };
 
         function readMessages() {
