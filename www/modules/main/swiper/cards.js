@@ -30,11 +30,8 @@
         var viewSizing = $scope.viewSizing = {};
 
         $scope.$on('settings.changed', load);
-        $scope.$on('app.resume', function () {
-            $scope.cards.length || load();
-        });
 
-        load();
+        $scope.$watch('cards.length', reloadEmptyCards);
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
@@ -89,6 +86,10 @@
             });
         }
 
+        function reloadEmptyCards() {
+            $scope.cards.length || load();
+        }
+
         function recalculateSizing() {
             if (!viewSizing.swiperViewWidth || !viewSizing.swiperViewHeight)
                 return;
@@ -129,7 +130,7 @@
                 }, function(err) {
                     $scope.geoEnabled = false;
                     $scope.loading = false;
-                    suggestionTimeToAnalytics
+                    suggestionTimeToAnalytics();
                     $rootScope.$broadcast('geolocation.error', err)
                 });
         }
