@@ -3,10 +3,6 @@
 
     <div class="main-content" ng-if="isContentSeen">
         <ion-content>
-            <ion-refresher
-                    pulling-text="Pull to refresh..."
-                    on-refresh="doRefresh()">
-            </ion-refresher>
             <ion-list>
                 <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" ui-sref="main.match-detail({chatId: chat.chat, name: chat.user.firstName})">
                     <img ng-src="{{chat.user.photos[0].src}}">
@@ -21,6 +17,15 @@
                     </ion-option-button>
                 </ion-item>
             </ion-list>
+        </ion-content>
+
+        <ion-content class="padding" ng-show="!chats.length" scroll="false">
+            <div class="centered-block">
+                <div class="default-content">
+                    <div class="ion-person-stalker centered-block-icon"></div>
+                    <div class="hint-text">У вас пока нет совпадений :(</div>
+                </div>
+            </div>
         </ion-content>
     </div>
 </ion-view>
