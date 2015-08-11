@@ -36,6 +36,9 @@
                 apiKey: '7ab0ed289078bababcf259dbb7e01645e2ecada5bd9ac14d',
                 gcmId: '165099633205',
                 devPush: false
+            },
+            ga: {
+                trackingId: 'UA-66152232-1'
             }
         });
 

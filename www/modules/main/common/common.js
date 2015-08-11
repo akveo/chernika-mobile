@@ -132,30 +132,26 @@
         }
     }
 
-    LoadingEventsToAnalytics.$inject = ['$ionicAnalytics'];
-    function LoadingEventsToAnalytics($ionicAnalytics) {
+    function LoadingEventsToAnalytics() {
         this.init = function (scope) {
             scope.$on('connection.loading.start', function (event, data) {
-                $ionicAnalytics.track('ConnectionLoading', {
-                    state: 'start',
-                    api: data.api,
-                    method: data.method
+                scope.$emit('analytics.event', {
+                    category: 'ConnectionLoading',
+                    action: 'start'
                 });
             });
 
             scope.$on('connection.loading.success', function (event, data) {
-                $ionicAnalytics.track('ConnectionLoading', {
-                    state: 'success',
-                    api: data.api,
-                    method: data.method
+                scope.$emit('analytics.event', {
+                    category: 'ConnectionLoading',
+                    action: 'success'
                 });
             });
 
             scope.$on('connection.loading.error', function (event, data) {
-                $ionicAnalytics.track('ConnectionLoading', {
-                    state: 'error',
-                    api: data.api,
-                    method: data.method
+                scope.$emit('analytics.event', {
+                    category: 'ConnectionLoading',
+                    action: 'error'
                 });
             });
         };

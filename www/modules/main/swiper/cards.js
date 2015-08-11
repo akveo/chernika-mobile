@@ -79,10 +79,11 @@
         };
 
         function swipeToAnalytics(isLike, cardObj) {
-            $ionicAnalytics.track('LikeDislikeProfile', {
-                like: isLike,
-                targetSex: cardObj.sex,
-                targetAge: cardObj.age
+            $scope.$emit('analytics.event', {
+                category: 'LikeDislikeProfile',
+                action: isLike ? 'like': 'dislike',
+                label: 'targetAge',
+                value: cardObj.age
             });
         }
 
@@ -136,8 +137,11 @@
         }
 
         function suggestionTimeToAnalytics(msTimeDiff) {
-            $ionicAnalytics.track('SuggestionTime', {
-                seconds: msTimeDiff ? msTimeDiff/1000 : Infinity
+            $scope.$emit('analytics.event', {
+                category: 'Suggestion',
+                action: 'timing',
+                label: 'time',
+                timing: msTimeDiff ? msTimeDiff/1000 : Infinity
             });
         }
 

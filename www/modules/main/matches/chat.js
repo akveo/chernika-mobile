@@ -178,11 +178,11 @@
                         message = scopeMessage;
                     }
                 });
-                $ionicAnalytics.track('NewMessage', {
-                    sent: !message.isSending,
-                    targetSex: $scope.user.sex,
-                    targetAge: $scope.user.age,
-                    firstMessage: $scope.messages.length == 1
+                $scope.$emit('analytics.event', {
+                    category: 'NewMessage',
+                    action: !message.isSending ? 'sent': 'not sent',
+                    label: 'firstMessage',
+                    value: $scope.messages.length == 1 ? 1 : 0
                 });
             }, 30000)
         }

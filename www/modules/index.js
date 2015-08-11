@@ -2,15 +2,16 @@
  * Created by vl on 31.3.15.
  */
 (function(angular) {
-    'use strict';
-
     angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
-        .config(appConfig)
-        .service('connectionListener', connectionListener)
-        .service('RootScopeEventsToAnalytics', RootScopeEventsToAnalytics)
-        .service('appStateListener', appStateListener)
-        .run(appRun)
-        .controller('SplashController', SplashController);
+      .config(appConfig)
+      .service('connectionListener', connectionListener)
+      .service('appStateListener', appStateListener)
+      .run(appRun)
+      .run(googleAnalyticsRun)
+      .run(ionicAnalyticsRun)
+      .controller('SplashController', SplashController);
+
+    'use strict';
 
     appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicAppProvider', 'appConfig'];
     function appConfig($urlRouterProvider, $stateProvider, $ionicAppProvider, appConfig) {
@@ -31,8 +32,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', '$ionicAnalytics', 'RootScopeEventsToAnalytics', 'appStateListener', '$ionicConfig', '$rootScope'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, $ionicAnalytics, RootScopeEventsToAnalytics, appStateListener, $ionicConfig, $rootScope) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope'];
+    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, appStateListener, $ionicConfig, $rootScope) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -59,8 +60,6 @@
             appStateListener.listenState();
             PushInitializer.init();
             IonicUserInitializer.init();
-            $ionicAnalytics.register();
-            RootScopeEventsToAnalytics.init();
         });
     }
 
@@ -142,32 +141,81 @@
         }
     }
 
-    RootScopeEventsToAnalytics.$inject = ['$rootScope', '$ionicAnalytics'];
-    function RootScopeEventsToAnalytics($rootScope, $ionicAnalytics) {
-        this.init = function() {
+    ionicAnalyticsRun.$inject = ['$rootScope', '$ionicAnalytics', '$ionicPlatform'];
+    function ionicAnalyticsRun($rootScope, $ionicAnalytics, $ionicPlatform) {
+        $ionicPlatform.ready(function() {
+            $ionicAnalytics.register();
+
             $rootScope.$on('user.login', function() {
                 $ionicAnalytics.track('UserLoggedIn');
+
             });
 
             $rootScope.$on('connection.off', function() {
                 $ionicAnalytics.track('ConnectionStateChange', {
-                    isOn: false
+                    action: 'off'
                 });
             });
 
             $rootScope.$on('connection.on', function() {
                 $ionicAnalytics.track('ConnectionStateChange', {
-                    isOn: true
+                    action: 'on'
                 });
             });
 
             $rootScope.$on('geolocation.error', function (event, posError) {
-                window.cordova && $ionicAnalytics.track('GeolocationError', {
-                    timeout: posError.code === PositionError.TIMEOUT,
-                    positionUnavailible: posError.code === PositionError.POSITION_UNAVAILABLE,
-                    permissionDenied: posError.code === PositionError.PERMISSION_DENIED
+                var errName = posError.code === PositionError.TIMEOUT ? 'timeout' : (posError.code === PositionError.POSITION_UNAVAILABLE ? 'unavailable' : 'permission');
+                $ionicAnalytics.track('GeolocationError', {
+                    action: errName
                 });
-            })
-        };
+            });
+
+            $rootScope.$on('analytics.event', function(event, arg) {
+                $ionicAnalytics.track(arg.category, {
+                    action: arg.action,
+                    label: arg.label,
+                    value: arg.value
+                });
+            });
+        });
     }
+
+    googleAnalyticsRun.$inject = ['$cordovaGoogleAnalytics', '$ionicPlatform', 'appConfig', '$rootScope'];
+    function googleAnalyticsRun($cordovaGoogleAnalytics, $ionicPlatform, appConfig, $rootScope) {
+        $ionicPlatform.ready(function () {
+            if (window.analytics) {
+                $cordovaGoogleAnalytics.startTrackerWithId(appConfig.ga.trackingId);
+
+                $rootScope.$on('user.login', function () {
+                    $cordovaGoogleAnalytics.trackEvent('UserLoggedIn');
+                });
+
+                $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+                    $cordovaGoogleAnalytics.trackView(toState.name);
+                });
+
+                $rootScope.$on('user.login.checked', function (event, loginData) {
+                    $cordovaGoogleAnalytics.setUserId(loginData.vkId);
+                });
+
+                $rootScope.$on('connection.off', function () {
+                    $cordovaGoogleAnalytics.trackEvent('ConnectionStateChange', 'off');
+                });
+
+                $rootScope.$on('connection.on', function () {
+                    $cordovaGoogleAnalytics.trackEvent('ConnectionStateChange', 'on');
+                });
+
+                $rootScope.$on('geolocation.error', function (event, posError) {
+                    var errName = posError.code === PositionError.TIMEOUT ? 'timeout' : (posError.code === PositionError.POSITION_UNAVAILABLE ? 'unavailable' : 'permission');
+                    $cordovaGoogleAnalytics.trackEvent('GeolocationError', errName);
+                });
+
+                $rootScope.$on('analytics.event', function (event, arg) {
+                    $cordovaGoogleAnalytics.trackEvent(arg.category, arg.timing, arg.label, arg.value);
+                });
+            }
+        });
+    }
+
 })(angular);
