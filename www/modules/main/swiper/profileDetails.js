@@ -34,6 +34,7 @@
             profileDetails.getProfileDetails()
                 .then(function (profileDetails) {
                     $scope.profileDetails = profileDetails;
+                    $scope.distance = getDistance($scope.userProfile.lastKnownPosition.coordinates, profileDetails.lastKnownPosition.coordinates);
                     $scope.$broadcast('connection.loading.success', {api: 'profilesApi', method: 'getProfileData'});
                 }, function (error) {
                     $scope.$broadcast('connection.loading.error', {api: 'profilesApi', method: 'getProfileData', error: error});
@@ -46,6 +47,14 @@
         this.getProfileDetails = function () {
             return profilesApi.getProfileData($stateParams.profileId);
         }
+    }
+
+    function getDistance(coords1, coords2) {
+        return geolib.getDistance(
+          {latitude: coords1[1], longitude: coords1[0]},
+          {latitude: coords2[1], longitude: coords2[0]},
+          100
+        ) / 1000;
     }
 
 })(angular);
