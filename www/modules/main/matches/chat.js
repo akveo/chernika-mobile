@@ -60,10 +60,17 @@
             ChatsApi.getChatsInfo()
                 .then(function (chats) {
                     $scope.chats = chats;
+                    joinChats();
                     $scope.$broadcast('connection.loading.success', {api: 'ChatsApi', method: 'getChatsInfo'});
                 }, function (error) {
                     $scope.$broadcast('connection.loading.error', {api: 'ChatsApi', method: 'getChatsInfo', error: error});
                 });
+        }
+
+        function joinChats() {
+            $scope.chats.forEach(function (chat) {
+                chat.message || ChatsApi.joinChat(chat.chat);
+            })
         }
     }
 
@@ -196,6 +203,7 @@
                     $scope.user = details.user;
                     $scope.motivationalMsg = motivationalMsgs[Math.floor(Math.random()*motivationalMsgs.length)];
                     readMessages();
+                    ChatsApi.joinChat($scope.chat._id);
                     $scope.$broadcast('connection.loading.success', {api: 'chatDetails', method: 'getDetails'});
                 }, function (error) {
                     $scope.$broadcast('connection.loading.error', {api: 'chatDetails', method: 'getDetails', error: error});

@@ -41,6 +41,10 @@
 
         this.readMessage = function(message) {
             appSocket.emit('message_read', message);
+        };
+
+        this.joinChat = function(chatId) {
+            appSocket.emit('join_chat', chatId);
         }
     }
 
