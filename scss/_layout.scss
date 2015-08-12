@@ -85,3 +85,11 @@ $centeredBlockHeight: 300px;
     left:-15px; right:-15px;
   }
 }
+
+.full-white {
+  position: relative;
+  height: 100%;
+  background-color: white;
+  display: block;
+  z-index: 1000;
+}
