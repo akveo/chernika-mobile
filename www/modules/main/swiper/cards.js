@@ -31,6 +31,7 @@
 
         $scope.$on('settings.changed', load);
 
+        $scope.$on('app.resume', reloadEmptyCards);
         $scope.$watch('cards.length', reloadEmptyCards);
 
         $scope.cardDestroyed = function(index) {
@@ -119,21 +120,24 @@
         }, true);
 
         function load() {
-            $scope.loading = true;
-            $scope.cards = [];
-            var loadStart = new Date();
-            suggestionsByLocation.getSuggestionsByLocation()
-                .then(function(suggestions) {
-                    var loadEnd = new Date();
-                    suggestionTimeToAnalytics(loadEnd - loadStart);
-                    $scope.cards = suggestions;
-                    $scope.loading = false;
-                }, function(err) {
-                    $scope.geoEnabled = false;
-                    $scope.loading = false;
-                    suggestionTimeToAnalytics();
-                    $rootScope.$broadcast('geolocation.error', err)
-                });
+            if (!$scope.isLoading) {
+                $scope.loading = true;
+                $scope.geoEnabled = true;
+                $scope.cards = [];
+                var loadStart = new Date();
+                suggestionsByLocation.getSuggestionsByLocation()
+                  .then(function(suggestions) {
+                      var loadEnd = new Date();
+                      suggestionTimeToAnalytics(loadEnd - loadStart);
+                      $scope.cards = suggestions;
+                      $scope.loading = false;
+                  }, function(err) {
+                      $scope.geoEnabled = false;
+                      $scope.loading = false;
+                      suggestionTimeToAnalytics();
+                      $rootScope.$broadcast('geolocation.error', err)
+                  });
+            }
         }
 
         function suggestionTimeToAnalytics(msTimeDiff) {
