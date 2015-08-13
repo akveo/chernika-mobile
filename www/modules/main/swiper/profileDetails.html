@@ -10,8 +10,10 @@
                 </ion-slide>
             </ion-slide-box>
             <div class="padding">
-                <div class="dark profile-details-name">{{profileDetails.firstName}}, {{profileDetails.age}}</div>
-                <div class="profile-details-distance">{{distance}}км от Вас</div>
+                <div class="profile-details-text">
+                    <span class="dark profile-details-name">{{profileDetails.firstName}}, {{profileDetails.age}}</span>
+                    <span class="profile-details-distance">{{distance === 0 ? 0.1 : distance}}&nbsp;км от Вас</span>
+                </div>
             </div>
         </ion-content>
     </div>

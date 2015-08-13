@@ -5,13 +5,18 @@
   .slider-pager {
     top: ($bar-height - 15px) / 2;
   }
-  .profile-details-name {
-    font-size: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  .profile-details-distance {
-    padding-left: 2px;
-    color: #717070;
+  .profile-details-text {
+    margin: 5px 0;
+    position: relative;
+    .profile-details-name {
+      font-size: 30px;
+    }
+    .profile-details-distance {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      color: #717070;
+    }
   }
 }

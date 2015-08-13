@@ -7,17 +7,22 @@
         .service('suggestionsByLocation',suggestionsByLocation)
         .controller('swiperController', swiperController);
 
-    suggestionsByLocation.$inject = ['suggestionsApi', 'multiplatformGeolocation'];
-    function suggestionsByLocation(suggestionsApi, multiplatformGeolocation) {
+    suggestionsByLocation.$inject = ['suggestionsApi', 'multiplatformGeolocation', '$rootScope'];
+    function suggestionsByLocation(suggestionsApi, multiplatformGeolocation, $rootScope) {
         this.getSuggestionsByLocation = function() {
             return multiplatformGeolocation
                 .getCurrentPosition()
                 .then(function(position) {
+                    updateUserProfileCoords(position.coords);
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
                 }, function(err) {
                     throw err;
                 });
         };
+
+        function updateUserProfileCoords(coordinates) {
+            $rootScope.userProfile.lastKnownPosition.coordinates = [coordinates.longitude, coordinates.latitude];
+        }
     }
 
     swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$ionicAnalytics', 'appConfig', 'ChatsApi'];
