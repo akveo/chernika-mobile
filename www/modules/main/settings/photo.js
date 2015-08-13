@@ -95,7 +95,7 @@
 
     photoSettingsWidthCalculator.$inject = [];
     function photoSettingsWidthCalculator() {
-        var screenWidth = screen.width;
+        var screenWidth = document.documentElement.clientWidth || screen.width;
         var containerPaddings = 10;
         var photoGutter = 15;
 

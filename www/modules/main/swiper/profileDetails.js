@@ -10,7 +10,7 @@
 
     profileDetailsCtrl.$inject = ['$scope', 'profileDetails', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
     function profileDetailsCtrl($scope, profileDetails, onConnectionChangePropertyListener, onLoadingPropertyListener) {
-        $scope.screenWidth = screen.width;
+        $scope.screenWidth = document.documentElement.clientWidth || screen.width;
         $scope.isContentSeen = false;
 
         onConnectionChangePropertyListener.listen($scope, {
