@@ -12,8 +12,7 @@
         .service('IonicUserInitializer', IonicUserInitializer)
         .service('multiplatformGeolocation', multiplatformGeolocation)
         .directive('cleverLoader', cleverLoader)
-        .directive('onReturn', onReturn)
-        .directive('refocus', refocus);
+        .directive('onReturn', onReturn);
 
     multiplatformGeolocation.inject = ['$q'];
     function multiplatformGeolocation ($q) {
@@ -103,29 +102,6 @@
                         $timeout(function(){
                             scope.onReturn();
                         });
-                    }
-                });
-            }
-        }
-    }
-
-    refocus.$inject = ['$timeout'];
-    function refocus($timeout) {
-        return {
-            restrict: "A",
-            link: function(scope, element, attrs) {
-                var elClicked = false;
-                var id = attrs.refocus;
-                var refocusableEl = angular.element(document.getElementById(id));
-
-                element.on('touchstart', function () {
-                    elClicked = true;
-                });
-
-                refocusableEl.on('blur', function (evt) {
-                    if (elClicked) {
-                        elClicked = false;
-                        refocusableEl[0].focus()
                     }
                 });
             }

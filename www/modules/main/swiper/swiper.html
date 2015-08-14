@@ -31,8 +31,11 @@
                  class="list card with-footer card-{{$index}}"
                  ng-style="cardStyles">
           <div class="item image card-content">
+            <div class="bg-icon" ng-show="!card.obj.photos[0]" bg-icon bg-width="imageActualWidth">
+                <div class="icon ion-person"></div>
+            </div>
             <div class="no-text">Нет</div>
-                <a class="photo-container" cropped-image="card.obj.photos[0]" target-width="imageActualWidth" href="#/main/swiper/{{card.obj._id}}"></a>
+                <a class="photo-container" ng-if="card.obj.photos[0]" cropped-image="card.obj.photos[0]" target-width="imageActualWidth" href="#/main/swiper/{{card.obj._id}}"></a>
             <div class="yes-text">Да</div>
           </div>
           <div class="item item-divider item-footer">

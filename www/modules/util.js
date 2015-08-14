@@ -6,7 +6,9 @@
         .service('appUtilities', appUtilities)
         .directive('croppedImage', croppedImage)
         .directive('containerWidth', containerWidth)
-        .service('blurredModal', blurredModal);
+        .service('blurredModal', blurredModal)
+        .directive('bgIcon', bgIcon)
+        .directive('refocus', refocus);
 
     function appUtilities() {
         this.queryToObject = function(query) {
@@ -86,6 +88,50 @@
                     return modal;
                 });
         };
+    }
+
+    refocus.$inject = ['$timeout'];
+    function refocus($timeout) {
+        return {
+            restrict: "A",
+            link: function(scope, element, attrs) {
+                var elClicked = false;
+                var id = attrs.refocus;
+                var refocusableEl = angular.element(document.getElementById(id));
+
+                element.on('touchstart', function () {
+                    elClicked = true;
+                });
+
+                refocusableEl.on('blur', function (evt) {
+                    if (elClicked) {
+                        elClicked = false;
+                        refocusableEl[0].focus()
+                    }
+                });
+            }
+        }
+    }
+
+    function bgIcon() {
+        return {
+            restrict: 'A',
+            scope: {
+                width: '=bgWidth'
+            },
+            link: function (scope, element) {
+                scope.$watch('width', applyStyles);
+
+                function applyStyles() {
+                    element.css({
+                        'width': scope.width + 'px',
+                        'height': scope.width + 'px',
+                        'line-height': scope.width + 'px',
+                        'font-size': (scope.width * 0.5) + 'px'
+                    })
+                }
+            }
+        }
     }
 
     containerWidth.$inject = ['$window', '$timeout'];

@@ -6,7 +6,10 @@ body.blurred {
 }
 
 .rounded-image {
-  border-radius: 50%;
+  border-radius: 9999px;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
   display: inline-block;
 }
 
@@ -92,4 +95,10 @@ $centeredBlockHeight: 300px;
   background-color: white;
   display: block;
   z-index: 1000;
+}
+
+.bg-icon {
+  position: absolute;
+  text-align: center;
+  color: $positive;
 }

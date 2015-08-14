@@ -4,8 +4,11 @@
     <div class="main-content" ng-if="isContentSeen">
         <ion-content>
             <ion-list>
-                <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" ui-sref="main.match-detail({chatId: chat.chat, name: chat.user.firstName})">
-                    <img ng-src="{{chat.user.photos[0].src}}">
+                <ion-item class="item-remove-animate item-avatar chats-list-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" ui-sref="main.match-detail({chatId: chat.chat, name: chat.user.firstName})">
+                    <img class="chats-list-avatar-image" ng-src="{{chat.user.photos[0].src}}">
+                    <div class="bg-icon" ng-show="!chat.user.photos[0]" bg-icon bg-width="40">
+                        <div class="icon ion-person"></div>
+                    </div>
                     <h2>
                         {{chat.user.firstName}}
                     </h2>
