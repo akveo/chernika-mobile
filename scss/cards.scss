@@ -196,5 +196,10 @@ td-card img {
   * {
     color: white;
   }
+  .new-match-icon {
+    background-color: white;
+    > .icon {
+      color: $positive;
+    }
+  }
 }
-

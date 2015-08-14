@@ -14,9 +14,15 @@
                 </div>
                 <div class="row">
                     <div class="col">
+                        <div class="bg-icon new-match-icon rounded-image" ng-show="!matchingProfile.photos[0]" bg-icon bg-width="100">
+                            <div class="icon ion-person"></div>
+                        </div>
                         <div class="rounded-image" cropped-image="matchingProfile.photos[0]" target-width="100"></div>
                     </div>
                     <div class="col">
+                        <div class="bg-icon new-match-icon rounded-image" ng-show="!userProfile.photos[0]" bg-icon bg-width="100">
+                            <div class="icon ion-person"></div>
+                        </div>
                         <div class="rounded-image" cropped-image="userProfile.photos[0]" target-width="100"></div>
                     </div>
                 </div>
