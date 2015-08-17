@@ -5,7 +5,8 @@
     'use strict';
 
     angular.module('app.main', ['app.main.matches', 'app.main.settings', 'app.main.swiper', 'app.main.common', 'app.api'])
-        .config(appConfig);
+        .config(appConfig)
+        .run(mainRun);
 
     appConfig.$inject = ['$stateProvider', '$urlRouterProvider'];
     function appConfig($stateProvider, $urlRouterProvider) {
@@ -20,6 +21,11 @@
                     userProfile: userProfileResolve
                 }
             })
+    }
+
+    mainRun.$inject = ['multiplatformGeolocation'];
+    function mainRun(multiplatformGeolocation) {
+        multiplatformGeolocation.init();
     }
 
     userProfileResolve.$inject = ['userApi', '$ionicLoading', '$rootScope'];

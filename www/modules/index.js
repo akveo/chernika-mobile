@@ -32,8 +32,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'multiplatformGeolocation', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope'];
-    function appRun($ionicPlatform, connectionListener, multiplatformGeolocation, PushInitializer, IonicUserInitializer, appStateListener, $ionicConfig, $rootScope) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope'];
+    function appRun($ionicPlatform, connectionListener, PushInitializer, IonicUserInitializer, appStateListener, $ionicConfig, $rootScope) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -54,8 +54,6 @@
               });
 
             $ionicConfig.views.swipeBackEnabled(false);
-
-            multiplatformGeolocation.init();
             connectionListener.listenConnection();
             appStateListener.listenState();
             PushInitializer.init();
