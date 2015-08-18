@@ -164,6 +164,14 @@
             }
         };
 
+        $scope.previousMessages = function() {
+            ChatsApi.getMessages($scope.chat._id, $scope.messages.length)
+              .then(function (messages) {
+                  $scope.messages = messages.concat($scope.messages);
+                  $scope.$broadcast('scroll.refreshComplete');
+              })
+        };
+
         function readMessages() {
             $scope.messages.forEach(function (msg) {
                 !msg.wasRead && msg.sender != $scope.userProfile._id && ChatsApi.readMessage(msg);

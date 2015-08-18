@@ -30,9 +30,10 @@
               })
         };
 
-        this.getMessages = function(chatId) {
+        this.getMessages = function(chatId, skip) {
             var messagesEndpoint = chatsEndpoint + '/' + chatId + '/messages';
-            return $http.get(messagesEndpoint).then(function(res) { return res.data; });
+            return $http.get(messagesEndpoint, {params:{"skip": skip}})
+              .then(function(res) { return res.data && res.data.reverse(); });
         };
 
         this.sendMessage = function (message) {
