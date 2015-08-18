@@ -19,9 +19,13 @@
                  ng-class="{ 'out-message': isMsgYours(msg), 'in-message': !isMsgYours(msg), 'sending': msg.isSending }">
                 <div class="item item-divider msg-header">
                     <span class="name" ng-bind="isMsgYours(msg) ? 'Вы' : chat.name"></span>
-                    <span class="time pull-right" ng-bind="msg.created | date : 'HH:mm'"></span>
                 </div>
-                <div class="item item-text-wrap msg-content" ng-bind="msg.text"></div>
+                <div class="item item-text-wrap msg-content">
+                    <div ng-bind="msg.text"></div>
+                    <div class="time">
+                        <span ng-bind="msg.created | date : 'dd.MM.yyyy HH:mm'"></span>
+                    </div>
+                </div>
             </div>
         </ion-content>
 

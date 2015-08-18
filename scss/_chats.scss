@@ -74,15 +74,16 @@ $anchorWidth: 7px;
   .name {
     font-weight: 700;
   }
-  .time {
-    float: right;
-  }
 }
 
 .msg-content {
   padding-top: 0;
   padding-bottom: 6px;
   border-top: none;
+  .time {
+    font-size: 11px;
+    color: #787373;
+  }
 }
 
 .chats-list-avatar .bg-icon {
