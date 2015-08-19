@@ -14,31 +14,54 @@
         .directive('cleverLoader', cleverLoader)
         .directive('onReturn', onReturn);
 
-    multiplatformGeolocation.inject = ['$q'];
-    function multiplatformGeolocation ($q) {
+    multiplatformGeolocation.inject = ['$q', '$ionicPlatform'];
+    function multiplatformGeolocation ($q, $ionicPlatform) {
         var self = this;
+        var locationModule = null;
+        var PRIORITY_BALANCED_POWER_ACCURACY = 102;
+        var defaultOptions = {
+            timeout: 30000,
+            enableHighAccuracy: false,
+            priority: PRIORITY_BALANCED_POWER_ACCURACY
+        };
+        var deferWatchers = [];
+
+        if (window.cordova && window.cordova.platformId == 'android') {
+            $ionicPlatform.ready(setAndroidLocation);
+        } else {
+            locationModule = navigator.geolocation;
+        }
 
         this.getCurrentPosition = function (opts) {
-            var q = $q.defer();
+            var defer = $q.defer();
 
-            self.locationModule.getCurrentPosition(function (result) {
-                q.resolve(result);
-            }, function (err) {
-                q.reject(err);
-            }, opts || self.positionOptions);
+            self.getLocationService()
+              .then(function (locationModule) {
+                  locationModule.getCurrentPosition(function (result) {
+                      defer.resolve(result);
+                  }, function (err) {
+                      defer.reject(err);
+                  }, opts || defaultOptions);
+              }) ;
 
-            return q.promise;
+            return defer.promise;
         };
 
-        this.init = function () {
-            var PRIORITY_BALANCED_POWER_ACCURACY = 102;
-            self.positionOptions = {
-                timeout: 30000,
-                enableHighAccuracy: false,
-                priority: PRIORITY_BALANCED_POWER_ACCURACY
-            };
+        this.getLocationService = function() {
+            if (locationModule) {
+                return $q.when(locationModule);
+            } else {
+                var defer = $q.defer();
+                deferWatchers.push(defer);
+                return defer.promise;
+            }
+        };
 
-            self.locationModule = window.cordova && window.cordova.platformId == 'android' ? LocationServices : navigator.geolocation;
+        function setAndroidLocation() {
+            locationModule = LocationServices;
+            deferWatchers.forEach(function(d) {
+                d.resolve(locationModule);
+            });
         }
     }
 
