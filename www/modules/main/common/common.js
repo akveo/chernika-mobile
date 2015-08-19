@@ -211,15 +211,13 @@
     function onConnectionChangePropertyListener() {
         this.listen = function($scope, opts) {
             var prop = opts.prop;
-            var onBadConnection = opts.onBadConnection;
-            var onGoodConnection = opts.onGoodConnection;
 
-            isProperty(onBadConnection) && $scope.$on('connection.off', function () {
-                $scope[prop] = onBadConnection;
+            opts.hasOwnProperty('onBadConnection') && $scope.$on('connection.off', function () {
+                $scope[prop] = opts.onBadConnection;
             });
 
-            isProperty(onGoodConnection) && $scope.$on('connection.on', function () {
-                $scope[prop] = onGoodConnection;
+            opts.hasOwnProperty('onGoodConnection') && $scope.$on('connection.on', function () {
+                $scope[prop] = opts.onGoodConnection;
             });
         }
     }
@@ -227,25 +225,19 @@
     function onLoadingPropertyListener() {
         this.listen = function($scope, opts) {
             var prop = opts.prop;
-            var onError = opts.onError;
-            var onSuccess = opts.onSuccess;
-            var onStart = opts.onStart;
 
-            isProperty(onError) && $scope.$on('connection.loading.error', function() {
-                $scope[prop] = onError;
+            opts.hasOwnProperty('onError') && $scope.$on('connection.loading.error', function() {
+                $scope[prop] = opts.onError;
             });
 
-            isProperty(onSuccess) && $scope.$on('connection.loading.success', function() {
-                $scope[prop] = onSuccess;
+            opts.hasOwnProperty('onSuccess') && $scope.$on('connection.loading.success', function() {
+                $scope[prop] = opts.onSuccess;
             });
 
-            isProperty(onStart) && $scope.$on('connection.loading.start', function() {
-                $scope[prop] = onStart;
+            opts.hasOwnProperty('onStart') && $scope.$on('connection.loading.start', function() {
+                $scope[prop] = opts.onStart;
             });
         };
     }
 
-    function isProperty(prop) {
-        return prop !== undefined;
-    }
 })(angular);

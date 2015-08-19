@@ -14,7 +14,6 @@
                 elementHeightLeft: '&'
             },
             link: function(scope, element) {
-                debugger;
                 var totalHeight = parseInt($window.getComputedStyle(element[0])['height']);
                 var leftDivsHeight = [].slice.call($document[0].querySelectorAll('[include-in-height-computation]')).reduce(function(res, includedElement) {
                     return res + parseInt($window.getComputedStyle(includedElement)['height']);
