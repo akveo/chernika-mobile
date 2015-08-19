@@ -39,6 +39,7 @@
     mainController.$inject = ['$rootScope', '$scope', '$state', 'userProfile'];
     function mainController($rootScope, $scope, $state, userProfile) {
         $rootScope.userProfile = userProfile;
+        $rootScope.screenWidth = document.documentElement.clientWidth || screen.width;
         $rootScope.platformId = window.cordova ? (window.cordova.platformId == 'android' ? 'android' : 'ios') : 'desktop';
         $scope.tabGo = function (state, params) {
             $state.go(state, params);

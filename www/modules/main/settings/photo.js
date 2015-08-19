@@ -93,14 +93,13 @@
         }
     }
 
-    photoSettingsWidthCalculator.$inject = [];
-    function photoSettingsWidthCalculator() {
-        var screenWidth = document.documentElement.clientWidth || screen.width;
+    photoSettingsWidthCalculator.$inject = ['$rootScope'];
+    function photoSettingsWidthCalculator($rootScope) {
         var containerPaddings = 10;
         var photoGutter = 15;
 
         this.calculate = function() {
-            var contentWidth = screenWidth - containerPaddings*2;
+            var contentWidth = $rootScope.screenWidth - containerPaddings*2;
             var smallPhotoWidth = (contentWidth - photoGutter*2)/3;
             var bigPhotoWidth = contentWidth - smallPhotoWidth - photoGutter;
 
@@ -204,7 +203,7 @@
                 }
 
                 function applyStyles() {
-                    var width = screen.width < scope.selectedPhoto.width ? screen.width : scope.selectedPhoto.width;
+                    var width = scope.screenWidth < scope.selectedPhoto.width ? scope.screenWidth : scope.selectedPhoto.width;
                     var scale = width / scope.selectedPhoto.width;
                     var height = scope.selectedPhoto.height * scale;
                     scope.areaMinWidth = width / 1.5;
