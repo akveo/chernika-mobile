@@ -19,7 +19,8 @@ var pluginlist = [
     'org.apache.cordova.device',
     'org.apache.cordova.dialogs',
     'com.akveo.cordova-vk --variable VK_APP_ID=vk4851553',
-    'org.apache.cordova.statusbar'
+    'org.apache.cordova.statusbar',
+    'org.apache.cordova.home'
 ];
 
 // no need to configure below

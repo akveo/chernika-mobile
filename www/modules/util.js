@@ -8,7 +8,8 @@
         .directive('containerWidth', containerWidth)
         .service('blurredModal', blurredModal)
         .directive('bgIcon', bgIcon)
-        .directive('refocus', refocus);
+        .directive('refocus', refocus)
+        .service('appBack', appBack);
 
     function appUtilities() {
         this.queryToObject = function(query) {
@@ -153,6 +154,31 @@
                 }
             }
         };
+    }
+
+    appBack.$inject = ['$state', '$ionicPlatform'];
+    function appBack($state, $ionicPlatform) {
+        var mainState = null;
+        var toMainStates = [];
+        var toHomeStates = [];
+
+        $ionicPlatform.registerBackButtonAction(back, 101);
+
+        function back() {
+            if (toHomeStates.indexOf($state.current.name) != -1) {
+                navigator.home.home();
+            } else if (toMainStates.indexOf($state.current.name) != -1) {
+                $state.go(mainState);
+            } else {
+                navigator.app.backHistory();
+            }
+        }
+
+        this.init = function(opts) {
+            mainState = opts.mainState || mainState;
+            toMainStates = opts.toMainStates || toHomeStates;
+            toHomeStates = opts.toHomeStates || toHomeStates;
+        }
     }
 
 })(angular);

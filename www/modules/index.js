@@ -32,8 +32,8 @@
         });
     }
 
-    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope'];
-    function appRun($ionicPlatform, connectionListener, PushInitializer, IonicUserInitializer, appStateListener, $ionicConfig, $rootScope) {
+    appRun.$inject = ['$ionicPlatform', 'connectionListener', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope', 'appBack'];
+    function appRun($ionicPlatform, connectionListener, PushInitializer, IonicUserInitializer, appStateListener, $ionicConfig, $rootScope, appBack) {
         $ionicPlatform.ready(function() {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -46,12 +46,11 @@
                 StatusBar.styleLightContent();
             }
 
-            $rootScope.$on('$stateChangeStart',
-              function(event, toState, toParams, fromState, fromParams){
-                 if (toState.name == 'login' && fromState.name.indexOf('main') != -1) {
-                     event.preventDefault();
-                 }
-              });
+            appBack.init({
+                mainState: 'main.swiper',
+                toMainStates: ['main.matches', 'main.settings'],
+                toHomeStates:['main.swiper', 'login']
+            });
 
             $ionicConfig.views.swipeBackEnabled(false);
             connectionListener.listenConnection();

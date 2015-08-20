@@ -25,8 +25,8 @@
         }
     }
 
-    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', '$ionicAnalytics', 'appConfig', 'ChatsApi'];
-    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, $ionicAnalytics, appConfig, ChatsApi) {
+    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi'];
+    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi) {
 
         $scope.userProfile = userProfile;
         $scope.geoEnabled = true;
