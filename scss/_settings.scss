@@ -69,3 +69,12 @@ $photoSettingsGutter: 15px;
     }
   }
 }
+
+.logout-btn {
+  position: absolute;
+  bottom: 20px;
+  padding: 5px 100px;
+  margin-left: 50%;
+  transform: translate(-50%, 0);
+  -webkit-transform: translate(-50%, 0)
+}

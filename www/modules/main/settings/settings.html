@@ -1,5 +1,5 @@
 <ion-view view-title="Настройки">
-    <ion-content>
+    <ion-content scroll="false">
         <ion-list>
             <ion-item class="item-icon-left" ui-sref="main.settings-photo">
                 <i class="icon ion-ios-camera"></i>
@@ -10,5 +10,8 @@
                 Настройки поиска
             </ion-item>
         </ion-list>
+        <button class="button button-positive logout-btn" ng-click="logout()">
+            Выйти
+        </button>
     </ion-content>
 </ion-view>

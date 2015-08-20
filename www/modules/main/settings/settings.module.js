@@ -13,7 +13,8 @@
                 url: '/settings',
                 views: {
                     'tab-settings': {
-                        templateUrl: 'modules/main/settings/settings.html'
+                        templateUrl: 'modules/main/settings/settings.html',
+                        controller: 'SettingsController'
                     }
                 }
             })
