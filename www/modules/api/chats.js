@@ -8,10 +8,13 @@
     ChatsApi.$inject = ['appSocket', '$http', 'appConfig'];
     function ChatsApi(appSocket, $http, appConfig) {
         var chatsEndpoint = appConfig.api.endpoint + 'chats';
-        var self = this;
+
+        this.getChats = function () {
+            return $http.get(chatsEndpoint).then(function(res) { return res.data; });
+        };
 
         this.getChatsInfo = function() {
-            return $http.get(chatsEndpoint).then(function(res) { return res.data; });
+            return $http.get(chatsEndpoint + '/info').then(function(res) { return res.data; });
         };
 
         this.getChat = function (chatId) {
@@ -19,15 +22,9 @@
             return $http.get(chatEndpoint).then(function(res) { return res.data; });
         };
 
-        this.getMatchedProfileChat = function (matchedProfileId) {   //TODO: Change API to make method simpler and faster
-            return self.getChatsInfo()
-              .then(function (chats) {
-                  var foundChat;
-                  chats.forEach(function (c) {
-                      foundChat = c.user._id == matchedProfileId ? c : foundChat;
-                  });
-                  return foundChat;
-              })
+        this.getMatchedProfileChat = function (matchedProfileId) {
+            var matchedChatEndpoint = chatsEndpoint + '/matched/' + matchedProfileId;
+            return $http.get(matchedChatEndpoint).then(function(res) { return res.data; });
         };
 
         this.getMessages = function(chatId, skip) {

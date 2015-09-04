@@ -71,7 +71,7 @@
                             return ChatsApi.getMatchedProfileChat(matchingProfile._id);
                         })
                         .then(function (chat) {
-                            newScope.chatId = chat.chat;
+                            newScope.chatId = chat._id;
                             modal.show();
                         });
                   }

@@ -145,7 +145,6 @@
 
             $rootScope.$on('user.login', function() {
                 $ionicAnalytics.track('UserLoggedIn');
-
             });
 
             $rootScope.$on('connection.off', function() {
