@@ -76,7 +76,7 @@
         return function() {
             var resDefer = $q.defer();
 
-            var authURL = "https://oauth.vk.com/authorize?client_id=4851553&scope=photos&redirect_uri=http://oauth.vk.com/blank.html&display=touch&response_type=token";
+            var authURL = "https://oauth.vk.com/authorize?client_id=4851553&scope=photos,offline&redirect_uri=http://oauth.vk.com/blank.html&display=touch&response_type=token";
             var wwwref = $window.open(encodeURI(authURL), '_blank', 'location=no');
             wwwref.addEventListener('loadstop', onLoadStop);
             var callbackFunctionName = 'vkAuthenticatorCallback_' + new Date().getTime();
