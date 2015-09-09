@@ -1,42 +1,46 @@
 <ion-view view-title="Настройки поиска">
-    <ion-content>
-        <ion-list>
-            <ion-toggle ng-model="settings.enableDiscovery">
-                Обнаружение
-            </ion-toggle>
-            <ion-item class="item-divider description">
-                Выключите, чтобы вас не могли обнаруживать другие пользователи. Вы все равно сможете просматривать других пользователей и пользоваться чатом.
-            </ion-item>
-            <ion-item>
-                <span class="top-label">Расстояние</span>
-                <span class="distance-label">{{settings.distance}} км.</span>
-                <div class="range range-positive">
-                    <input type="range" name="volume" min="1" max="150" ng-model="settings.distance">
-                </div>
-            </ion-item>
-            <ion-item>
-                <span class="top-label">Возраст</span>
-                <span class="distance-label">{{settings.minAge}}-{{settings.maxAge | agePlus}}</span>
-                <div class="range range-positive">
-                    <span class="input-label">Минимальный&nbsp;</span>
-                    <input type="range" name="volume" min="18" max="55" ng-model="settings.minAge">
-                </div>
-                <div class="range range-positive">
-                    <span class="input-label">Максимальный</span>
-                    <input type="range" name="volume" min="18" max="55" ng-model="settings.maxAge">
-                </div>
-            </ion-item>
-            <label class="item item-input item-select">
-                <div class="input-label">
-                    Показывать
-                </div>
-                <select ng-model="settings.show">
-                    <option value="2">Только Мужчин</option>
-                    <option value="1">Только Женщин</option>
-                    <option value="0">Мужчин и Женщин</option>
-                </select>
-            </label>
+    <clever-loader is-seen="true" with-no-connection-banner="true"></clever-loader>
 
-        </ion-list>
-    </ion-content>
+    <div class="main-content" ng-if="isContentSeen">
+        <ion-content>
+            <ion-list>
+                <ion-toggle ng-model="settings.enableDiscovery">
+                    Обнаружение
+                </ion-toggle>
+                <ion-item class="item-divider description">
+                    Выключите, чтобы вас не могли обнаруживать другие пользователи. Вы все равно сможете просматривать других пользователей и пользоваться чатом.
+                </ion-item>
+                <ion-item>
+                    <span class="top-label">Расстояние</span>
+                    <span class="distance-label">{{settings.distance}} км.</span>
+                    <div class="range range-positive">
+                        <input type="range" name="volume" min="1" max="150" ng-model="settings.distance">
+                    </div>
+                </ion-item>
+                <ion-item>
+                    <span class="top-label">Возраст</span>
+                    <span class="distance-label">{{settings.minAge}}-{{settings.maxAge | agePlus}}</span>
+                    <div class="range range-positive">
+                        <span class="input-label">Минимальный&nbsp;</span>
+                        <input type="range" name="volume" min="18" max="55" ng-model="settings.minAge">
+                    </div>
+                    <div class="range range-positive">
+                        <span class="input-label">Максимальный</span>
+                        <input type="range" name="volume" min="18" max="55" ng-model="settings.maxAge">
+                    </div>
+                </ion-item>
+                <label class="item item-input item-select">
+                    <div class="input-label">
+                        Показывать
+                    </div>
+                    <select ng-model="settings.show">
+                        <option value="2">Только Мужчин</option>
+                        <option value="1">Только Женщин</option>
+                        <option value="0">Мужчин и Женщин</option>
+                    </select>
+                </label>
+
+            </ion-list>
+        </ion-content>
+    </div>
 </ion-view>

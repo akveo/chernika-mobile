@@ -23,10 +23,7 @@
                 views: {
                     'tab-settings': {
                         templateUrl: 'modules/main/settings/searchSettings.html',
-                        controller: 'AccountCtrl',
-                        resolve: {
-                            currentSettings: currentSettingsResolve
-                        }
+                        controller: 'AccountCtrl'
                     }
                 }
             })
@@ -39,11 +36,6 @@
                     }
                 }
             });
-    }
-
-    currentSettingsResolve.$inject = ['userApi'];
-    function currentSettingsResolve(userApi) {
-        return userApi.getSettings();
     }
 
 })(angular);

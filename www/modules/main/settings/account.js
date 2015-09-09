@@ -8,16 +8,25 @@
         .service('settingsTimeoutSaver', settingsTimeoutSaver)
         .filter('agePlus', agePlus);
 
-    AccountCtrl.$inject = ['$scope', 'appConfig', 'settingsTimeoutSaver', 'currentSettings'];
-    function AccountCtrl($scope, appConfig, settingsTimeoutSaver, currentSettings) {
-        console.log(currentSettings);
-        $scope.settings = angular.extend({
-            enableDiscovery: true,
-            distance: 100,
-            minAge: 18,
-            maxAge: 34,
-            show: 2 //Female
-        }, currentSettings);
+    AccountCtrl.$inject = ['$scope', 'appConfig', 'settingsTimeoutSaver', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', 'userApi'];
+    function AccountCtrl($scope, appConfig, settingsTimeoutSaver, onConnectionChangePropertyListener, onLoadingPropertyListener, userApi) {
+        $scope.settings = {};
+
+        onConnectionChangePropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onGoodConnection: true,
+            onBadConnection: false
+        });
+
+        onLoadingPropertyListener.listen($scope, {
+            prop: 'isContentSeen',
+            onSuccess: true,
+            onStart: false
+        });
+
+        $scope.$on('connection.on', load);
+
+        load();
 
         $scope.$watch('settings', function(newValue, oldValue) {
             if (!angular.equals(newValue, oldValue)) {
@@ -36,6 +45,23 @@
                 $scope.settings.maxAge = appConfig.settings.agesMinDistance + parseInt($scope.settings.minAge);
             }
         });
+
+        function load() {
+            $scope.$broadcast('connection.loading.start', {api: 'userApi', method: 'getSettings'});
+            userApi.getSettings()
+              .then(function (settings) {
+                  $scope.settings = angular.extend({
+                      enableDiscovery: true,
+                      distance: 100,
+                      minAge: 18,
+                      maxAge: 34,
+                      show: 2 //Female
+                  }, settings);
+                  $scope.$broadcast('connection.loading.success', {api: 'userApi', method: 'getSettings'});
+              }, function (error) {
+                  $scope.$broadcast('connection.loading.error', {api: 'userApi', method: 'getSettings', error: error});
+              });
+        }
     }
 
     settingsTimeoutSaver.$inject = ['$timeout', 'userApi', '$rootScope'];
