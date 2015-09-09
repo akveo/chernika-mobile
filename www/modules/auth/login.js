@@ -24,6 +24,7 @@
 
         $scope.doAuthenticate = function() {
             $scope.$emit('analytics.event', {category: 'LoginButtonClicked'});
+            $ionicLoading.show();
             if (window.cordova) {
                 vkApi.initiateLogin(['photos', 'offline']);
             } else {
@@ -35,7 +36,6 @@
         };
 
         function afterTokenReceive(params) {
-            $ionicLoading.show();
             return userApi
                 .login(params)
                 .then(function() {
