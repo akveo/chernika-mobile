@@ -16,6 +16,7 @@
                 abstract: true,
                 controller: mainController,
                 templateUrl: "modules/main/mainLayout.html",
+                onEnter: onMainEnter,
                 resolve: {
                     userProfile: userProfileResolve
                 }
@@ -43,6 +44,12 @@
         $rootScope.platformId = window.cordova ? (window.cordova.platformId == 'android' ? 'android' : 'ios') : 'desktop';
         $scope.tabGo = function (state, params) {
             $state.go(state, params);
+        }
+    }
+
+    function onMainEnter() {
+        if (window.StatusBar) {
+            StatusBar.styleLightContent();
         }
     }
 

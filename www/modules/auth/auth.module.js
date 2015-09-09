@@ -13,8 +13,18 @@
             .state('login', {
                 url: "/login",
                 templateUrl: "modules/auth/login.html",
-                controller: 'DeviceLoginController'
+                controller: 'DeviceLoginController',
+                onEnter: onLoginEnter
             })
+    }
+
+    onLoginEnter.$inject = ['$ionicHistory']
+    function onLoginEnter($ionicHistory) {
+        $ionicHistory.clearCache();
+        localStorage.clear();
+        if (window.StatusBar) {
+            StatusBar.styleDefault();
+        }
     }
 
 })(angular);
