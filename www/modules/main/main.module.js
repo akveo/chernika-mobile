@@ -47,7 +47,10 @@
         }
     }
 
-    function onMainEnter() {
+    onMainEnter.$inject = ['$ionicHistory']
+    function onMainEnter($ionicHistory) {
+        $ionicHistory.clearCache();
+        $ionicHistory.clearHistory();
         if (window.StatusBar) {
             StatusBar.styleLightContent();
         }

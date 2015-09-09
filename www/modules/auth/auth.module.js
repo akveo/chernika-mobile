@@ -21,6 +21,7 @@
     onLoginEnter.$inject = ['$ionicHistory']
     function onLoginEnter($ionicHistory) {
         $ionicHistory.clearCache();
+        $ionicHistory.clearHistory();
         localStorage.clear();
         if (window.StatusBar) {
             StatusBar.styleDefault();
