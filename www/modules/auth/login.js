@@ -13,11 +13,10 @@
 
         $scope.$onVkSdkEvent('vkSdk.newToken', function(evt) {
             VkSdk.getUser(evt.detail.userId, function(r) {
-                var vkUser = !r.error && r.response && r.response.length > 0 ? r.response[0] : {};
                 afterTokenReceive({
                     user_id: evt.detail.userId,
                     access_token: evt.detail.accessToken,
-                    vkUser: vkUser
+                    vkUser: getVkUserFromResponse(r)
                 });
             })
         });
@@ -95,6 +94,10 @@
                 }
             }
         };
+    }
+
+    function getVkUserFromResponse(r) {
+        return !r.error && (r.response && r.response[0]) || (r && r[0])
     }
 
 })(angular);
