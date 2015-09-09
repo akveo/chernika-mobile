@@ -13,8 +13,8 @@
 
     'use strict';
 
-    appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicAppProvider', 'appConfig'];
-    function appConfig($urlRouterProvider, $stateProvider, $ionicAppProvider, appConfig) {
+    appConfig.$inject = ['$urlRouterProvider', '$stateProvider', '$ionicAppProvider', 'appConfig', '$ionicConfigProvider'];
+    function appConfig($urlRouterProvider, $stateProvider, $ionicAppProvider, appConfig, $ionicConfigProvider) {
         $urlRouterProvider.otherwise('/splash');
 
         $stateProvider
@@ -30,6 +30,8 @@
             gcm_id: appConfig.ionic.gcmId,
             dev_push: appConfig.ionic.devPush
         });
+
+        $ionicConfigProvider.platform.ios.backButton.text('назад');
     }
 
     appRun.$inject = ['$ionicPlatform', 'connectionListener', 'PushInitializer', 'IonicUserInitializer', 'appStateListener', '$ionicConfig', '$rootScope', 'appBack'];
