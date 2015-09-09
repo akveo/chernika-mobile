@@ -52,3 +52,15 @@ $loginPageFooterHeight: 66px;
     background: #5c7ca1;
   }
 }
+
+.no-response-popup {
+  text-align: center;
+
+  .popup-head {
+    display: none;
+  }
+
+  .no-response-icon {
+    font-size: 85px;
+  }
+}
