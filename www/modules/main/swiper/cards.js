@@ -28,7 +28,6 @@
     swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi'];
     function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi) {
 
-        $scope.userProfile = userProfile;
         $scope.geoEnabled = true;
         $scope.cards = [];
         $scope.loading = true;
