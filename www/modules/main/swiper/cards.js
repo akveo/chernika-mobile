@@ -137,10 +137,15 @@
                       $scope.cards = suggestions;
                       $scope.loading = false;
                   }, function(err) {
-                      $scope.geoEnabled = false;
                       $scope.loading = false;
                       suggestionTimeToAnalytics();
-                      $rootScope.$broadcast('geolocation.error', err)
+                      //Cordova geolocation error contains error code
+                      //so, to recognize position errors we do it by checking
+                      //code field's value. Clumsy, :(
+                      if (err.code) {
+                          $scope.geoEnabled = false;
+                          $rootScope.$broadcast('geolocation.error', err)
+                      }
                   });
             }
         }
