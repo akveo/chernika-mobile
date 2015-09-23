@@ -27,7 +27,8 @@
         var deferWatchers = [];
 
         if (window.cordova && window.cordova.platformId == 'android') {
-            $ionicPlatform.ready(setAndroidLocation);
+            //$ionicPlatform.ready(setAndroidLocation);
+            locationModule = navigator.geolocation;
         } else {
             locationModule = navigator.geolocation;
         }
