@@ -1,0 +1,9 @@
+// The path for our ionicons font files, relative to the built CSS in www/css
+$ionicons-font-path: "../lib/ionic/fonts" !default;
+
+$font-family-sans-serif: "Lato", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+$default-font-color: rgb(62, 62, 62);
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+  color: $default-font-color;
+}

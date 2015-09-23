@@ -1,3 +1,8 @@
+body {
+  font-family: $font-family-sans-serif;
+  color: $default-font-color;
+}
+
 body.blurred {
   > ion-nav-bar > *, ion-nav-view {
     -webkit-filter: blur(10px);
