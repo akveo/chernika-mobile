@@ -14,6 +14,7 @@
             .state('main', {
                 url: "/main",
                 abstract: true,
+                cache: false,
                 controller: mainController,
                 templateUrl: "modules/main/mainLayout.html",
                 onEnter: onMainEnter,
@@ -47,10 +48,7 @@
         }
     }
 
-    onMainEnter.$inject = ['$ionicHistory']
-    function onMainEnter($ionicHistory) {
-        $ionicHistory.clearCache();
-        $ionicHistory.clearHistory();
+    function onMainEnter() {
         if (window.StatusBar) {
             StatusBar.styleLightContent();
         }
