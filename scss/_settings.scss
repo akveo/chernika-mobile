@@ -73,8 +73,11 @@ $photoSettingsGutter: 15px;
 .logout-btn {
   position: absolute;
   bottom: 20px;
-  padding: 5px 100px;
+  padding: 0 70px;
   margin-left: 50%;
   transform: translate(-50%, 0);
-  -webkit-transform: translate(-50%, 0)
+  -webkit-transform: translate(-50%, 0);
+  border-color: white;
+  background-color: #808080;
+  color: white;
 }
