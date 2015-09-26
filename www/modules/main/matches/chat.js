@@ -144,10 +144,8 @@
                 };
 
                 ChatsApi.sendMessage({
-                    receiver: {
-                        _id: $scope.user._id,
-                        name: $scope.user.firstName
-                    },
+                    receiver: $scope.user._id,
+                    senderName: $scope.userProfile.firstName,
                     message: newMessage
                 });
 
