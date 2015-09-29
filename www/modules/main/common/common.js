@@ -21,7 +21,7 @@
         var PRIORITY_BALANCED_POWER_ACCURACY = 102;
         var defaultOptions = {
             timeout: 30000,
-            enableHighAccuracy: false,
+            enableHighAccuracy: true,
             priority: PRIORITY_BALANCED_POWER_ACCURACY
         };
         var deferWatchers = [];
