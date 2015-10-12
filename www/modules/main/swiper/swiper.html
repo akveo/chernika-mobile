@@ -14,7 +14,9 @@
         <div class="default-content" ng-if="!geoEnabled">
             <div class="ion-ios-navigate-outline centered-block-icon"></div>
             <div class="hint-text">
-                Ошибка геолокации. Для поиска новых пар включите геолокацию в настройках вашего устройства
+                Ошибка геолокации.
+                <span ng-show="platformId != 'android'">Для поиска новых пар включите геолокацию в настройках вашего устройства</span>
+                <span ng-show="platformId == 'android'">Для поиска новых пар рекомендуется включить режим повышенной точности в настройках местоположения вашего устройства</span>
             </div>
             <button ng-show="platformId == 'android'" ng-click="switchToLocationSettings()" class="button icon-left ion-settings button-positive" style="margin-top: 10px">Перейти</button>
         </div>
