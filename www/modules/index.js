@@ -2,7 +2,7 @@
  * Created by vl on 31.3.15.
  */
 (function(angular) {
-    angular.module('app', ['ionic', 'ngCordova', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
+    angular.module('app', ['ionic', 'ngCordova', 'ngIOS9UIWebViewPatch', 'ionic.service.core', 'ionic.service.push', 'ionic.service.analytics', 'app.auth', 'app.main', 'app.api', 'ngDraggable', 'ngImgCrop'])
       .config(appConfig)
       .service('connectionListener', connectionListener)
       .service('appStateListener', appStateListener)
