@@ -1,0 +1,29 @@
+{
+  "name": "ionic-plugin-deploy",
+  "version": "0.2.3",
+  "description": "Ionic Deploy Plugin",
+  "cordova": {
+    "id": "ionic-plugin-deploy",
+    "platforms": [
+      "android",
+      "ios"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driftyco/ionic-plugins-deploy.git"
+  },
+  "keywords": [
+    "Ionic",
+    "deploy",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios"
+  ],
+  "author": "Ionic",
+  "license": "Apache 2.0",
+  "bugs": {
+    "url": "https://github.com/driftyco/ionic-plugins-deploy/issues"
+  },
+  "homepage": "https://github.com/driftyco/ionic-plugins-deploy#readme"
+}

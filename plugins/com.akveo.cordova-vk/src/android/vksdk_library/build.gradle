@@ -1,0 +1,122 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
+
+    defaultConfig {
+        minSdkVersion 9
+        targetSdkVersion 19
+    }
+}
+
+configurations {
+    // Used for correct javadoc generation
+    javadoc.extendsFrom compile
+}
+
+dependencies {
+    javadoc 'org.apache.httpcomponents:httpclient:4.0.1'
+    javadoc 'org.json:json:20080701'
+    javadoc 'com.google.android:annotations:4.1.1.4@jar'
+    compile 'com.android.support:support-v4:20.0.0'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:+'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+if (project.hasProperty('officialBuild')) {
+    def String releaseRepositoryUrl = hasProperty('RELEASE_REPOSITORY_URL') ? RELEASE_REPOSITORY_URL : 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+    def String snapshotRepositoryUrl = hasProperty('SNAPSHOT_REPOSITORY_URL') ? SNAPSHOT_REPOSITORY_URL : 'https://oss.sonatype.org/content/repositories/snapshots/'
+    def String repositoryUsername = hasProperty('NEXUS_USERNAME') ? NEXUS_USERNAME : ''
+    def String repositoryPassword = hasProperty('NEXUS_PASSWORD') ? NEXUS_PASSWORD : ''
+
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                pom.project {
+                    artifactId = 'androidsdk'
+                    name = 'VK API library'
+                    packaging = 'aar'
+                    description = 'Main VK Android API library'
+                    url = 'https://github.com/VKCOM/vk-android-sdk'
+                    scm {
+                        url 'https://github.com/VKCOM/vk-android-sdk'
+                        connection 'scm:git:git://github.com/VKCOM/vk-android-sdk.git'
+                        developerConnection 'scm:git:git://github.com/VKCOM/vk-android-sdk.git'
+                    }
+                    licenses {
+                        license {
+                            name "MIT License"
+                            url 'https://github.com/VKCOM/vk-android-sdk/raw/master/LICENSE'
+                            distribution 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'dreddik'
+                            name 'Roman Truba'
+                            email 'roman@vk.com'
+                            url 'http://vk.com'
+                            organization 'VK'
+                            organizationUrl 'http://vk.com'
+                            roles {
+                                role 'developer'
+                            }
+                            timezone '+4'
+                        }
+                    }
+                }
+
+                repository(url: releaseRepositoryUrl) {
+                    authentication(userName: repositoryUsername, password: repositoryPassword)
+                }
+                snapshotRepository(url: snapshotRepositoryUrl) {
+                    authentication(userName: repositoryUsername, password: repositoryPassword)
+                }
+            }
+        }
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.sourceFiles
+        classpath = project.files(configurations.javadoc,
+                "${buildDir}/classes/release",
+                project.fileTree("${buildDir}/exploded-bundles") { include '*/classes.jar' },
+                new File((File) (android.plugin.sdkFolder), "platforms/${android.compileSdkVersion}/android.jar"))
+    }
+
+    task javadocJar(type: Jar, dependsOn: tasks.javadoc) {
+        from tasks.javadoc.destinationDir
+        classifier = 'javadoc'
+    }
+
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.sourceFiles
+        classifier = 'sources'
+    }
+
+    signing {
+        required true
+        sign configurations.archives
+    }
+
+    artifacts {
+        archives tasks.javadocJar
+        archives tasks.sourcesJar
+    }
+}

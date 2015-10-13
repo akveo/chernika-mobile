@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="org.apache.cordova.home"
+      version="0.2.6">
+
+    <name>Android Home</name>
+    <description>Cordova Android Home Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,android,home</keywords>
+    <repo>https://github.com/ZhichengChen/cordova-plugin-android-home.git</repo>
+    <issue>https://github.com/ZhichengChen/cordova-plugin-android-home/issues</issue>
+
+    <js-module src="www/home.js" name="home">
+        <merges target="navigator.home" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Home">
+                <param name="android-package" value="org.apache.cordova.home.Home"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/Home.java" target-dir="src/org/apache/cordova/home" />
+
+    </platform>
+
+</plugin>

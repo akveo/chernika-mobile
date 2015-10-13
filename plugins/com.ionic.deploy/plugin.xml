@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="com.ionic.deploy"
+    version="0.2.3">
+    <name>IonicDeploy</name>
+    <description>Ionic Deploy Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>Ionic,deploy</keywords>
+    <repo>https://github.com/driftyco/ionic-plugins-deploy</repo>
+    <issue>https://github.com/driftyco/ionic-plugins-deploy/issues</issue>
+
+    <js-module src="www/ionicdeploy.js" name="IonicDeploy">
+        <clobbers target="IonicDeploy" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="IonicDeploy">
+                <param name="android-package" value="com.ionic.deploy.IonicDeploy"/>
+                <param name="onload" value="true"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/IonicDeploy.java" target-dir="src/com/ionic/deploy" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="IonicDeploy">
+                <param name="ios-package" value="IonicDeploy" onload="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/IonicConstant.h" />
+        <source-file src="src/ios/IonicConstant.m" />
+        <header-file src="src/ios/IonicDeploy.h" />
+        <source-file src="src/ios/IonicDeploy.m" />
+        <header-file src="src/ios/Download.h" />
+        <source-file src="src/ios/Download.m" />
+        <header-file src="src/ios/DownloadManager.h" />
+        <source-file src="src/ios/DownloadManager.m" />
+        <header-file src="src/ios/SSZipArchive.h" />
+        <source-file src="src/ios/SSZipArchive.m" />
+        <header-file src="src/ios/ARCHelper/ARCHelper.h" />
+        <header-file src="src/ios/MiniZip/crypt.h" />
+        <header-file src="src/ios/MiniZip/ioapi.h" />
+        <source-file src="src/ios/MiniZip/ioapi.c" />
+        <header-file src="src/ios/MiniZip/unzip.h" />
+        <source-file src="src/ios/MiniZip/unzip.c" />
+        <header-file src="src/ios/MiniZip/zip.h" />
+        <source-file src="src/ios/MiniZip/zip.c" />
+        <source-file src="src/ios/ZLib/adler32.c" />
+        <source-file src="src/ios/ZLib/compress.c" />
+        <source-file src="src/ios/ZLib/crc32.c" />
+        <header-file src="src/ios/ZLib/crc32.h" />
+        <source-file src="src/ios/ZLib/deflate.c" />
+        <header-file src="src/ios/ZLib/deflate.h" />
+        <source-file src="src/ios/ZLib/gzclose.c" />
+        <header-file src="src/ios/ZLib/gzguts.h" />
+        <source-file src="src/ios/ZLib/gzlib.c" />
+        <source-file src="src/ios/ZLib/gzread.c" />
+        <source-file src="src/ios/ZLib/gzwrite.c" />
+        <source-file src="src/ios/ZLib/infback.c" />
+        <source-file src="src/ios/ZLib/inffast.c" />
+        <header-file src="src/ios/ZLib/inffast.h" />
+        <header-file src="src/ios/ZLib/inffixed.h" />
+        <source-file src="src/ios/ZLib/inflate.c" />
+        <header-file src="src/ios/ZLib/inflate.h" />
+        <source-file src="src/ios/ZLib/inftrees.c" />
+        <header-file src="src/ios/ZLib/inftrees.h" />
+        <source-file src="src/ios/ZLib/trees.c" />
+        <header-file src="src/ios/ZLib/trees.h" />
+        <source-file src="src/ios/ZLib/uncompr.c" />
+        <header-file src="src/ios/ZLib/zconf.h" />
+        <header-file src="src/ios/ZLib/zlib.h" />
+        <source-file src="src/ios/ZLib/zutil.c" />
+        <header-file src="src/ios/ZLib/zutil.h" />
+        <header-file src="src/ios/Unirest/Base64.h" />
+        <source-file src="src/ios/Unirest/Base64.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPClientHelper.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPClientHelper.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPRequest.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPRequest.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPRequestWithBody.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPRequestWithBody.m" />
+        <header-file src="src/ios/Unirest/Unirest-Prefix.pch" />
+        <header-file src="src/ios/Unirest/UNIRest.h" />
+        <source-file src="src/ios/Unirest/UNIRest.m" />
+        <header-file src="src/ios/Unirest/UNIUrlConnection.h" />
+        <source-file src="src/ios/Unirest/UNIUrlConnection.m" />
+        <header-file src="src/ios/Unirest/UNIBaseRequest.h" />
+        <source-file src="src/ios/Unirest/UNIBaseRequest.m" />
+        <header-file src="src/ios/Unirest/UNIBodyRequest.h" />
+        <source-file src="src/ios/Unirest/UNIBodyRequest.m" />
+        <header-file src="src/ios/Unirest/UNISimpleRequest.h" />
+        <source-file src="src/ios/Unirest/UNISimpleRequest.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPBinaryResponse.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPBinaryResponse.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPJsonResponse.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPJsonResponse.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPResponse.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPResponse.m" />
+        <header-file src="src/ios/Unirest/UNIHTTPStringResponse.h" />
+        <source-file src="src/ios/Unirest/UNIHTTPStringResponse.m" />
+        <header-file src="src/ios/Unirest/UNIJsonNode.h" />
+        <source-file src="src/ios/Unirest/UNIJsonNode.m" />
+    </platform>
+</plugin>
