@@ -28,6 +28,11 @@
                 appSocket.emit('authorize', localStorage[appConfig.api.tokenLocalStorageKey]);
             });
 
+            $rootScope.$on('user.logout', function() {
+                appSocket.emit('logout');
+                appSocket.removeAllListeners();
+            });
+
             appSocket.on('authorize', function () {
                 var token = localStorage[appConfig.api.tokenLocalStorageKey];
                 token && appSocket.emit('authorize', token);
