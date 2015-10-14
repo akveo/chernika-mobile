@@ -20,8 +20,8 @@
         var locationModule = null;
         var PRIORITY_BALANCED_POWER_ACCURACY = 102;
         var defaultOptions = {
-            timeout: 30000,
-            enableHighAccuracy: true,
+            timeout: 60000,
+            enableHighAccuracy: setAccuracy(),
             priority: PRIORITY_BALANCED_POWER_ACCURACY
         };
         var deferWatchers = [];
@@ -57,6 +57,10 @@
                 return defer.promise;
             }
         };
+
+        function setAccuracy() {
+            return ionic.Platform.isAndroid() && ionic.Platform.version() < 4.4 ? false : true;
+        }
 
         function setAndroidLocation() {
             locationModule = LocationServices;
