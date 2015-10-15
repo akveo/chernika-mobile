@@ -27,7 +27,7 @@
                 cardVerticalOffset: 12
             },
             settings: {
-                agesMinDistance: 4
+                agesMinDistance: 1
             },
             ionic: {
                 appId: '52e42ca3',

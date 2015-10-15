@@ -89,3 +89,20 @@ $anchorWidth: 7px;
 .chats-list-avatar .bg-icon {
   left: 23px;
 }
+
+.bar-stable .button.button-clear.send-button {
+  font-size: 40px;
+  color: rgba(68, 68, 68, 0.81);
+}
+
+.bar-stable.chat-footer {
+  height: auto;
+}
+
+.chat-input-wrapper {
+  border-color: #eee;
+  .chat-input {
+    resize: none;
+    background: #eee;
+  }
+}
