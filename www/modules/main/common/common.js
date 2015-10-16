@@ -11,6 +11,7 @@
         .service('PushInitializer', PushInitializer)
         .service('IonicUserInitializer', IonicUserInitializer)
         .service('multiplatformGeolocation', multiplatformGeolocation)
+        .service('socialShare', socialShare)
         .directive('cleverLoader', cleverLoader)
         .directive('onReturn', onReturn);
 
@@ -91,6 +92,19 @@
                 userApi.addDevice(data);
                 $rootScope.deviceToken = data.token;
             });
+        }
+    }
+
+    socialShare.$inject = ['$q'];
+    function socialShare() {
+        var msg = {
+            text: 'Отличное приложение',
+            subject: 'отличная тема',
+            link: 'akveo.com'
+        };
+
+        this.share = function () {
+            window.plugins.socialsharing.share(msg.text, msg.subject, null, msg.link);
         }
     }
 

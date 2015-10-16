@@ -8,7 +8,10 @@
                 <div class="hint-text" ng-class="{ invisible: cards.length }">Ищем новых людей недалеко от Вас</div>
             </div>
             <div ng-if="!loading && !cards.length">
-                <div class="hint-text" ng-class="{ invisible: cards.length }">Рядом с вами нет новых людей</div>
+                <div class="hint-text" ng-class="{ invisible: cards.length }">
+                    <div>Рядом с вами нет новых людей</div>
+                    <div><button ng-click="share()" class="button swiper-btn button-positive">Пригласить друзей</button></div>
+                </div>
             </div>
         </div>
         <div class="default-content" ng-if="!geoEnabled">
@@ -18,7 +21,7 @@
                 <span ng-show="platformId != 'android'">Для поиска новых пар включите геолокацию в настройках вашего устройства</span>
                 <span ng-show="platformId == 'android'">Для поиска новых пар рекомендуется включить режим повышенной точности в настройках местоположения вашего устройства</span>
             </div>
-            <button ng-show="platformId == 'android'" ng-click="switchToLocationSettings()" class="button icon-left ion-settings button-positive" style="margin-top: 10px">Перейти</button>
+            <button ng-show="platformId == 'android'" ng-click="switchToLocationSettings()" class="button swiper-btn icon-left ion-settings button-positive">Перейти</button>
         </div>
 
     </div>

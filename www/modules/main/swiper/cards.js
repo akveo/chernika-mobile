@@ -25,8 +25,8 @@
         }
     }
 
-    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi'];
-    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi) {
+    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi', 'socialShare'];
+    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi, socialShare) {
 
         $scope.geoEnabled = true;
         $scope.cards = [];
@@ -82,6 +82,8 @@
             var diagnostic = window.cordova.plugins.diagnostic;
             $scope.platformId == 'android' && diagnostic.switchToLocationSettings();
         };
+
+        $scope.share = socialShare.share;
 
         function swipeToAnalytics(isLike, cardObj) {
             $scope.$emit('analytics.event', {
