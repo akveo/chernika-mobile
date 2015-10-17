@@ -16,9 +16,11 @@ navigation history that also transitions its views in and out.
   </ion-tab>
 
   <!-- Chats Tab -->
-  <ion-tab title="Совпадения" ng-click="tabGo('main.matches')" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/main/matches">
-    <ion-nav-view name="tab-matches"></ion-nav-view>
-  </ion-tab>
+  <tab-badge-highlight>
+    <ion-tab title="Совпадения" ng-click="tabGo('main.matches')" tab-badge-highlight icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" on-select="onChatsSelect()" badge-style="{{::chatBadgeStyle}}" badge="chatBadge" href="#/main/matches">
+      <ion-nav-view name="tab-matches"></ion-nav-view>
+    </ion-tab>
+  </tab-badge-highlight>
 
 
 

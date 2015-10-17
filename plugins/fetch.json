@@ -148,5 +148,38 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "android.support.v4": {
+        "source": {
+            "type": "registry",
+            "id": "android.support.v4"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/katzer/cordova-plugin-local-notifications",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-device": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-device"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "de.appplant.cordova.common.registerusernotificationsettings": {
+        "source": {
+            "type": "registry",
+            "id": "de.appplant.cordova.common.registerusernotificationsettings"
+        },
+        "is_top_level": false,
+        "variables": {}
     }
 }
