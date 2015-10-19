@@ -7,11 +7,11 @@
 
   chatsNotifyEventsRun.$inject = ['$rootScope', 'socketEventService', '$state'];
   function chatsNotifyEventsRun($rootScope, socketEventService, $state, $stateParams) {
-    init();
+    $rootScope.$on('user.login.checked', init);
 
     function init() {
-      $rootScope.$on('connection.on', loadChats);
       socketEventService.listen($rootScope, 'new_message', onNewMessage);
+      //$rootScope.$on('connection.on', loadChats);
       //socketEventService.listen($rootScope, 'new_match', onNewMatch);
     }
 
@@ -21,6 +21,7 @@
 
     function onNewMessage(msg) {
       if (msg.sender != $rootScope.userProfile._id) {
+        console.log('new msg')
         $rootScope.$broadcast('notify.message', msg)
       }
     }
