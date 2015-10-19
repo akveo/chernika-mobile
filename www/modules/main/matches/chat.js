@@ -74,8 +74,8 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$ionicAnalytics'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $ionicAnalytics) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$rootScope'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $rootScope) {
         $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
@@ -174,6 +174,7 @@
             $scope.messages.forEach(function (msg) {
                 !msg.wasRead && msg.sender != $scope.userProfile._id && ChatsApi.readMessage(msg);
             });
+            $rootScope.$broadcast('chat.read', $scope.chat);
         }
 
         function addMessage(msg) {
