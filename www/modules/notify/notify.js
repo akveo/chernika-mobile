@@ -22,7 +22,7 @@
     function onNewMessage(msg) {
       if (isMessageNotificationNeeded(msg)) {
         addUnreadChat(msg.chat);
-        $rootScope.$broadcast('notify.message', msg, unreadChats.length);
+        $rootScope.$broadcast('notify.message', msg);
       }
     }
 
@@ -39,10 +39,8 @@
       chatIndex != -1 && unreadChats.splice(chatIndex, 1);
     }
 
-    function onUnreadChatLengthChange(newLength, oldLength) {
-      if (unreadChats.length == 0) {
-        $rootScope.$broadcast('notify.allRead');
-      }
+    function onUnreadChatLengthChange() {
+      $rootScope.$broadcast('notify.unreadChatsLengthChange', unreadChats.length);
     }
 
     function isMessageNotificationNeeded(msg) {
@@ -59,19 +57,14 @@
       scope: true,
       link: function (scope, el, attrs) {
 
-        scope.$on('notify.message', onMessageNotify);
-        scope.$on('notify.allRead', onAllRead);
+        scope.$on('notify.unreadChatsLengthChange', onUnreadChatsLengthChange);
 
-        function onMessageNotify(evt, msg, unreadChatsLength) {
+        function onUnreadChatsLengthChange(evt, unreadChatsLength) {
             setBadge(unreadChatsLength);
         }
 
-        function onAllRead() {
-          setBadge(false);
-        }
-
         function setBadge(badgeInfo) {
-          scope.chatBadge = badgeInfo ? '1' : undefined;
+          scope.chatBadge = badgeInfo ? badgeInfo : undefined;
         }
       }
     }
