@@ -125,13 +125,15 @@
         };
 
         socketEventService.listen($scope, 'new_message', function(msg) {
-            $scope.messages.every(function(scopeMsg, index) {
-                if (msg.created == scopeMsg.created) {
-                    $scope.messages[index] = msg;
-                    return false;
-                }
-                return true;
-            }) && addMessage(msg);
+            if (msg.chat == $scope.chat._id) {
+                $scope.messages.every(function (scopeMsg, index) {
+                    if (msg.created == scopeMsg.created) {
+                        $scope.messages[index] = msg;
+                        return false;
+                    }
+                    return true;
+                }) && addMessage(msg);
+            }
         });
 
         $scope.sendMessage = function() {
