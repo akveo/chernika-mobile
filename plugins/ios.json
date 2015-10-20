@@ -33,6 +33,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"UniversalAnalytics\"><param name=\"ios-package\" value=\"UniversalAnalyticsPlugin\" /></feature>",
                             "count": 1
                         },
@@ -46,6 +50,10 @@
                         },
                         {
                             "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
                         {
@@ -74,18 +82,6 @@
                         },
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"LocalNotification\"><param name=\"ios-package\" onload=\"true\" value=\"APPLocalNotification\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -116,6 +112,12 @@
                         }
                     ],
                     "MobileCoreServices.framework": [
+                        {
+                            "xml": false,
+                            "count": 2
+                        }
+                    ],
+                    "CoreLocation.framework": [
                         {
                             "xml": false,
                             "count": 2
@@ -155,24 +157,6 @@
                             "count": 2
                         }
                     ],
-                    "CoreLocation.framework": [
-                        {
-                            "xml": false,
-                            "count": 2
-                        }
-                    ],
-                    "CoreBluetooth.framework": [
-                        {
-                            "xml": false,
-                            "count": 1
-                        }
-                    ],
-                    "AudioToolbox.framework": [
-                        {
-                            "xml": true,
-                            "count": 1
-                        }
-                    ],
                     "Social.framework": [
                         {
                             "xml": true,
@@ -184,12 +168,39 @@
                             "xml": true,
                             "count": 1
                         }
+                    ],
+                    "CoreBluetooth.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "AVFoundation.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "Photos.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": true,
+                            "count": 1
+                        }
                     ]
                 }
             }
         }
     },
     "installed_plugins": {
+        "android.support.v4": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "com.akveo.cordova-vk": {
             "VK_APP_ID": "vk4851553",
             "PACKAGE_NAME": "com.akveo.pinder"
@@ -206,6 +217,9 @@
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "cordova-plugin-google-analytics": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
@@ -216,6 +230,12 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-x-socialsharing": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova.plugins.diagnostic": {
@@ -235,23 +255,7 @@
         },
         "org.apache.cordova.statusbar": {
             "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-x-socialsharing": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "de.appplant.cordova.plugin.local-notification": {
-            "PACKAGE_NAME": "com.akveo.pinder"
         }
     },
-    "dependent_plugins": {
-        "de.appplant.cordova.common.registerusernotificationsettings": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        }
-    }
+    "dependent_plugins": {}
 }

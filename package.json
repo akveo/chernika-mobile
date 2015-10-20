@@ -19,11 +19,7 @@
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
-    "ionic-plugin-deploy",
-    {
-      "locator": "https://github.com/katzer/cordova-plugin-local-notifications",
-      "id": "de.appplant.cordova.plugin.local-notification"
-    }
+    "ionic-plugin-deploy"
   ],
   "cordovaPlatforms": [
     "android",
