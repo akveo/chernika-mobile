@@ -19,10 +19,13 @@
   },
   "cordovaPlugins": [
     "cordova-plugin-whitelist",
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    {
+      "locator": "https://github.com/phonegap-build/PushPlugin",
+      "id": "com.phonegap.plugins.PushPlugin"
+    }
   ],
   "cordovaPlatforms": [
-    "android",
     "ios"
   ]
 }

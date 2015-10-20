@@ -80,15 +80,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.phonegap.plugins.PushPlugin": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phonegap-build/PushPlugin.git",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "com.akveo.cordova-vk": {
         "source": {
             "type": "git",
@@ -180,6 +171,15 @@
             "id": "de.appplant.cordova.common.registerusernotificationsettings"
         },
         "is_top_level": false,
+        "variables": {}
+    },
+    "com.phonegap.plugins.PushPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phonegap-build/PushPlugin",
+            "subdir": "."
+        },
+        "is_top_level": true,
         "variables": {}
     }
 }
