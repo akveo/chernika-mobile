@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one
+  or more contributor license agreements.  See the NOTICE file
+  distributed with this work for additional information
+  regarding copyright ownership.  The ASF licenses this file
+  to you under the Apache License, Version 2.0 (the
+  "License"); you may not use this file except in compliance
+  with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing,
+  software distributed under the License is distributed on an
+  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+  KIND, either express or implied.  See the License for the
+  specific language governing permissions and limitations
+  under the License.
+-->
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+xmlns:android="http://schemas.android.com/apk/res/android"
+           id="cordova-plugin-locationservices"
+      version="1.1.0">
+
+    <name>Google Location Services for Cordova - Android</name>
+    <description>Android geolocation plugin using Google Play Services Location API.</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,geolocation,google-play-services</keywords>
+    <repo>https://github.com/louisbl/cordova-plugin-locationservices</repo>
+    <issue>https://github.com/louisbl/cordova-plugin-locationservices/issues</issue>
+
+    <!-- android -->
+    <platform name="android">
+        <framework src="com.google.android.gms:play-services-location:+" />
+
+        <js-module src="www/Coordinates.js" name="Coordinates">
+            <clobbers target="Coordinates" />
+            <clobbers target="cordova.plugins.locationServices.Coordinates" />
+            <clobbers target="plugin.locationServices.Coordinates" />
+        </js-module>
+
+        <js-module src="www/PositionError.js" name="PositionError">
+            <clobbers target="PositionError" />
+            <clobbers target="cordova.plugins.locationServices.PositionError" />
+            <clobbers target="plugin.locationServices.PositionError" />
+        </js-module>
+
+        <js-module src="www/Position.js" name="Position">
+            <clobbers target="Position" />
+            <clobbers target="cordova.plugins.locationServices.PositionError" />
+            <clobbers target="plugin.locationServices.PositionError" />
+        </js-module>
+
+        <js-module src="www/LocationServices.js" name="LocationServices">
+            <clobbers target="LocationServices" />
+            <clobbers target="cordova.plugins.locationServices.geolocation" />
+            <clobbers target="plugin.locationServices.geolocation" />
+        </js-module>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="LocationServices">
+                <param name="android-package" value="fr.louisbl.cordova.locationservices.CordovaLocationServices"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+        </config-file>
+
+        <source-file src="src/android/CordovaLocationListener.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+        <source-file src="src/android/CordovaLocationServices.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+        <source-file src="src/android/ErrorDialogFragment.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+        <source-file src="src/android/GApiUtils.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+        <source-file src="src/android/LocationServiceErrorMessages.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+        <source-file src="src/android/LocationUtils.java" target-dir="src/fr/louisbl/cordova/locationservices" />
+
+    </platform>
+</plugin>

@@ -275,6 +275,9 @@
         },
         "cordova-plugin-media": {
             "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-locationservices": {
+            "PACKAGE_NAME": "com.akveo.pinder"
         }
     },
     "dependent_plugins": {}

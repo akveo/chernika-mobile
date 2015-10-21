@@ -197,5 +197,13 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-locationservices": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-locationservices"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

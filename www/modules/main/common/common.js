@@ -19,17 +19,17 @@
     function multiplatformGeolocation ($q, $ionicPlatform) {
         var self = this;
         var locationModule = null;
-        var PRIORITY_BALANCED_POWER_ACCURACY = 102;
+        var PRIORITY_HIGH_ACCURACY = 100;
         var defaultOptions = {
             timeout: 60000,
             enableHighAccuracy: setAccuracy(),
-            priority: PRIORITY_BALANCED_POWER_ACCURACY
+            priority: PRIORITY_HIGH_ACCURACY
         };
         var deferWatchers = [];
 
         if (window.cordova && window.cordova.platformId == 'android') {
-            //$ionicPlatform.ready(setAndroidLocation);
-            locationModule = navigator.geolocation;
+            $ionicPlatform.ready(setAndroidLocation);
+            //locationModule = navigator.geolocation;
         } else {
             locationModule = navigator.geolocation;
         }
@@ -60,14 +60,29 @@
         };
 
         function setAccuracy() {
-            return ionic.Platform.isAndroid() && ionic.Platform.version() < 4.4 ? false : true;
+            return ionic.Platform.isAndroid() && ionic.Platform.version() < 5 ? false : true;
         }
 
         function setAndroidLocation() {
-            locationModule = LocationServices;
-            deferWatchers.forEach(function(d) {
-                d.resolve(locationModule);
+            cordova.plugins.diagnostic.getLocationMode(function(mode) {
+                locationModule = ionic.Platform.version() >= 5 ? navigator.geolocation : locationByDeviceMode(mode);
+                deferWatchers.forEach(function(d) {
+                    d.resolve(locationModule);
+                });
+            }, function (err) {
+                locationModule = navigator.geolocation;
+                deferWatchers.forEach(function(d) {
+                    d.resolve(locationModule);
+                });
             });
+
+            function locationByDeviceMode(mode) {
+                if (mode == 'high_accuracy' || mode == 'battery_saving') {
+                    return navigator.geolocation;
+                } else if ('device_only'){
+                    return window.LocationServices;
+                }
+            }
         }
     }
 
