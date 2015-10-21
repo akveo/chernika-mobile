@@ -79,7 +79,7 @@
             function locationByDeviceMode(mode) {
                 if (mode == 'high_accuracy' || mode == 'battery_saving') {
                     return navigator.geolocation;
-                } else if ('device_only'){
+                } else if (mode == 'device_only'){
                     return window.LocationServices;
                 }
             }
