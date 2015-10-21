@@ -106,3 +106,8 @@ $anchorWidth: 7px;
     background: #eee;
   }
 }
+
+.tabs-striped.tabs-positive .tab-item.tab-item-active .badge.chat-badge {
+  opacity: 1;
+  transition: none;
+}

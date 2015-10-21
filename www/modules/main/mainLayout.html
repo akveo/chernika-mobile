@@ -6,18 +6,18 @@ navigation history that also transitions its views in and out.
 <ion-tabs class="tabs-icon-top tabs-positive">
 
   <!-- Account Tab -->
-  <ion-tab title="Настройки" ng-click="tabGo('main.settings')" icon-off="ion-ios-gear-outline" icon-on="ion-ios-gear" href="#/main/settings">
+  <ion-tab title="Настройки" ng-click="tabGo('main.settings')" icon-off="ion-ios-gear-outline" badge-style="none" icon-on="ion-ios-gear" href="#/main/settings">
     <ion-nav-view name="tab-settings"></ion-nav-view>
   </ion-tab>
 
   <!-- Swiper Tab -->
-  <ion-tab title="Люди" ng-click="tabGo('main.swiper')" icon-off="ion-android-favorite-outline" icon-on="ion-android-favorite" href="#/main/swiper">
+  <ion-tab title="Люди" ng-click="tabGo('main.swiper')" icon-off="ion-android-favorite-outline" badge-style="none" icon-on="ion-android-favorite" href="#/main/swiper">
     <ion-nav-view name="tab-swiper"></ion-nav-view>
   </ion-tab>
 
   <!-- Chats Tab -->
   <tab-badge-highlight>
-    <ion-tab title="Совпадения" ng-click="tabGo('main.matches')" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" badge="chatBadge" href="#/main/matches">
+    <ion-tab title="Совпадения" ng-click="tabGo('main.matches')" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" badge="chatBadge" badge-style="badge-calm chat-badge" href="#/main/matches">
       <ion-nav-view name="tab-matches"></ion-nav-view>
     </ion-tab>
   </tab-badge-highlight>

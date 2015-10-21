@@ -12,12 +12,12 @@
 
     $rootScope.$on('user.login.checked', init);
     $rootScope.$on('connection.on', checkChats);
+    $rootScope.$on('chat.read', onChatRead);
     $rootScope.$watch(function () { return unreadChats.length; }, onUnreadChatLengthChange);
 
     function init() {
       unreadChats = [];
       socketEventService.listen($rootScope, 'new_message', onNewMessage);
-      $rootScope.$on('chat.read', onChatRead);
       checkChats();
     }
 
