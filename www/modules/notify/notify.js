@@ -3,7 +3,8 @@
 
   angular.module('app.notify')
     .directive('tabBadgeHighlight', tabBadgeHighlight)
-    .run(chatsNotifyEventsRun);
+    .run(chatsNotifyEventsRun)
+    .run(chatsToasterRun);
 
   chatsNotifyEventsRun.$inject = ['$rootScope', 'socketEventService', '$state', 'ChatsApi'];
   function chatsNotifyEventsRun($rootScope, socketEventService, $state, ChatsApi) {
@@ -56,6 +57,27 @@
         && !msg.wasRead
         && $state.current.name != 'main.match-detail'
         && $state.params.chatId != msg.chat;
+    }
+  }
+
+  chatsToasterRun.$inject = ['$rootScope', '$ionicPlatform'];
+  function chatsToasterRun($rootScope, $ionicPlatform) {
+    var notificationSound;
+
+    $rootScope.$on('notify.message', function (evt, msg) {
+      sound();
+      window.plugins.toast.showWithOptions(
+        {
+          message: "новое сообщение",
+          duration: "short",
+          position: "top"
+        });
+    });
+
+    function sound() {
+      var pathPrefix = ionic.Platform.isAndroid() ? window.cordova.file.applicationDirectory + 'www/' : '';
+      notificationSound = notificationSound || new window.Media(pathPrefix + 'media/191678__porphyr__waterdrop.wav');
+      notificationSound.play();
     }
   }
 

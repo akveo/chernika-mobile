@@ -83,6 +83,14 @@
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Toast\"><param name=\"ios-package\" value=\"Toast\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -192,6 +200,12 @@
                             "xml": true,
                             "count": 1
                         }
+                    ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
                     ]
                 }
             }
@@ -254,6 +268,12 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "org.apache.cordova.statusbar": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "com.akveo.pinder"
         }
     },
