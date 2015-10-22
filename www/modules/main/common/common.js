@@ -29,7 +29,6 @@
 
         if (window.cordova && window.cordova.platformId == 'android') {
             $ionicPlatform.ready(setAndroidLocation);
-            //locationModule = navigator.geolocation;
         } else {
             locationModule = navigator.geolocation;
         }
@@ -64,25 +63,10 @@
         }
 
         function setAndroidLocation() {
-            cordova.plugins.diagnostic.getLocationMode(function(mode) {
-                locationModule = ionic.Platform.version() >= 5 ? navigator.geolocation : locationByDeviceMode(mode);
-                deferWatchers.forEach(function(d) {
-                    d.resolve(locationModule);
-                });
-            }, function (err) {
-                locationModule = navigator.geolocation;
-                deferWatchers.forEach(function(d) {
-                    d.resolve(locationModule);
-                });
+            locationModule = ionic.Platform.version() >= 5 ? navigator.geolocation : window.LocationServices;
+            deferWatchers.forEach(function(d) {
+                d.resolve(locationModule);
             });
-
-            function locationByDeviceMode(mode) {
-                if (mode == 'high_accuracy' || mode == 'battery_saving') {
-                    return navigator.geolocation;
-                } else if (mode == 'device_only'){
-                    return window.LocationServices;
-                }
-            }
         }
     }
 
