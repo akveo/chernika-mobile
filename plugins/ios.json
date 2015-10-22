@@ -278,6 +278,9 @@
         },
         "cordova-plugin-locationservices": {
             "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.akveo.pinder"
         }
     },
     "dependent_plugins": {}

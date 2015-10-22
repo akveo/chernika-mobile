@@ -6,5 +6,12 @@
       "path": "/pinder",
       "proxyUrl": "http://akveo.com/pinder/"
     }
+  ],
+  "browsers": [
+    {
+      "platform": "android",
+      "browser": "crosswalk",
+      "version": "12.41.296.5"
+    }
   ]
 }
