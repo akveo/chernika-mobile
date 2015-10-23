@@ -43,11 +43,11 @@
         };
 
         $scope.dislikeFirst = function() {
-            $scope.cards[0].programmaticalSwipe(true);
+            $scope.$broadcast('tinderCards.swipeProgrammatically', true);
         };
 
         $scope.likeFirst = function() {
-            $scope.cards[0].programmaticalSwipe(false);
+            $scope.$broadcast('tinderCards.swipeProgrammatically', false);
         };
         $scope.cardSwipedLeft = function(index) {
             suggestionsApi.dislikeProfile($scope.cards[index].obj._id);
