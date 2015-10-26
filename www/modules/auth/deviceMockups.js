@@ -3,7 +3,8 @@
  */
 (function(angular) {
     angular.module('app.auth')
-        .directive('elementHeightLeft', elementHeightLeft);
+      .directive('elementHeightLeft', elementHeightLeft)
+      .directive('mockupVerticalAlign', mockupVerticalAlign);
 
     elementHeightLeft.$inject = ['$window', '$document'];
     function elementHeightLeft($window, $document) {
@@ -19,6 +20,21 @@
                     return res + parseInt($window.getComputedStyle(includedElement)['height']);
                 }, 0);
                 scope.elementHeightLeft = totalHeight - leftDivsHeight;
+            }
+        };
+    }
+
+    //Shitty shit, to tired to center the mockup properly
+    function mockupVerticalAlign() {
+        return {
+            restrict: 'A',
+            link: function(scope, $element) {
+                var $slide = $element.parent('.slider-slide');
+                var textBox = $slide[0].querySelector('.box');
+                var textBoxHeight = textBox.offsetHeight + 20; //plus h4 margin for android
+                var mockupHeight = $element[0].offsetHeight;
+                var slideHeight = $slide[0].offsetHeight;
+                $element[0].style.bottom = (slideHeight - mockupHeight)/2 - textBoxHeight + 'px';
             }
         };
     }
