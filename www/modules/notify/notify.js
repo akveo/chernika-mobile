@@ -65,7 +65,7 @@
     var notificationSound;
 
     $rootScope.$on('notify.message', function (evt, msg) {
-      sound();
+      !$rootScope.isPaused && sound();
       window.plugins.toast.showWithOptions(
         {
           message: "новое сообщение",

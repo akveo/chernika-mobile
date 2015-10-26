@@ -119,14 +119,16 @@
             return self.online;
         }
     }
-    
+
     appStateListener.$inject = ['$rootScope'];
     function appStateListener($rootScope) {
         function resume() {
+            $rootScope.isPaused = false;
             $rootScope.$broadcast('app.resume');
         }
 
         function pause() {
+            $rootScope.isPaused = true;
             $rootScope.$broadcast('app.pause');
         }
 

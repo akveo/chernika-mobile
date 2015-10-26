@@ -74,8 +74,8 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$rootScope'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $rootScope) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$rootScope', 'appStateListener'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $rootScope, appStateListener) {
         $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
@@ -94,6 +94,11 @@
         });
 
         $scope.$on('connection.on', load);
+
+        if (ionic.Platform.isAndroid()) {
+            $scope.$on('app.resume', readMessages);
+        }
+
         $scope.$watch('isContentSeen', function (newValue) {
             if (newValue === true) {
                 $timeout(function() {
@@ -181,7 +186,7 @@
 
         function addMessage(msg) {
             $scope.messages.push(msg);
-            ChatsApi.readMessage(msg);
+            !$scope.isPaused && ChatsApi.readMessage(msg);
             $timeout(function() {
                 $ionicScrollDelegate.scrollBottom(true);
             });
