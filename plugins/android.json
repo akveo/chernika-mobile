@@ -75,6 +75,14 @@
                     ],
                     "/*": [
                         {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 3
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
+                            "count": 1
+                        },
+                        {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 4
                         },
@@ -91,10 +99,6 @@
                             "count": 2
                         },
                         {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
-                            "count": 3
-                        },
-                        {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
                             "count": 2
                         },
@@ -108,10 +112,6 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_VIDEO\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\" />",
                             "count": 1
                         }
                     ]
@@ -130,6 +130,22 @@
                         },
                         {
                             "xml": "<feature name=\"PushPlugin\"><param name=\"android-package\" value=\"com.plugin.gcm.PushPlugin\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"14+\" name=\"xwalkVersion\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
                             "count": 1
                         },
                         {
@@ -161,6 +177,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"android-package\" value=\"org.apache.cordova.splashscreen.SplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         },
@@ -187,22 +207,6 @@
                         {
                             "xml": "<feature name=\"StatusBar\"><param name=\"android-package\" value=\"org.apache.cordova.statusbar.StatusBar\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"webView\" value=\"org.crosswalk.engine.XWalkWebViewEngine\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"14+\" name=\"xwalkVersion\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"--disable-pull-to-refresh-effect\" name=\"xwalkCommandLine\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference default=\"embedded\" name=\"xwalkMode\" />",
-                            "count": 1
                         }
                     ]
                 }
@@ -210,9 +214,6 @@
         }
     },
     "installed_plugins": {
-        "android.support.v4": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
         "com.akveo.cordova-vk": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
@@ -223,6 +224,12 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "com.phonegap.plugins.PushPlugin": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-android-support-v4": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-file": {
@@ -247,6 +254,9 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-whitelist": {
@@ -274,9 +284,6 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.akveo.pinder"
         }
     },

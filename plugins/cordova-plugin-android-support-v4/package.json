@@ -1,0 +1,30 @@
+{
+  "name": "cordova-plugin-android-support-v4",
+  "version": "21.0.1",
+  "description": "Cordova plugin to add android-support-v4.jar to Cordova/PhoneGap project",
+  "cordova": {
+    "id": "cordova-plugin-android-support-v4",
+    "platforms": [
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/floatinghotpot/cordova-plugin-android-support-v4.git"
+  },
+  "bugs": {
+    "url": "https://github.com/floatinghotpot/cordova-plugin-android-support-v4/issues"
+  },
+  "keywords": [
+    "cordova",
+    "ecosystem:cordova",
+    "google",
+    "android",
+    "support",
+    "v4"
+  ],
+  "author": {
+    "name": "Google"
+  },
+  "license": "MIT"
+}
