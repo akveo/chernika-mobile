@@ -162,7 +162,7 @@
             "type": "registry",
             "id": "cordova-plugin-device"
         },
-        "is_top_level": false,
+        "is_top_level": true,
         "variables": {}
     },
     "de.appplant.cordova.common.registerusernotificationsettings": {
@@ -226,6 +226,30 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-android-support-v4"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-console": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-statusbar"
         },
         "is_top_level": true,
         "variables": {}

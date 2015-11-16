@@ -12,6 +12,7 @@
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.$onVkSdkEvent('vkSdk.newToken', function(evt) {
+            $ionicLoading.show();
             VkSdk.getUser(evt.detail.userId, function(r) {
                 afterTokenReceive({
                     user_id: evt.detail.userId,
@@ -21,9 +22,10 @@
             })
         });
 
+        $scope.$onVkSdkEvent('vkSdk.accessDenied', loginErr);
+
         $scope.doAuthenticate = function() {
             $scope.$emit('analytics.event', {category: 'LoginButtonClicked'});
-            $ionicLoading.show();
             if (window.cordova) {
                 vkApi.initiateLogin(['photos', 'offline']);
             } else {
@@ -41,16 +43,17 @@
                     $rootScope.$broadcast('user.login');
                     $ionicLoading.hide();
                     $state.go('main.swiper');
-                }, function error(e) {
-                    // TODO: User friendly error
-                    $ionicLoading.hide();
-                    $ionicPopup.alert(
-                      {
-                          templateUrl: 'modules/auth/noResponsePopup.html',
-                          cssClass: 'no-response-popup'
-                      }
-                    );
-                });
+                },loginErr);
+        }
+
+        function loginErr(e) {
+            $ionicLoading.hide();
+            $ionicPopup.alert(
+                {
+                    templateUrl: 'modules/auth/noResponsePopup.html',
+                    cssClass: 'no-response-popup'
+                }
+            );
         }
     }
 
