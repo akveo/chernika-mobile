@@ -6,6 +6,8 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var fs = require('fs');
+var shell = require('gulp-shell');
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -35,6 +37,17 @@ gulp.task('install', ['git-check'], function() {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
     });
 });
+
+gulp.task('signAndroid',  shell.task([
+    fs.existsSync('chernika.apk') ? 'rm chernika.apk' : '',
+    'cp ./platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk ./',
+    'jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore -storepass vova_ebashit -keypass vova_ebashit android-armv7-release-unsigned.apk alias_name',
+    'zipalign -v 4 android-armv7-release-unsigned.apk chernika.apk',
+    'rm android-armv7-release-unsigned.apk'
+]));
+
+gulp.task('buildAndroid', shell.task('cordova build android --release'));
+
 
 gulp.task('git-check', function(done) {
   if (!sh.which('git')) {
