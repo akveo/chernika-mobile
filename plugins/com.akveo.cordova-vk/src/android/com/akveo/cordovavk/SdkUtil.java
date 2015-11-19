@@ -45,7 +45,7 @@ public final class SdkUtil {
     }
 
     public static PluginResult createErrorResult(String code, String message) throws JSONException {
-        return createErrorResult(code, message, false);
+        return createErrorResult(code, message, true);
     }
 
     public static PluginResult createErrorResult(String code, String message, boolean keepCallback) throws JSONException {
