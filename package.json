@@ -1,7 +1,7 @@
 {
-  "name": "pinder-mobile",
+  "name": "chernika",
   "version": "1.0.0",
-  "description": "pinder-mobile: An Ionic project",
+  "description": "chernika: An Ionic project",
   "dependencies": {
     "cheerio": "^0.19.0",
     "glob": "^5.0.14",
@@ -27,7 +27,7 @@
     }
   ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }

@@ -45,6 +45,10 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"Capture\"><param name=\"ios-package\" value=\"CDVCapture\" /></feature>",
                             "count": 1
                         },
@@ -53,7 +57,15 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"SocialSharing\"><param name=\"ios-package\" value=\"SocialSharing\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Toast\"><param name=\"ios-package\" value=\"Toast\" /></feature>",
                             "count": 1
                         },
                         {
@@ -82,14 +94,6 @@
                         },
                         {
                             "xml": "<preference name=\"StatusBarStyle\" value=\"lightcontent\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Toast\"><param name=\"ios-package\" value=\"Toast\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"Media\"><param name=\"ios-package\" value=\"CDVSound\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -162,7 +166,7 @@
                     "CoreGraphics.framework": [
                         {
                             "xml": false,
-                            "count": 2
+                            "count": 3
                         }
                     ],
                     "Social.framework": [
@@ -177,19 +181,13 @@
                             "count": 1
                         }
                     ],
+                    "QuartzCore.framework": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ],
                     "CoreBluetooth.framework": [
-                        {
-                            "xml": false,
-                            "count": 1
-                        }
-                    ],
-                    "AVFoundation.framework": [
-                        {
-                            "xml": false,
-                            "count": 1
-                        }
-                    ],
-                    "Photos.framework": [
                         {
                             "xml": false,
                             "count": 1
@@ -198,12 +196,6 @@
                     "AudioToolbox.framework": [
                         {
                             "xml": true,
-                            "count": 1
-                        }
-                    ],
-                    "QuartzCore.framework": [
-                        {
-                            "xml": false,
                             "count": 1
                         }
                     ]
@@ -228,6 +220,9 @@
         "com.phonegap.plugins.PushPlugin": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
+        "cordova-plugin-crosswalk-webview": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
@@ -240,16 +235,28 @@
         "cordova-plugin-inappbrowser": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
+        "cordova-plugin-locationservices": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-media": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "cordova-plugin-media-capture": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-network-information": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
+        "cordova-plugin-splashscreen": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
+        "cordova-plugin-x-toast": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "cordova.plugins.diagnostic": {
@@ -268,18 +275,6 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-media": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-locationservices": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.akveo.pinder"
         }
     },

@@ -250,6 +250,8 @@
             "subdir": "."
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "VK_APP_ID": "vk4851553"
+        }
     }
 }
