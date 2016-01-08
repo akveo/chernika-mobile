@@ -19,6 +19,10 @@
                 return acc;
             }, {});
         };
+
+        this.clone = function(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        };
     }
 
     croppedImage.$inject = ['appConfig'];

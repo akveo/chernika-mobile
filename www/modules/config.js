@@ -37,6 +37,13 @@
             },
             ga: {
                 trackingId: 'UA-66152232-1'
+            },
+            testUser: {
+                id: '342838738',
+                testCoordinates: {
+                    latitude: 53.9000,
+                    longitude: 27.5667
+                }
             }
         });
 

@@ -7,11 +7,17 @@
         .service('suggestionsByLocation',suggestionsByLocation)
         .controller('swiperController', swiperController);
 
-    suggestionsByLocation.$inject = ['suggestionsApi', 'multiplatformGeolocation', '$rootScope'];
-    function suggestionsByLocation(suggestionsApi, multiplatformGeolocation, $rootScope) {
+    suggestionsByLocation.$inject = ['suggestionsApi', 'multiplatformGeolocation', '$rootScope', 'appConfig', '$q', 'appUtilities'];
+    function suggestionsByLocation(suggestionsApi, multiplatformGeolocation, $rootScope, appConfig, $q, appUtilities) {
         this.getSuggestionsByLocation = function() {
-            return multiplatformGeolocation
-                .getCurrentPosition()
+            var geolocationPromise = null;
+            if ($rootScope.userProfile._id != appConfig.testUser.id) {
+                geolocationPromise = multiplatformGeolocation.getCurrentPosition();
+            } else {
+                // Predefined coordinates for test user
+                geolocationPromise = $q.when(appUtilities.clone({ coords: appConfig.testUser.testCoordinates }));
+            }
+            return geolocationPromise
                 .then(function(position) {
                     updateUserProfileCoords(position.coords);
                     return suggestionsApi.getSuggestions(position.coords.latitude, position.coords.longitude);
