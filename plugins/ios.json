@@ -7,6 +7,10 @@
         "files": {}
     },
     "installed_plugins": {
+        "com.akveo.cordova-vk": {
+            "VK_APP_ID": "vk4851553",
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "com.ionic.deploy": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
@@ -74,10 +78,6 @@
             "PACKAGE_NAME": "com.akveo.pinder"
         },
         "org.apache.cordova.statusbar": {
-            "PACKAGE_NAME": "com.akveo.pinder"
-        },
-        "com.akveo.cordova-vk": {
-            "VK_APP_ID": "vk4851553",
             "PACKAGE_NAME": "com.akveo.pinder"
         }
     },
