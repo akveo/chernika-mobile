@@ -1,0 +1,15 @@
+{
+    "version": "1.0.0",
+    "name": "org.apache.cordova.home",
+    "cordova_name": "Home",
+    "description": "Cordova Home Plugin",
+    "license": "Apache 2.0",
+    "keywords": [
+        "cordova",
+        "home"
+    ],
+    "platforms": [
+        "android"
+    ],
+    "engines": []
+}

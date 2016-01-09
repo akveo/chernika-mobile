@@ -23,38 +23,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "org.apache.cordova.statusbar": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.statusbar"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.console": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.console"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.device": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.device"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "org.apache.cordova.dialogs": {
-        "source": {
-            "type": "registry",
-            "id": "org.apache.cordova.dialogs"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-inappbrowser": {
         "source": {
             "type": "git",
@@ -90,9 +58,8 @@
     },
     "org.apache.cordova.home": {
         "source": {
-            "type": "git",
-            "url": "https://github.com/ZhichengChen/cordova-plugin-android-home",
-            "subdir": "."
+            "type": "registry",
+            "id": "org.apache.cordova.home"
         },
         "is_top_level": true,
         "variables": {}
@@ -207,14 +174,6 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-splashscreen"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
-    "cordova-plugin-android-support-v4": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-android-support-v4"
         },
         "is_top_level": true,
         "variables": {}
