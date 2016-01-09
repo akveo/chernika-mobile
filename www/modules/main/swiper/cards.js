@@ -39,7 +39,7 @@
         $scope.loading = true;
         var viewSizing = $scope.viewSizing = {};
 
-        $scope.$on('settings.changed', load);
+        $scope.$on('settings.changed', reloadOnNextViewEnter);
 
         $scope.$on('app.resume', reloadEmptyCards);
         $scope.$watch('cards.length', reloadEmptyCards);
@@ -98,6 +98,18 @@
                 label: 'targetAge',
                 value: cardObj.age
             });
+        }
+
+        var viewChangeListener = null;
+        function reloadOnNextViewEnter() {
+            if (!viewChangeListener) {
+                viewChangeListener = $scope.$on('$ionicView.enter', function() {
+                    viewChangeListener();
+                    viewChangeListener = null;
+                    console.log('View change load.');
+                    load();    
+                });
+            }
         }
 
         function reloadEmptyCards() {
