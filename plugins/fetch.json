@@ -202,17 +202,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "com.akveo.cordova-vk": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/akveo/cordova-vk",
-            "subdir": "."
-        },
-        "is_top_level": true,
-        "variables": {
-            "VK_APP_ID": "vk4851553"
-        }
-    },
     "cordova-plugin-disable-bitcode": {
         "source": {
             "type": "registry",
@@ -220,5 +209,15 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "com.akveo.cordova-vk": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-vk"
+        },
+        "is_top_level": true,
+        "variables": {
+            "VK_APP_ID": "vk4851553"
+        }
     }
 }

@@ -48,6 +48,13 @@
                 </dict>
             </array>
         </config-file>
+        <config-file target="*-Info.plist" parent="LSApplicationQueriesSchemes">
+            <array>
+                <string>vk</string>
+                <string>vk-share</string>
+                <string>vkauthorize</string>
+            </array>
+        </config-file>
     </platform>
 
     <!-- android -->
