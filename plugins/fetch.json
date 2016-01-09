@@ -253,5 +253,13 @@
         "variables": {
             "VK_APP_ID": "vk4851553"
         }
+    },
+    "cordova-plugin-disable-bitcode": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-disable-bitcode"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

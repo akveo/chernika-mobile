@@ -26,6 +26,9 @@
         "cordova-plugin-crosswalk-webview": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },
+        "cordova-plugin-disable-bitcode": {
+            "PACKAGE_NAME": "com.akveo.pinder"
+        },
         "cordova-plugin-file": {
             "PACKAGE_NAME": "com.akveo.pinder"
         },

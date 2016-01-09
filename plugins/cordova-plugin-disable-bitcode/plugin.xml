@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+           id="cordova-plugin-disable-bitcode"
+           version="1.2.1" >
+
+  <name>DisableBitcode</name>
+  <description>Cordova/PhoneGap Plugin to disable ios bitcode build setting</description>
+  <license>MIT</license>
+  <keywords>cordova,phonegap,bitcode</keywords>
+  <repo>https://github.com/akofman/cordova-plugin-disable-bitcode.git</repo>
+
+  <platform name="ios">
+    <hook type="after_plugin_add" src="src/disable-bitcode-after-plugin-add.js" />
+    <hook type="after_platform_add" src="src/disable-bitcode-after-platform-add.js" />
+  </platform>
+</plugin>
