@@ -48,6 +48,9 @@
     <splash src="resources/ios/splash/Default-Portrait~ipad.png" width="768" height="1024"/>
     <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
+    <splash src="resources/ios/splash/Default-Landscape~ipad.png" width="1024" height="768"/>
+    <splash src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
+    <splash src="resources/ios/splash/Default-Landscape-736h.png" width="2208" height="1242"/>
   </platform>
   <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>

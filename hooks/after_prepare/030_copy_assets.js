@@ -99,25 +99,25 @@ var filestocopy = [{
 },   
 //------------------------
 {
-    "resources/ios/screen/screen-iphone5-2x.png": 
+    "resources/ios/screen/Default-568h@2x~iphone.png": 
     "platforms/ios/chernika/Resources/splash/Default-568h@2x~iphone.png"
 }, {
-    "resources/ios/screen/ipad2x-portrait.png": 
+    "resources/ios/screen/Default-Landscape@2x~ipad.png": 
     "platforms/ios/chernika/Resources/splash/Default-Landscape@2x~ipad.png"
 }, {
-    "resources/ios/screen/ipad1x-portrait.png": 
+    "resources/ios/screen/Default-Landscape~ipad.png": 
     "platforms/ios/chernika/Resources/splash/Default-Landscape~ipad.png"
 }, {
-    "resources/ios/screen/ipad2x.png": 
+    "resources/ios/screen/Default-Portrait@2x~ipad.png": 
     "platforms/ios/chernika/Resources/splash/Default-Portrait@2x~ipad.png"
 }, {
-    "resources/ios/screen/ipad1x.png": 
+    "resources/ios/screen/Default-Portrait~ipad.png": 
     "platforms/ios/chernika/Resources/splash/Default-Portrait~ipad.png"
 }, {
-    "resources/ios/screen/screen-iphone-portrait-2x.png": 
+    "resources/ios/screen/Default@2x~iphone.png": 
     "platforms/ios/chernika/Resources/splash/Default@2x~iphone.png"
 }, {
-    "resources/ios/screen/screen-iphone-portrait.png": 
+    "resources/ios/screen/Default~iphone.png": 
     "platforms/ios/chernika/Resources/splash/Default~iphone.png"
 }, {
     "resources/ios/screen/Default-667h.png": 
