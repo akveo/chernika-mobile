@@ -96,11 +96,13 @@
 
   socialShare.$inject = ['$q'];
   function socialShare() {
+
     var msg = {
-      text: 'Отличное приложение',
-      subject: 'отличная тема',
-      link: 'akveo.com'
+      text: 'Я нахожу интересных людей в Чернике. Присоединяйся и ты!',
+      subject: 'Я в Чернике',
+      link: 'http://onelink.to/2tmxg2'
     };
+
 
     this.share = function () {
       window.plugins.socialsharing.share(msg.text, msg.subject, null, msg.link);
