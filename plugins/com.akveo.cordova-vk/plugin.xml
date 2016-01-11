@@ -3,7 +3,7 @@
         xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="com.akveo.cordova-vk"
-        version="0.1.0">
+        version="1.0.1">
 
     <name>cordova-vk</name>
     <description>Cordova plugin for integration with vksdk</description>
