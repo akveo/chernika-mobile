@@ -25,6 +25,9 @@ platforms.forEach(cleanPlatformLib);
 
 function cleanPlatformLib(platform) {
     var platformAssetsPath = 'platforms/' + platform + '/assets/';
+    if (platform == 'ios') {
+        platformAssetsPath = 'platforms/' + platform + '/';    
+    }
     var libPath = platformAssetsPath + 'www/lib/';
 
     var toSave = _.map(fileNamesToSave, function (fname) {
