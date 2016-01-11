@@ -52,6 +52,12 @@
     <splash src="resources/ios/splash/Default-Landscape~ipad.png" width="1024" height="768"/>
     <splash src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
     <splash src="resources/ios/splash/Default-Landscape-736h.png" width="2208" height="1242"/>
+
+    <preference name="deployment-target" value="8.0" />
+    <preference name="target-device" value="handset" />
+    <config-file target="*-Info.plist" parent="CFBundleDevelopmentRegion">
+      <string>Russian</string>
+    </config-file>
   </platform>
   <platform name="android">
     <icon src="resources/android/icon/drawable-ldpi-icon.png" density="ldpi"/>
