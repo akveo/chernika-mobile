@@ -58,14 +58,20 @@
         });
     }
 
-    SplashController.$inject = ['userApi', '$state'];
-    function SplashController(userApi, $state) {
+    SplashController.$inject = ['userApi', '$state', '$ionicPlatform'];
+    function SplashController(userApi, $state, $ionicPlatform) {
         userApi.checkLoggedIn()
             .then(function() {
-                $state.go('main.swiper');
+                $ionicPlatform.ready(function() {
+                    $state.go('main.swiper');
+                });
             }, function() {
-                $state.go('login');
-            });
+                $ionicPlatform.ready(function() {
+                    $state.go('login');
+                });
+            }); 
+        
+        
     }
 
     connectionListener.$inject = ['$rootScope', 'appSocket'];
