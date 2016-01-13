@@ -10,7 +10,30 @@
 
     AccountCtrl.$inject = ['$scope', 'appConfig', 'settingsTimeoutSaver', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', 'userApi'];
     function AccountCtrl($scope, appConfig, settingsTimeoutSaver, onConnectionChangePropertyListener, onLoadingPropertyListener, userApi) {
-        $scope.settings = {};
+        $scope.settings = {
+            enableDiscovery: true,
+            distance: 100,
+            minAge: 18,
+            maxAge: 34,
+            show: "2"
+        };
+
+        //$scope.sexOptions = [0, 1, 2];
+
+        $scope.sexOptions = [
+            {
+                id: 0,
+                label: 'Мужчин и Женщин'
+            },
+            {
+                id: 1,
+                label: 'Только Мужчин'
+            },
+            {
+                id: 2,
+                label: 'Только Женщин'
+            }
+        ];
 
         onConnectionChangePropertyListener.listen($scope, {
             prop: 'isContentSeen',
@@ -50,13 +73,7 @@
             $scope.$broadcast('connection.loading.start', {api: 'userApi', method: 'getSettings'});
             userApi.getSettings()
               .then(function (settings) {
-                  $scope.settings = angular.extend({
-                      enableDiscovery: true,
-                      distance: 100,
-                      minAge: 18,
-                      maxAge: 34,
-                      show: 2 //Female
-                  }, settings);
+                  angular.extend($scope.settings, settings);
                   $scope.$broadcast('connection.loading.success', {api: 'userApi', method: 'getSettings'});
               }, function (error) {
                   $scope.$broadcast('connection.loading.error', {api: 'userApi', method: 'getSettings', error: error});
