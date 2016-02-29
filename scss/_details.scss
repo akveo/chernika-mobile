@@ -14,9 +14,22 @@
     .profile-details-distance {
       display: inline-block;
       position: absolute;
-      right: 0;
+      right: 30px;
       bottom: 0;
       color: #717070;
     }
+    .more-details {
+      position: absolute;
+      right: 5px;
+      top: -12px;
+      font-size: 40px;
+    }
+  }
+}
+
+.popover {
+  .item.active, .item.activated, .item-complex.active .item-content, .item-complex.activated .item-content {
+    border-color: #ccc;
+    background-color: #D9D9D9;
   }
 }

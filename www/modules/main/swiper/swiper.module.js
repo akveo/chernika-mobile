@@ -10,7 +10,7 @@
     function swiperConfig($stateProvider) {
         $stateProvider
             .state('main.swiper', {
-                url: '/swiper',
+                url: '/swiper?reloadCards',
                 views: {
                     'tab-swiper': {
                         templateUrl: 'modules/main/swiper/swiper.html',

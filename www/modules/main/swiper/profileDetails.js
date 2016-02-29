@@ -8,8 +8,8 @@
         .service('profileDetails', profileDetails)
         .controller('profileDetailsCtrl', profileDetailsCtrl);
 
-    profileDetailsCtrl.$inject = ['$scope', 'profileDetails', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener'];
-    function profileDetailsCtrl($scope, profileDetails, onConnectionChangePropertyListener, onLoadingPropertyListener) {
+    profileDetailsCtrl.$inject = ['$scope', 'profileDetails', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$ionicPopover', '$state', $stateParams, 'suggestionsApi'];
+    function profileDetailsCtrl($scope, profileDetails, onConnectionChangePropertyListener, onLoadingPropertyListener, $ionicPopover, $state, $stateParams, suggestionsApi) {
         $scope.isContentSeen = false;
 
         onConnectionChangePropertyListener.listen($scope, {
@@ -28,6 +28,12 @@
 
         load();
 
+        $ionicPopover.fromTemplateUrl('modules/main/swiper/profileDetailsPopover.html', {
+            scope: $scope,
+        }).then(function(popover) {
+            $scope.popover = popover;
+        });
+
         function load() {
             $scope.$broadcast('connection.loading.start', {api: 'profilesApi', method: 'getProfileData'});
             profileDetails.getProfileDetails()
@@ -38,6 +44,22 @@
                 }, function (error) {
                     $scope.$broadcast('connection.loading.error', {api: 'profilesApi', method: 'getProfileData', error: error});
                 });
+        }
+
+        $scope.openPopover = function($event) {
+            $scope.popover.show($event);
+        };
+
+        $scope.complain = function() {
+            window.plugins.toast.showWithOptions(
+              {
+                  message: "жалоба отправлена",
+                  duration: "short",
+                  position: "top"
+              });
+            $scope.popover.hide();
+            suggestionsApi.dislikeProfile($stateParams.profileId);
+            $state.go('main.swiper', {reloadCards: true})
         }
     }
 

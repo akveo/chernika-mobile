@@ -31,8 +31,8 @@
         }
     }
 
-    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi', 'socialShare'];
-    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi, socialShare) {
+    swiperController.$inject = ['$scope', '$rootScope', 'suggestionsApi', 'suggestionsByLocation', 'userProfile', 'blurredModal', 'appConfig', 'ChatsApi', 'socialShare', '$stateParams'];
+    function swiperController($scope, $rootScope, suggestionsApi, suggestionsByLocation, userProfile, blurredModal, appConfig, ChatsApi, socialShare, $stateParams) {
 
         $scope.geoEnabled = true;
         $scope.cards = [];
@@ -43,6 +43,8 @@
 
         $scope.$on('app.resume', reloadEmptyCards);
         $scope.$watch('cards.length', reloadEmptyCards);
+
+        $scope.$on('$ionicView.enter', reload);
 
         $scope.cardDestroyed = function(index) {
             $scope.cards.splice(index, 1);
@@ -178,6 +180,9 @@
             });
         }
 
+        function reload() {
+            $stateParams.reloadCards && load();
+        }
     }
 
 })(angular);
