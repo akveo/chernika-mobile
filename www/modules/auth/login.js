@@ -43,6 +43,12 @@
                     $rootScope.$broadcast('user.login');
                     $ionicLoading.hide();
                     $state.go('main.swiper');
+                    $ionicPopup.alert(
+                     {
+                         templateUrl: 'modules/auth/terms.html',
+                         cssClass: 'terms-popup'
+                     }
+                    );
                 },loginErr);
         }
 

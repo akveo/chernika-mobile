@@ -35,6 +35,12 @@
             });
         };
 
+        this.reportAbuse = function(profileId){
+            return $http.post(suggestionsEndpoint + '/report', {
+                targetId: profileId
+            });
+        }
+
     }
 
     var photoStubs = [

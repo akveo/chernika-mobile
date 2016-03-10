@@ -59,6 +59,7 @@
               });
             $scope.popover.hide();
             suggestionsApi.dislikeProfile($stateParams.profileId);
+            suggestionsApi.reportAbuse($stateParams.profileId);
             $state.go('main.swiper', {reloadCards: true})
         }
     }
