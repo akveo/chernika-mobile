@@ -46,6 +46,10 @@
     this.saveSettings = function(settings) {
       return $http.put(settingsEndpoint, settings);
     };
+
+    this.confirmPolicy = function() {
+      return $http.get(userEndpoint + '/confirmPolicy');
+    };
   }
 
   profilesApi.$inject = ['$http', 'appConfig'];

@@ -11,11 +11,10 @@
     AccountCtrl.$inject = ['$scope', 'appConfig', 'settingsTimeoutSaver', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', 'userApi'];
     function AccountCtrl($scope, appConfig, settingsTimeoutSaver, onConnectionChangePropertyListener, onLoadingPropertyListener, userApi) {
         $scope.settings = {
-            enableDiscovery: true,
             distance: 100,
             minAge: 18,
             maxAge: 34,
-            show: "2"
+            show: 0
         };
 
         //$scope.sexOptions = [0, 1, 2];
@@ -26,11 +25,11 @@
                 label: 'Мужчин и Женщин'
             },
             {
-                id: 1,
+                id: 2,
                 label: 'Только Мужчин'
             },
             {
-                id: 2,
+                id: 1,
                 label: 'Только Женщин'
             }
         ];

@@ -7,8 +7,8 @@
         .factory('vkAuthenticator', vkAuthenticator)
         .service('vkApi', vkApi);
 
-    DeviceLoginController.$inject = ['$scope', '$rootScope', '$state', 'vkApi', 'userApi', 'vkAuthenticator', '$ionicLoading', '$ionicPopup'];
-    function DeviceLoginController($scope, $rootScope, $state, vkApi, userApi, vkAuthenticator, $ionicLoading, $ionicPopup) {
+    DeviceLoginController.$inject = ['$scope', '$rootScope', '$state', 'vkApi', 'userApi', 'vkAuthenticator', '$ionicLoading', '$ionicPopup', 'appConfig'];
+    function DeviceLoginController($scope, $rootScope, $state, vkApi, userApi, vkAuthenticator, $ionicLoading, $ionicPopup, appConfig) {
         $scope.isAndroid = ionic.Platform.isAndroid();
 
         $scope.$onVkSdkEvent('vkSdk.newToken', function(evt) {
@@ -39,16 +39,14 @@
         function afterTokenReceive(params) {
             return userApi
                 .login(params)
-                .then(function() {
-                    $rootScope.$broadcast('user.login');
+                .then(function(data) {
                     $ionicLoading.hide();
-                    $state.go('main.swiper');
-                    $ionicPopup.alert(
-                     {
-                         templateUrl: 'modules/auth/terms.html',
-                         cssClass: 'terms-popup'
-                     }
-                    );
+                    if(data.data.confirmPolicy){
+                        $rootScope.$broadcast('user.login');
+                        $state.go('main.swiper');
+                    } else {
+                        showConfirmPolicyPopup();
+                    }
                 },loginErr);
         }
 
@@ -60,6 +58,21 @@
                     cssClass: 'no-response-popup'
                 }
             );
+        }
+
+        function showConfirmPolicyPopup(){
+            $ionicPopup.confirm({
+                templateUrl: 'modules/auth/terms.html',
+                cssClass: 'terms-popup'
+            }).then(function(confirm){
+                if(confirm){
+                    userApi.confirmPolicy();
+                    $rootScope.$broadcast('user.login');
+                    $state.go('main.swiper');
+                } else {
+                    localStorage.removeItem(appConfig.api.tokenLocalStorageKey);
+                }
+            });
         }
     }
 
