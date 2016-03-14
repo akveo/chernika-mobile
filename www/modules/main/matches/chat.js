@@ -147,7 +147,7 @@
         $scope.block = function(){
             window.plugins.toast.showWithOptions(
                 {
-                    message: "Конец",
+                    message: "Совпадение удалено",
                     duration: "short",
                     position: "top"
                 });
