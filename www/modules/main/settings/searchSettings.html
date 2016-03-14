@@ -23,13 +23,14 @@
                         <input type="range" name="volume" min="18" max="55" ng-model="settings.maxAge">
                     </div>
                 </ion-item>
+                <div class="list">
                 <label class="item item-input item-select">
                     <div class="input-label">
                         Показывать
                     </div>
                     <select ng-model="settings.show" ng-options="opt.id as opt.label for opt in sexOptions"></select>
                 </label>
-
+                </div>
             </ion-list>
         </ion-content>
     </div>

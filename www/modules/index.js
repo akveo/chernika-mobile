@@ -50,6 +50,11 @@
                 toHomeStates:['main.swiper', 'login']
             });
 
+            $rootScope.$on('$stateChangeStart',
+                function(event, toState){
+                    cordova.plugins.Keyboard.hideKeyboardAccessoryBar(toState.name != 'main.settings-search');
+            });
+
             $ionicConfig.views.swipeBackEnabled(false);
             connectionListener.listenConnection();
             appStateListener.listenState();

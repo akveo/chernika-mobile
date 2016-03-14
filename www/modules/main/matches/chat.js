@@ -74,8 +74,8 @@
         }
     }
 
-    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$rootScope', 'appStateListener'];
-    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $rootScope, appStateListener) {
+    ChatDetailCtrl.$inject = ['$scope', '$ionicScrollDelegate', '$timeout', 'chatDetails', 'ChatsApi', 'socketEventService', 'onConnectionChangePropertyListener', 'onLoadingPropertyListener', '$rootScope', 'appStateListener', 'suggestionsApi', '$ionicPopover', '$state'];
+    function ChatDetailCtrl($scope, $ionicScrollDelegate, $timeout, chatDetails, ChatsApi, socketEventService, onConnectionChangePropertyListener, onLoadingPropertyListener, $rootScope, appStateListener, suggestionsApi, $ionicPopover, $state) {
         $scope.isContentSeen = false;
         $scope.activeMessage = {
             text: ''
@@ -120,6 +120,42 @@
                 $ionicScrollDelegate.scrollBottom();
             }, 100);
         });
+
+
+        $ionicPopover.fromTemplateUrl('modules/main/matches/chatPopover.html', {
+            scope: $scope
+        }).then(function(popover) {
+            $scope.popover = popover;
+        });
+
+        $scope.openPopover = function($event) {
+            $scope.popover.show($event);
+        };
+
+        $scope.report = function(){
+            window.plugins.toast.showWithOptions(
+                {
+                    message: "жалоба отправлена",
+                    duration: "short",
+                    position: "top"
+                });
+            $scope.popover.hide();
+            suggestionsApi.dislikeProfile($scope.user._id);
+            suggestionsApi.reportAbuse($scope.user._id);
+        };
+
+        $scope.block = function(){
+            window.plugins.toast.showWithOptions(
+                {
+                    message: "Конец",
+                    duration: "short",
+                    position: "top"
+                });
+            $scope.popover.hide();
+            suggestionsApi.dislikeProfile($scope.user._id);
+            suggestionsApi.blockAbuse($scope.user._id);
+            $state.go('main.matches');
+        };
 
         $scope.tracker = function (msg) {
             return msg._id + msg.created;

@@ -7,7 +7,9 @@
 <ion-view cache-view="false">
     <ion-nav-title>{{chat.name}}</ion-nav-title>
     <clever-loader is-seen="true" with-no-connection-banner="true"></clever-loader>
-
+    <ion-nav-buttons side="right">
+        <button class="button ion-ios-gear chat-popover-toggle" ng-click="openPopover($event)"></button>
+    </ion-nav-buttons>
     <div class="main-content" ng-if="isContentSeen">
         <ion-content class="padding" ng-show="messages.length">
             <ion-refresher

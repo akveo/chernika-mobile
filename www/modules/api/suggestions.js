@@ -39,6 +39,12 @@
             return $http.post(suggestionsEndpoint + '/report', {
                 targetId: profileId
             });
+        };
+
+        this.blockAbuse = function(profileId){
+            return $http.post(suggestionsEndpoint + '/block', {
+                targetId: profileId
+            });
         }
 
     }
