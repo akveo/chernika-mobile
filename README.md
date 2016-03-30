@@ -1,27 +1,19 @@
 # Chernika
 Hybrid mobile dating app developed using ionic.
 
-<img src="http://i.imgur.com/kGrVr1R.gif" width="400">
+<img src="http://i.imgur.com/OvXNrFu.gif" width="400">
 
 ## Setup
-1. Install node and bower dependencies: `npm install` 'bower install'
+1. Install node and bower dependencies: `npm install` and `bower install`
 2. Build configs, styles etc.: `gulp build`
 3. Add some platform, for example Android: `cordova platform add ios`
-4. Type 'ionic run android'
+4. Type `ionic run android`
 5. We used cordova 5.3.3, if you have older version try updating it `npm install -g cordova` (may require sudo)
 
+Also you can try out our [node backend](https://github.com/akveo/chernika-server)!  
+
 ## Features
-#### Gameplay
-* 100 different levels. (If you think the first 20 is too easy, yeah it's true. Go straight to the 4-th and 5-th chapter and let's see how long would it take for you to finish them :) ).
-* Neat UI
-* Responsive design
-* Autosave feature
 
-I didn't add bootstrap, because I think it's overwhelming for such small project
-
-#### Technical stuff
-* Ionic
-* Sass
 * Ionic tinder cars
 * Websockets chats
 * Geolocation
