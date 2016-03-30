@@ -30,7 +30,7 @@ Application is live. You can download it from marketplaces:
 Please refer to [Apache Cordova documentation](http://cordova.apache.org/docs/en/4.0.0/) for additional info.
 
 ## License
-[MIT](http://opensource.org/licenses/MIT)
+[MIT](/LICENSE.txt)
 
 ## From akveo
 For any additional information as well as with any suggestions or offers please refer to [Akveo homepage](http://akveo.com)
