@@ -24,8 +24,8 @@ Also you can try out our [node backend](https://github.com/akveo/chernika-server
 
 ##Try chernika
 Application is live. You can download it from marketplaces:
-* [Apple store](https://itunes.apple.com/us/app/digit-square-puzzle-game/id959622726)
-* [Android market](https://play.google.com/store/apps/details?id=com.flatlogic.digitsquare)
+* [Apple store](https://itunes.apple.com/us/app/chernika/id1063634137)
+* [Android market](https://play.google.com/store/apps/details?id=com.akveo.pinder)
 
 Please refer to [Apache Cordova documentation](http://cordova.apache.org/docs/en/4.0.0/) for additional info.
 
