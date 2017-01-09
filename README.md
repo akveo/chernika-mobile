@@ -1,3 +1,5 @@
+(chernika-server is no longer officially supported. Please feel free to fork, chop and change, use as reference)
+
 # Chernika
 Hybrid mobile dating app developed using ionic.
 
